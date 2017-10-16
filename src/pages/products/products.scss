@@ -1,0 +1,47 @@
+page-products {
+    ion-slides {
+        height: 30%;
+    }
+    .swiper-pagination-bullet{
+        opacity: 0.5;
+        background: #ffffff;
+    }
+    .swiper-pagination-bullet-active{
+        opacity: 1;
+    }
+    ion-thumbnail{
+        img{
+            width: 100px;
+            height: 100px;
+        }
+    }
+    .price{
+        color: #ff6659;
+        font-size: 3rem;
+        margin-bottom: 2rem;
+    }
+    .price i{
+        font-style: normal;
+        font-size: 1.8rem;
+    }
+    .product-list{
+        button{
+            background: none;
+        }
+        .number{
+            font-size: 2rem;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .iconfont{
+            color: #999999;
+            vertical-align: middle;
+        }
+        .icon-delicon{
+            font-size: 2.6rem;
+        }
+        .icon-add{
+            font-size: 3rem;
+        }
+    }
+}

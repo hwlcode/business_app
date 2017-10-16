@@ -1,0 +1,94 @@
+page-home {
+    .login{
+        height: 1em;
+        margin-top: 15px;
+    }
+    ion-slides {
+        height: 30%;
+    }
+    .swiper-pagination-bullet{
+        opacity: 0.5;
+        background: #ffffff;
+    }
+    .swiper-pagination-bullet-active{
+        opacity: 1;
+    }
+    .order-btn{
+        justify-content: center;
+        button{
+            font-weight: bold;
+            font-size: 3rem;
+            margin: 0;
+            border-radius: 0;
+        }
+        ion-icon{
+            color: #ffffff;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    }
+    .home-list{
+        background: #ffffff;
+        button{
+            display: inline-block;
+            background: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #999999;
+            div{margin-top: 15px;}
+        }
+        ion-col{
+            background: #ffffff;
+            justify-content: center;
+            text-align: center;
+        }
+        .iconfont{
+            font-size: 3.5rem;
+            color: #ff6659;
+        }
+    }
+    .product {
+        ion-row {
+            background-color: #efefef;
+            font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+            padding-top: 3px;
+            ion-col {
+                position: relative;
+                background-color: white;
+                border: 2px solid #efefef;
+                border-radius: 2px;
+                padding: 0px;
+                p {
+                    margin: 0px;
+                    padding: 0px;
+                    width: 100%;
+                    font-size: 12px;
+                    font-family: "黑体-简";
+                    font-weight: 300;
+                    color: #808080;
+                    height: 26px;
+                    line-height: 26px;
+                    background: rgba(255, 255, 255, 0.8);
+                    overflow: hidden;
+                    text-indent: 5px;
+                }
+            }
+        }
+        .list-price {
+            width: 98%;
+            height: 26px;
+            line-height: 18px;
+            position: relative;
+            bottom: 0;
+            margin: 0 2%;
+        }
+        .price-new {
+            font-size: 18px;
+            color: #f8285c;
+        }
+        .list-price i {
+            font-style: normal;
+            font-size: 12px;
+        }
+    }
+}

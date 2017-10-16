@@ -1,0 +1,90 @@
+<ion-header>
+    <ion-navbar style="opacity: 0.85" no-border-bottom color="primary" >
+        <ion-grid>
+            <ion-row>
+                <ion-col col-10 no-padding>
+                    <ion-searchbar (input)="getItems($event)"></ion-searchbar>
+                </ion-col>
+                <ion-col col-2 no-padding>
+                    <button ion-button class="login">登录</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-navbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <ion-slides pager>
+        <ion-slide>
+            <img src="assets/banner_1.png" class="slide-image"/>
+        </ion-slide>
+        <ion-slide>
+            <img src="assets/banner_2.jpeg" class="slide-image"/>
+        </ion-slide>
+        <ion-slide>
+            <img src="assets/banner_3.jpeg" class="slide-image"/>
+        </ion-slide>
+    </ion-slides>
+
+    <ion-row class="order-btn" padding>
+        <button ion-button block color="light">
+            开始订购 <ion-icon name="arrow-dropright"></ion-icon>
+        </button>
+    </ion-row>
+
+    <ion-grid class="home-list">
+        <ion-row padding-vertical>
+            <ion-col col-4>
+                <button>
+                    <i class="iconfont icon-menuordericon"></i>
+                    <div>我的订单</div>
+                </button>
+            </ion-col>
+            <ion-col col-4>
+                <button>
+                    <i class="iconfont icon-points"></i>
+                    <div>我的积分</div>
+                </button>
+            </ion-col>
+            <ion-col col-4>
+                <button>
+                    <i class="iconfont icon-mall_fill"></i>
+                    <div>积分商城</div>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <div class="product">
+        <ion-row wrap>
+            <ion-col tappable col-6>
+                <img src="assets/timg.jpeg" alt="">
+                <p>黑木耳</p>
+                <div class="list-price buy">
+                    <span class="price-new"><i>￥</i>14/斤</span>
+                </div>
+            </ion-col>
+            <ion-col tappable col-6>
+                <img src="assets/timg.jpeg" alt="">
+                <p>黑木耳</p>
+                <div class="list-price buy">
+                    <span class="price-new"><i>￥</i>14/斤</span>
+                </div>
+            </ion-col>
+            <ion-col tappable col-6>
+                <img src="assets/timg.jpeg" alt="">
+                <p>黑木耳</p>
+                <div class="list-price buy">
+                    <span class="price-new"><i>￥</i>14/斤</span>
+                </div>
+            </ion-col>
+            <ion-col tappable col-6>
+                <img src="assets/timg.jpeg" alt="">
+                <p>黑木耳</p>
+                <div class="list-price buy">
+                    <span class="price-new"><i>￥</i>14/斤</span>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>
