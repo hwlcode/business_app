@@ -1,12 +1,12 @@
 <ion-header>
-    <ion-navbar style="opacity: 0.85" no-border-bottom color="primary" >
+    <ion-navbar style="opacity: 0.85" no-border-bottom color="primary">
         <ion-grid>
             <ion-row>
                 <ion-col col-10 no-padding>
                     <ion-searchbar (input)="getItems($event)"></ion-searchbar>
                 </ion-col>
                 <ion-col col-2 no-padding>
-                    <button ion-button class="login">登录</button>
+                    <button ion-button class="login" (click)="goToLogin()">登录</button>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -15,20 +15,15 @@
 
 <ion-content fullscreen>
     <ion-slides pager>
-        <ion-slide>
-            <img src="assets/banner_1.png" class="slide-image"/>
-        </ion-slide>
-        <ion-slide>
-            <img src="assets/banner_2.jpeg" class="slide-image"/>
-        </ion-slide>
-        <ion-slide>
-            <img src="assets/banner_3.jpeg" class="slide-image"/>
+        <ion-slide *ngFor="let banner of banners">
+            <img src="{{'http://localhost:8000'+banner.banner.path}}" class="slide-image"/>
         </ion-slide>
     </ion-slides>
 
     <ion-row class="order-btn" padding>
-        <button ion-button block color="light">
-            开始订购 <ion-icon name="arrow-dropright"></ion-icon>
+        <button ion-button block color="light" (click)="goProduct()">
+            开始订购
+            <ion-icon name="arrow-dropright"></ion-icon>
         </button>
     </ion-row>
 
@@ -55,36 +50,25 @@
         </ion-row>
     </ion-grid>
 
-    <div class="product">
-        <ion-row wrap>
-            <ion-col tappable col-6>
-                <img src="assets/timg.jpeg" alt="">
-                <p>黑木耳</p>
-                <div class="list-price buy">
-                    <span class="price-new"><i>￥</i>14/斤</span>
-                </div>
-            </ion-col>
-            <ion-col tappable col-6>
-                <img src="assets/timg.jpeg" alt="">
-                <p>黑木耳</p>
-                <div class="list-price buy">
-                    <span class="price-new"><i>￥</i>14/斤</span>
-                </div>
-            </ion-col>
-            <ion-col tappable col-6>
-                <img src="assets/timg.jpeg" alt="">
-                <p>黑木耳</p>
-                <div class="list-price buy">
-                    <span class="price-new"><i>￥</i>14/斤</span>
-                </div>
-            </ion-col>
-            <ion-col tappable col-6>
-                <img src="assets/timg.jpeg" alt="">
-                <p>黑木耳</p>
-                <div class="list-price buy">
-                    <span class="price-new"><i>￥</i>14/斤</span>
-                </div>
-            </ion-col>
-        </ion-row>
+    <div class="product-list">
+        <ion-list no-padding>
+            <ion-item no-padding *ngFor="let product of products" (click)="goProduct()">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-6><img src="{{'http://localhost:8000'+product.banner.path}}"></ion-col>
+                        <ion-col col-6>
+                            <h2 text-right>{{product.name}}</h2>
+                            <p text-right class="price"><i>￥</i>{{product.price}}/斤</p>
+                            <p text-right>
+                                <button><i class="iconfont icon-delicon"></i></button>
+                                <span class="number">1</span>
+                                <button><i class="iconfont icon-add"></i></button>
+                            </p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </ion-list>
     </div>
+
 </ion-content>

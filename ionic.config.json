@@ -1,8 +1,12 @@
 {
-  "name": "business_app",
-  "app_id": "",
-  "type": "ionic-angular",
-  "integrations": {
-    "cordova": {}
-  }
+    "name": "business_app",
+    "app_id": "",
+    "type": "ionic-angular",
+    "integrations": {
+        "cordova": {}
+    },
+    "proxies": [{
+        "path": "/api",
+        "proxyUrl": "http://localhost:8000/api"
+    }]
 }

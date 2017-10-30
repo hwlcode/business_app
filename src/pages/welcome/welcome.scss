@@ -1,0 +1,58 @@
+page-welcome {
+    ion-slide {
+        background-color: #9a0007;
+    }
+
+    ion-slide img {
+        height: 70vh !important;
+        width: auto !important;
+    }
+    .welcome-btn {
+        font-size: 2rem;
+        color: #ffffff;
+        border: 2px #fff solid;
+        background: none;
+        border-radius: 30px;
+        padding: 15px 30px;
+        margin-top: 16.8rem;
+    }
+
+    .toolbar-background {
+        background: #9a0007;
+    }
+
+    .button-inner {
+        color: #fff;
+    }
+
+    .slide-zoom {
+        height: 100%;
+    }
+
+    .slide-title {
+        margin-top: 16.8rem;
+        color: #ffffff;
+    }
+
+    .slide-image {
+        max-height: 50%;
+        max-width: 60%;
+        margin: 18px 0;
+    }
+
+    b {
+        font-weight: 500;
+        color: #ffffff;
+    }
+
+    p {
+        padding: 0 40px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #ffffff;
+
+        b {
+            color: #ffffff;
+        }
+    }
+}
