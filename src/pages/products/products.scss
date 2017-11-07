@@ -1,4 +1,7 @@
 page-products {
+    .list-ios .item-block .item-inner {
+        border-bottom: 0.55px solid #f2f2f2;
+    }
     ion-slides {
         height: 30%;
     }
@@ -17,8 +20,8 @@ page-products {
     }
     .price{
         color: #ff6659;
-        font-size: 3rem;
-        margin-bottom: 2rem;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
     }
     .price i{
         font-style: normal;

@@ -1,12 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-
-/**
- * Generated class for the ProductsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import {AppGlobal, AppService} from "../../app/app.service";
 
 @IonicPage()
 @Component({
@@ -14,13 +8,38 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
     templateUrl: 'products.html',
 })
 export class ProductsPage {
+    public banners;
+    public products;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-
+    constructor(public navCtrl: NavController, public navParams: NavParams, public appService: AppService) {
+        this.getBanners();
+        this.getProduct();
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad ProductsPage');
+    }
+
+    getBanners() {
+        this.appService.httpGet(AppGlobal.API.getBanner, '', d => {
+            if (d.code == 0) {
+                this.banners = d.data;
+                this.banners.map(item => {
+                    item.image = AppGlobal.domain + item.banner.path;
+                })
+            }
+        })
+    }
+
+    getProduct() {
+        this.appService.httpGet(AppGlobal.API.products, '', d => {
+            if (d.code == 0) {
+                this.products = d.data;
+                this.products.map(item => {
+                    item.image = AppGlobal.domain + item.banner.path;
+                })
+            }
+        })
     }
 
     hideTabs() {

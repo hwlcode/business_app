@@ -6,72 +6,66 @@
 -->
 <ion-header>
 
-  <ion-navbar color="dark">
-    <ion-title>我的</ion-title>
-  </ion-navbar>
+    <ion-navbar color="primary" no-border-bottom>
+        <ion-title>我的</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
     <ion-list>
-        <ion-list-header>订单与积分</ion-list-header>
-        <ion-item (click)="goToOrders()">
-            <ion-icon name="leaf" item-start></ion-icon>
-             我的订单
-            <ion-icon name="rose" item-end></ion-icon>
+        <ion-item color="primary" [class.show]="isLogin" class="display-box" (click)="choosePic()">
+            <ion-avatar item-start><img src="{{avatar}}"></ion-avatar>
+            <h2 class="user-name" item-end>{{phone}}</h2>
+            <ion-icon name="arrow-forward" item-end class="upload-avatar"></ion-icon>
         </ion-item>
-        <ion-item>
-            <ion-icon name="leaf" item-start></ion-icon>
-            我的积分
-            <ion-icon name="rose" item-end></ion-icon>
+        <ion-item color="primary" class="display-box" [class.show]="!isLogin">
+            <h2 class="no-login" (click)="goToLogin()">点击登录</h2>
         </ion-item>
     </ion-list>
+
+    <ion-list>
+        <ion-list-header>订单与积分</ion-list-header>
+        <ion-item>
+            <i class="iconfont icon-jifen3"></i>
+            我的积分
+            <div item-end>{{code}}</div>
+        </ion-item>
+    </ion-list>
+
     <ion-list>
         <ion-list-header>帐户与安全</ion-list-header>
-        <ion-item>
-            <ion-icon name="leaf" item-start></ion-icon>
+        <ion-item (click)="changeUserName()">
             姓名
-            <ion-icon name="rose" item-end></ion-icon>
+            <div item-end>{{name}}</div>
+            <ion-icon name="arrow-forward" item-end></ion-icon>
         </ion-item>
         <ion-item>
-            <ion-icon name="leaf" item-start></ion-icon>
-            性别
-            <ion-icon name="rose" item-end></ion-icon>
+            <ion-label icon-start>性别</ion-label>
+            <ion-select [(ngModel)]="gender" item-end [selectOptions]="selectOptions" cancelText="取消" okText="确定" (ngModelChange)="saveSex($event)">
+                <ion-option value="先生">先生</ion-option>
+                <ion-option value="女士">女士</ion-option>
+            </ion-select>
         </ion-item>
         <ion-item>
-            <ion-icon name="leaf" item-start></ion-icon>
-            生日
-            <ion-icon name="rose" item-end></ion-icon>
+            <ion-label>生日</ion-label>
+            <ion-datetime displayFormat="YYYY-MM-DD" pickerFormat="YYYY MM DD" [(ngModel)]="event.timeStarts" (ngModelChange)="saveBirty($event)" cancelText="取消" doneText="确定"></ion-datetime>
         </ion-item>
         <ion-item>
-            <ion-icon name="leaf" item-start></ion-icon>
             手机
-            <ion-icon name="rose" item-end></ion-icon>
+            <div item-end>{{phone}}</div>
         </ion-item>
     </ion-list>
     <ion-list>
         <ion-list-header>地址</ion-list-header>
         <ion-item>
-            <ion-icon name="leaf" item-start></ion-icon>
+            <i class="iconfont icon-dizhi1"></i>
             收货地址
-            <ion-icon name="rose" item-end></ion-icon>
-        </ion-item>
-    </ion-list>
-    <ion-list>
-        <ion-list-header>系统</ion-list-header>
-        <ion-item>
-            <ion-icon name="leaf" item-start></ion-icon>
-            帮助
-            <ion-icon name="rose" item-end></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-icon name="leaf" item-start></ion-icon>
-            登出
-            <ion-icon name="rose" item-end></ion-icon>
+            <ion-icon name="arrow-forward" item-end></ion-icon>
         </ion-item>
     </ion-list>
     <ion-row margin-horizontal>
-        <button block ion-button color="primary" class="save">保存</button>
+        <button block ion-button color="primary" class="save" (click)="loginOut()">登出</button>
     </ion-row>
 </ion-content>

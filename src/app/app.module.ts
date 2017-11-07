@@ -18,6 +18,17 @@ import {LoginPage} from "../pages/login/login";
 import {LoginPageModule} from "../pages/login/login.module";
 import {OrdersPage} from "../pages/orders/orders";
 import {OrdersPageModule} from "../pages/orders/orders.module";
+import {ProfilePage} from "../pages/profile/profile";
+import {ProfilePageModule} from "../pages/profile/profile.module";
+import {ImageService} from "./image.service";
+import {Camera} from "@ionic-native/camera";
+import {ImagePicker} from "@ionic-native/image-picker";
+import {FileTransfer} from "@ionic-native/file-transfer";
+import {DatePicker} from "@ionic-native/date-picker";
+import {UserNamePage} from "../pages/user-name/user-name";
+import {UserNamePageModule} from "../pages/user-name/user-name.module";
+import {ShoppingPage} from "../pages/shopping/shopping";
+import {ShoppingPageModule} from "../pages/shopping/shopping.module";
 
 @NgModule({
     declarations: [
@@ -31,6 +42,9 @@ import {OrdersPageModule} from "../pages/orders/orders.module";
         ProductsPageModule,
         LoginPageModule,
         OrdersPageModule,
+        ProfilePageModule,
+        UserNamePageModule,
+        ShoppingPageModule,
         IonicStorageModule.forRoot(),
         IonicModule.forRoot(MyApp, {
             backButtonText: '返回',              //重置back文案
@@ -45,12 +59,20 @@ import {OrdersPageModule} from "../pages/orders/orders.module";
         TabsPage,
         ProductsPage,
         LoginPage,
-        OrdersPage
+        OrdersPage,
+        ProfilePage,
+        UserNamePage,
+        ShoppingPage
     ],
     providers: [
         StatusBar,
         SplashScreen,
         AppService,
+        ImageService,
+        Camera,
+        ImagePicker,
+        FileTransfer,
+        DatePicker,
         {provide: ErrorHandler, useClass: IonicErrorHandler}
     ]
 })

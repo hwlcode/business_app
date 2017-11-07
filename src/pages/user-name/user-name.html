@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>编缉姓名</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <form [formGroup]="fromGroup">
+        <ion-list>
+            <ion-item>
+                <ion-input type="text" formControlName="name" placeholder="输入姓名"></ion-input>
+            </ion-item>
+            <ion-item>
+                <button ion-button block large [disabled]="!fromGroup.valid" (click)="update()">保存</button>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>

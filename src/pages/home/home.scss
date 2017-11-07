@@ -6,6 +6,18 @@ page-home {
     ion-slides {
         height: 30%;
     }
+    .hide{
+        display: none;
+    }
+    .show{
+        display: flex!important;
+    }
+    .label-ios{
+        margin: 0;
+    }
+    .item-inner{
+        border: 0!important;
+    }
     .swiper-pagination-bullet{
         opacity: 0.5;
         background: #ffffff;
@@ -32,7 +44,6 @@ page-home {
             display: inline-block;
             background: none;
             font-size: 16px;
-            font-weight: bold;
             color: #999999;
             div{margin-top: 15px;}
         }
@@ -42,34 +53,25 @@ page-home {
             text-align: center;
         }
         .iconfont{
-            font-size: 3.5rem;
-            color: #ff6659;
+            font-size: 3rem;
+            color: #24ad20;
         }
     }
-    .product {
+    .product-list {
         ion-row {
-            background-color: #efefef;
-            font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
-            padding-top: 3px;
             ion-col {
-                position: relative;
-                background-color: white;
-                border: 2px solid #efefef;
-                border-radius: 2px;
                 padding: 0px;
-                p {
-                    margin: 0px;
-                    padding: 0px;
-                    width: 100%;
-                    font-size: 12px;
-                    font-family: "黑体-简";
-                    font-weight: 300;
-                    color: #808080;
-                    height: 26px;
-                    line-height: 26px;
-                    background: rgba(255, 255, 255, 0.8);
-                    overflow: hidden;
-                    text-indent: 5px;
+                h2 {
+                    font-size: 16px;
+                    color: #333333;
+                    margin-bottom: 5px;
+                }
+                p{
+                    font-size: 16px;
+                    i{
+                        color: #ff6659;
+                        font-style: normal;
+                    }
                 }
             }
         }

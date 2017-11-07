@@ -1,25 +1,28 @@
 import { LoadingController, AlertController, ToastController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import {Http} from "@angular/http";
+import "rxjs/add/operator/toPromise";
 
 @Injectable()
 export class AppGlobal {
     //缓存key的配置
     static cache: any = {
-        slides: "_dress_slides",
-        categories: "_dress_categories",
-        products: "_dress_products"
+
     }
 
     //接口基地址
-    static domain = ""
+    static domain = "http://192.168.20.44:8000"
 
     //接口地址
     static API: any = {
-        getBanner: '/api/banners',
+        getBanner: '/api/web/banners',
         getProducts: '/api/productList',
-        verifyCode: '/api/verifyCode'
+        verifyCode: '/api/verifyCode',
+        profile: '/api/profile',
+        login: '/api/user/login',
+        upload: '/api/upload',
+        uploadAvatar: '/api/upload/avatar',
+        products: '/api/web/productList'
     };
 }
 
@@ -48,6 +51,7 @@ export class AppService {
         if (loader) {
             loading.present();
         }
+
         this.http.get(AppGlobal.domain + url + this.encode(params))
             .toPromise()
             .then(res => {
@@ -87,6 +91,7 @@ export class AppService {
     }
 
     private handleError(error: Response | any) {
+        // this.alert(error);
         let msg = '';
         if (error.status == 400) {
             msg = '请求无效(code：404)';
@@ -100,7 +105,6 @@ export class AppService {
             msg = '服务器发生错误(code：500)';
             console.error(msg + '，请检查路径是否正确');
         }
-        console.log(error);
         if (msg != '') {
             this.toast(msg);
         }
@@ -132,7 +136,7 @@ export class AppService {
     toast(message, callback?) {
         let toast = this.toastCtrl.create({
             message: message,
-            duration: 2000,
+            duration: 5000,
             dismissOnPageChange: true,
         });
         toast.present();

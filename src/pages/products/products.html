@@ -1,6 +1,6 @@
 <ion-header>
 
-    <ion-navbar style="opacity: 0.8" no-border-bottom color="dark">
+    <ion-navbar style="opacity: 0.8" no-border-bottom color="primary">
         <ion-title>产品列表</ion-title>
     </ion-navbar>
 
@@ -8,122 +8,20 @@
 
 <ion-content>
     <ion-slides pager>
-        <ion-slide>
-            <img src="assets/banner_1.jpeg" class="slide-image"/>
-        </ion-slide>
-        <ion-slide>
-            <img src="assets/banner_2.jpeg" class="slide-image"/>
-        </ion-slide>
-        <ion-slide>
-            <img src="assets/banner_3.jpeg" class="slide-image"/>
+        <ion-slide *ngFor="let banner of banners">
+            <img src="{{banner.image}}" class="slide-image"/>
         </ion-slide>
     </ion-slides>
 
     <div class="product-list">
         <ion-list no-padding>
-            <ion-item no-padding>
+            <ion-item no-padding *ngFor="let product of products">
                 <ion-grid>
                     <ion-row>
-                        <ion-col col-6><img src="assets/timg.jpeg"></ion-col>
+                        <ion-col col-6><img src="{{product.image}}"></ion-col>
                         <ion-col col-6>
-                            <h2 text-right>黑木耳</h2>
-                            <p text-right class="price"><i>￥</i>14/斤</p>
-                            <p text-right>
-                                <button><i class="iconfont icon-delicon"></i></button>
-                                <span class="number">1</span>
-                                <button><i class="iconfont icon-add"></i></button>
-                            </p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-            <ion-item no-padding>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-6><img src="assets/timg.jpeg"></ion-col>
-                        <ion-col col-6>
-                            <h2 text-right>黑木耳</h2>
-                            <p text-right class="price"><i>￥</i>14/斤</p>
-                            <p text-right>
-                                <button><i class="iconfont icon-delicon"></i></button>
-                                <span class="number">1</span>
-                                <button><i class="iconfont icon-add"></i></button>
-                            </p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-            <ion-item no-padding>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-6><img src="assets/timg.jpeg"></ion-col>
-                        <ion-col col-6>
-                            <h2 text-right>黑木耳</h2>
-                            <p text-right class="price"><i>￥</i>14/斤</p>
-                            <p text-right>
-                                <button><i class="iconfont icon-delicon"></i></button>
-                                <span class="number">1</span>
-                                <button><i class="iconfont icon-add"></i></button>
-                            </p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-            <ion-item no-padding>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-6><img src="assets/timg.jpeg"></ion-col>
-                        <ion-col col-6>
-                            <h2 text-right>黑木耳</h2>
-                            <p text-right class="price"><i>￥</i>14/斤</p>
-                            <p text-right>
-                                <button><i class="iconfont icon-delicon"></i></button>
-                                <span class="number">1</span>
-                                <button><i class="iconfont icon-add"></i></button>
-                            </p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-            <ion-item no-padding>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-6><img src="assets/timg.jpeg"></ion-col>
-                        <ion-col col-6>
-                            <h2 text-right>黑木耳</h2>
-                            <p text-right class="price"><i>￥</i>14/斤</p>
-                            <p text-right>
-                                <button><i class="iconfont icon-delicon"></i></button>
-                                <span class="number">1</span>
-                                <button><i class="iconfont icon-add"></i></button>
-                            </p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-            <ion-item no-padding>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-6><img src="assets/timg.jpeg"></ion-col>
-                        <ion-col col-6>
-                            <h2 text-right>黑木耳</h2>
-                            <p text-right class="price"><i>￥</i>14/斤</p>
-                            <p text-right>
-                                <button><i class="iconfont icon-delicon"></i></button>
-                                <span class="number">1</span>
-                                <button><i class="iconfont icon-add"></i></button>
-                            </p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-            <ion-item no-padding>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-6><img src="assets/timg.jpeg"></ion-col>
-                        <ion-col col-6>
-                            <h2 text-right>黑木耳</h2>
-                            <p text-right class="price"><i>￥</i>14/斤</p>
+                            <h2 text-right>{{product.name}}</h2>
+                            <p text-right class="price"><i>￥</i>{{product.price}}/斤</p>
                             <p text-right>
                                 <button><i class="iconfont icon-delicon"></i></button>
                                 <span class="number">1</span>

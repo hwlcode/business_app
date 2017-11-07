@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {numberValidator, phoneValidator} from "../../app/validator";
 import {Storage} from '@ionic/storage';
 import {AppGlobal, AppService} from "../../app/app.service";
+import {ProfilePage} from "../profile/profile";
 
 @IonicPage()
 @Component({
@@ -16,7 +17,7 @@ export class LoginPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public appService: AppService) {
         let fb = new FormBuilder();
         this.loginForm = fb.group({
-            phone: ['', [phoneValidator]],
+            phone: ['15868823605', [phoneValidator]],
             phoneCode: ['', [numberValidator]]
         })
     }
@@ -27,22 +28,28 @@ export class LoginPage {
 
     login() {
         if (this.loginForm.valid) {
-            console.log(this.loginForm.value);
-            this.storage.set('isLogin', true);
+            this.appService.httpPost(AppGlobal.API.login, this.loginForm.value, (data) => {
+                if (data.code == 0) {
+                    this.storage.set('isLogin', this.loginForm.get('phone').value);
+                    this.navCtrl.setRoot(ProfilePage, {phone: this.loginForm.get('phone').value});
+                }else{
+                    this.appService.toast(data.msg);
+                }
+            });
         }
     }
 
     // 验证码倒计时
     verifyCode: any = {
         verifyCodeTips: "获取验证码",
-        countdown: 60,
+        countdown: 30,
         disable: true
     }
 
     // 倒计时
     settime() {
         if (this.verifyCode.countdown == 1) {
-            this.verifyCode.countdown = 60;
+            this.verifyCode.countdown = 30;
             this.verifyCode.verifyCodeTips = "获取验证码";
             this.verifyCode.disable = true;
             return;
@@ -67,8 +74,11 @@ export class LoginPage {
         this.appService.httpGet(AppGlobal.API.verifyCode, {
             phone: this.loginForm.value.phone
         }, d => {
-            if (d.code == 0) {
-
+            this.appService.alert(d);
+            if (d.code == 'OK') {
+                console.log(d);
+            } else {
+                this.appService.toast(d.msg);
             }
         })
         //此处实现验证码请求
