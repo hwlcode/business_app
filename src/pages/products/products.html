@@ -6,7 +6,7 @@
 
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
     <ion-slides pager>
         <ion-slide *ngFor="let banner of banners">
             <img src="{{banner.image}}" class="slide-image"/>
@@ -23,9 +23,9 @@
                             <h2 text-right>{{product.name}}</h2>
                             <p text-right class="price"><i>￥</i>{{product.price}}/斤</p>
                             <p text-right>
-                                <button><i class="iconfont icon-delicon"></i></button>
+                                <button (click)="removeProduct(product)"><i class="iconfont icon-delicon"></i></button>
                                 <span class="number">1</span>
-                                <button><i class="iconfont icon-add"></i></button>
+                                <button class="add-btn" (click)="addProduct(product)"><i class="iconfont icon-add1"></i></button>
                             </p>
                         </ion-col>
                     </ion-row>
@@ -34,3 +34,12 @@
         </ion-list>
     </div>
 </ion-content>
+<ion-footer>
+    <ion-item color="light" style="opacity: 0.55">
+        <ion-badge item-start>{{num}}</ion-badge>
+        <div *ngIf="num == 0">还未选购商品</div>
+        <div (click)="presentModal()" *ngIf="num > 0">￥{{sum}}元</div>
+        <button ion-button item-end [disabled]="num == 0" (click)="selectPayWay()">去结算</button>
+    </ion-item>
+</ion-footer>
+

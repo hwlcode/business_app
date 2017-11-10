@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {AppGlobal, AppService} from '../../app/app.service';
@@ -124,7 +124,7 @@ export class ProfilePage implements OnInit {
                 phone: this.phone,
                 birth: val
             }, res => {
-                if(res.code == 0){
+                if (res.code == 0) {
                     console.log('done');
                 }
             })
@@ -139,7 +139,7 @@ export class ProfilePage implements OnInit {
                 phone: this.phone,
                 sex: val
             }, res => {
-                if(res.code == 0){
+                if (res.code == 0) {
                     console.log('done');
                 }
             })

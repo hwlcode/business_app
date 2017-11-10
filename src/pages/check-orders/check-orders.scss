@@ -1,0 +1,44 @@
+page-check-orders {
+    .item-ios.item-block .item-inner {
+        border-bottom: 0;
+    }
+    .hide-order {
+        text-decoration: none;
+    }
+    .header {
+        padding: 0;
+
+        .item-ios { margin-bottom: 0px; }
+    }
+    .toolbar-background-ios {
+        background: #cccccc;
+    }
+    .item-ios { margin-bottom: 5px; }
+
+    button {
+        background: none;
+    }
+    .number {
+        font-size: 1.5rem;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .iconfont {
+        color: #999999;
+        vertical-align: middle;
+    }
+    .icon-delicon {
+        font-size: 2.4rem;
+        color: #24ad20;
+    }
+    .icon-add1 {
+        font-size: 2.1rem;
+        color: #24ad20;
+    }
+    .add-btn {
+        padding-right: 0;
+    }
+    .price{
+        color: #ff6659;
+    }
+}

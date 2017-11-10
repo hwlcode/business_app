@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {Storage} from "@ionic/storage"
+import {LoginPage} from "../login/login";
+import {Storage} from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -8,8 +9,20 @@ import {Storage} from "@ionic/storage"
     templateUrl: 'orders.html',
 })
 export class OrdersPage {
+    public isLogin: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+    constructor(public navCtrl: NavController,
+                public navParams: NavParams,
+                public storage: Storage) {
+        this.storage.get('isLogin').then(result => {
+            if (result) {
+                this.isLogin = true;
+            }
+        })
+    }
+
+    goToLogin() {
+        this.navCtrl.push(LoginPage);
     }
 
     ionViewDidLoad() {

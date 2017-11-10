@@ -32,6 +32,7 @@ export class LoginPage {
                 if (data.code == 0) {
                     this.storage.set('isLogin', this.loginForm.get('phone').value);
                     this.navCtrl.setRoot(ProfilePage, {phone: this.loginForm.get('phone').value});
+                    this.navCtrl.parent.select(2);
                 }else{
                     this.appService.toast(data.msg);
                 }

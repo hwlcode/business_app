@@ -1,3 +1,24 @@
 page-orders {
-
+    .no-login {
+        margin-top: 45%;
+    }
+    .no-login-tips {
+        color: #999999;
+        font-size: 16px;
+    }
+    .display-box {
+        display: none;
+    }
+    .show {
+        display: block !important;
+    }
+    .card-content-ios{
+        padding-bottom: 0;
+    }
+    .price{
+        color: #f44336;
+    }
+    .status{
+        color: green;
+    }
 }

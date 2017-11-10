@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar class="header">
+        <ion-item no-border>
+            <div icon-start>己选购商品</div>
+            <a href="javascript:;" (click)="dismiss()" item-end class="hide-order">确认</a>
+        </ion-item>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let item of orders">
+            <div item-start>{{item.product.name}}</div>
+            <!--<div item-end>x{{item.num}}</div>-->
+            <div item-end class="price">￥{{item.product.price * item.num}}</div>
+            <div item-end>
+                <button (click)="removeProduct(item.product)"><i class="iconfont icon-delicon"></i></button>
+                <span class="number">{{item.num}}</span>
+                <button class="add-btn" (click)="addProduct(item.product)"><i class="iconfont icon-add1"></i></button>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

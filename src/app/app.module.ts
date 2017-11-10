@@ -29,6 +29,8 @@ import {UserNamePage} from "../pages/user-name/user-name";
 import {UserNamePageModule} from "../pages/user-name/user-name.module";
 import {ShoppingPage} from "../pages/shopping/shopping";
 import {ShoppingPageModule} from "../pages/shopping/shopping.module";
+import {CheckOrdersPageModule} from "../pages/check-orders/check-orders.module";
+import {CheckOrdersPage} from "../pages/check-orders/check-orders";
 
 @NgModule({
     declarations: [
@@ -45,6 +47,7 @@ import {ShoppingPageModule} from "../pages/shopping/shopping.module";
         ProfilePageModule,
         UserNamePageModule,
         ShoppingPageModule,
+        CheckOrdersPageModule,
         IonicStorageModule.forRoot(),
         IonicModule.forRoot(MyApp, {
             backButtonText: '返回',              //重置back文案
@@ -62,7 +65,8 @@ import {ShoppingPageModule} from "../pages/shopping/shopping.module";
         OrdersPage,
         ProfilePage,
         UserNamePage,
-        ShoppingPage
+        ShoppingPage,
+        CheckOrdersPage
     ],
     providers: [
         StatusBar,

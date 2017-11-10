@@ -5,46 +5,62 @@ page-products {
     ion-slides {
         height: 30%;
     }
-    .swiper-pagination-bullet{
+    .swiper-pagination-bullet {
         opacity: 0.5;
         background: #ffffff;
     }
-    .swiper-pagination-bullet-active{
+    .swiper-pagination-bullet-active {
         opacity: 1;
     }
-    ion-thumbnail{
-        img{
+    ion-thumbnail {
+        img {
             width: 100px;
             height: 100px;
         }
     }
-    .price{
+    .price {
         color: #ff6659;
         font-size: 2rem;
         margin-bottom: 1.5rem;
     }
-    .price i{
+    .price i {
         font-style: normal;
         font-size: 1.8rem;
     }
-    .product-list{
-        button{
+    .product-list {
+        button {
             background: none;
         }
-        .number{
+        .number {
             font-size: 2rem;
             display: inline-block;
             vertical-align: middle;
         }
-        .iconfont{
+        .iconfont {
             color: #999999;
             vertical-align: middle;
         }
-        .icon-delicon{
+        .icon-delicon {
             font-size: 2.6rem;
+            color: #24ad20;
         }
-        .icon-add{
-            font-size: 3rem;
+        .icon-add1 {
+            font-size: 2.5rem;
+            color: #24ad20;
+        }
+        .add-btn {
+            padding-right: 0;
+        }
+    }
+    ion-footer {
+        .item-ios.item-block .item-inner {
+            border-bottom: 0;
+        }
+
+        .item-ios .item-button {
+            padding: 1.5em;
+            font-size: 1.5rem;
+            margin: 0;
         }
     }
 }
