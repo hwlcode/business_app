@@ -36,11 +36,11 @@ export class CheckOrdersPage {
             this.num--;
         }
         let order = new Order(product, 1);
-        this.sum -= parseInt(order.product.price, 10);
-        let isExist = JSON.stringify(this.orders).indexOf(order.product._id);
+        this.sum -= parseInt((order.product as any).price, 10);
+        let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id);
         if (isExist) {
             this.orders.map(item => {
-                if (item.product._id == order.product._id) {
+                if (item.product._id == (order.product as any)._id) {
                     if (item.num > 1) {
                         item.num--;
                     } else if (item.num == 1) {
@@ -54,13 +54,13 @@ export class CheckOrdersPage {
     addProduct(product) {
         this.num++;
         let order = new Order(product, 1);
-        let isExist = JSON.stringify(this.orders).indexOf(order.product._id);
-        this.sum += parseInt(order.product.price, 10);
+        let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id);
+        this.sum += parseInt((order.product as any).price, 10);
         if (isExist < 0) {
             this.orders.push(order);
         } else {
             this.orders.map(item => {
-                if (item.product._id == order.product._id) {
+                if (item.product._id == (order.product as any)._id) {
                     item.num++;
                 }
             });
