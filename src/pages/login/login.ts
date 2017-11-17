@@ -4,7 +4,6 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {numberValidator, phoneValidator} from "../../app/validator";
 import {Storage} from '@ionic/storage';
 import {AppGlobal, AppService} from "../../app/app.service";
-import {ProfilePage} from "../profile/profile";
 
 @IonicPage()
 @Component({
@@ -31,8 +30,9 @@ export class LoginPage {
             this.appService.httpPost(AppGlobal.API.login, this.loginForm.value, (data) => {
                 if (data.code == 0) {
                     this.storage.set('isLogin', this.loginForm.get('phone').value);
-                    this.navCtrl.setRoot(ProfilePage, {phone: this.loginForm.get('phone').value});
-                    this.navCtrl.parent.select(2);
+                    // this.navCtrl.setRoot(ProfilePage, {phone: this.loginForm.get('phone').value});
+                    // this.navCtrl.parent.select(2);
+                    this.navCtrl.setRoot('HomePage');
                 }else{
                     this.appService.toast(data.msg);
                 }
@@ -72,17 +72,18 @@ export class LoginPage {
         }
 
         //发送验证码成功后开始倒计时
-        this.appService.httpGet(AppGlobal.API.verifyCode, {
-            phone: this.loginForm.value.phone
-        }, d => {
-            this.appService.alert(d);
-            if (d.code == 'OK') {
-                console.log(d);
-            } else {
-                this.appService.toast(d.msg);
-            }
-        })
-        //此处实现验证码请求
+        if(this.verifyCode.disable) {
+            this.appService.httpGet(AppGlobal.API.verifyCode, {
+                phone: this.loginForm.value.phone
+            }, d => {
+                this.appService.alert(d);
+                if (d.code == 'OK') {
+                    console.log(d);
+                } else {
+                    this.appService.toast(d.msg);
+                }
+            })
+        }
         this.verifyCode.disable = false;
         this.settime();
     }

@@ -11,7 +11,8 @@ export class AppGlobal {
     }
 
     //接口基地址
-    static domain = "http://192.168.20.44:8000"
+    // static domain = "http://47.96.16.226"
+    static domain = "http://192.168.20.92:8000"
 
     //接口地址
     static API: any = {
@@ -154,6 +155,7 @@ export class AppService {
             console.error("window.localStorage error:" + e);
         }
     }
+
     //ionic2开始storage默认使用的是IndexedDB，而不是LocalStorage
     getItem(key: string, callback) {
         try {

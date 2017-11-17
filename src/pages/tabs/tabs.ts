@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage} from "ionic-angular";
+import {Storage} from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -11,8 +12,12 @@ export class TabsPage {
     tab2Root = 'OrdersPage';
     tab3Root = 'ProfilePage';
 
-    constructor() {
-
+    constructor(public storage: Storage) {
+        this.storage.get('isLogin').then(result => {
+            if (result) {
+                console.log(result);
+            }
+        })
     }
 
 }
