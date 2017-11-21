@@ -2,8 +2,7 @@
     <ion-navbar style="opacity: 0.85" no-border-bottom color="primary">
             <ion-item color="primary">
                 <ion-searchbar (input)="getItems($event)" placeholder="输入要搜索的关键字"></ion-searchbar>
-                <button ion-button class="hide login" (click)="goToLogin()" [class.show]="!isLogin" item-end>登录</button>
-                <ion-avatar class="hide" [class.show]="isLogin" item-end (click)="goToUser()"><img src="{{avatar}}" width="60" hight="60"></ion-avatar>
+                <i class="iconfont icon-name user" item-end (click)="user()"></i>
             </ion-item>
     </ion-navbar>
 </ion-header>

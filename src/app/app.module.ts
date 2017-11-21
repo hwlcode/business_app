@@ -31,6 +31,11 @@ import {ShoppingPage} from "../pages/shopping/shopping";
 import {ShoppingPageModule} from "../pages/shopping/shopping.module";
 import {CheckOrdersPageModule} from "../pages/check-orders/check-orders.module";
 import {CheckOrdersPage} from "../pages/check-orders/check-orders";
+import {UtilService} from "../service/util.service";
+import {CoreService} from "../service/core.service";
+import {UserService} from "../service/user.service";
+import {BannerService} from "../service/banner.service";
+import {ProductService} from "../service/product.service";
 
 @NgModule({
     declarations: [
@@ -77,6 +82,11 @@ import {CheckOrdersPage} from "../pages/check-orders/check-orders";
         ImagePicker,
         FileTransfer,
         DatePicker,
+        UtilService,
+        CoreService,
+        UserService,
+        BannerService,
+        ProductService,
         {provide: ErrorHandler, useClass: IonicErrorHandler}
     ]
 })

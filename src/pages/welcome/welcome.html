@@ -1,15 +1,15 @@
 <ion-slides pager>
-    <ion-slide *ngFor="let slide of slides">
+    <ion-slide *ngFor="let slide of slides" color="primary">
         <ion-toolbar>
             <ion-buttons end>
-                <button ion-button (click)="goToHome()" class="skip-btn">跳过</button>
+                <button ion-button (click)="goToHome()" class="skip-btn" color="primary">跳过</button>
             </ion-buttons>
         </ion-toolbar>
-        <!--<img [src]="slide.image" class="slide-image"/>-->
+        <img [src]="slide.img" class="slide-image"/>
         <h2 class="slide-title" [innerHTML]="slide.title"></h2>
         <p [innerHTML]="slide.description"></p>
     </ion-slide>
-    <ion-slide>
+    <ion-slide color="primary">
         <ion-toolbar>
         </ion-toolbar>
         <!--<img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/>-->

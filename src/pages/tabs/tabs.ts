@@ -1,23 +1,32 @@
 import {Component} from '@angular/core';
-import {IonicPage} from "ionic-angular";
-import {Storage} from '@ionic/storage';
+import {IonicPage, NavController} from "ionic-angular";
+import {UtilService} from "../../service/util.service";
+import {LoginPage} from "../login/login";
 
 @IonicPage()
 @Component({
     templateUrl: 'tabs.html'
 })
-export class TabsPage {
+export class TabsPage{
+    tabs: Array<{ key: string, value: string, icon: string, page: string }>;
 
-    tab1Root = 'HomePage';
-    tab2Root = 'OrdersPage';
-    tab3Root = 'ProfilePage';
-
-    constructor(public storage: Storage) {
-        this.storage.get('isLogin').then(result => {
-            if (result) {
-                console.log(result);
-            }
-        })
+    constructor(public utilService: UtilService,
+                public navCtrl: NavController) {
+        this.getTabs();
     }
 
+    getTabs() {
+        this.tabs = this.utilService.getTabs();
+    }
+
+    selectedTab(event) {
+        if(event.index == 1 || event.index == 2){
+            this.utilService.getLoginStatus().then( data => {
+                console.log(data);
+                if(data == null){
+                    this.navCtrl.push(LoginPage);
+                }
+            })
+        }
+    }
 }

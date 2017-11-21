@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
-import {AppGlobal, AppService} from "../../app/app.service";
+import {IonicPage} from 'ionic-angular';
 import {ModalController} from 'ionic-angular';
 import {CheckOrdersPage} from "../check-orders/check-orders";
-import { ActionSheetController } from 'ionic-angular';
+import {ActionSheetController} from 'ionic-angular';
+import {BannerService} from "../../service/banner.service";
+import {CoreService} from "../../service/core.service";
+import {ProductService} from "../../service/product.service";
 
 @IonicPage()
 @Component({
@@ -11,43 +13,44 @@ import { ActionSheetController } from 'ionic-angular';
     templateUrl: 'products.html',
 })
 export class ProductsPage {
-    public banners: any;
-    public products: any;
-    public num: number = 0;
-    public sum: number = 0;
-    private show: boolean = false;
-    private orders: any = [];
+    banners: any;
+    products: any;
+    num: number = 0;
+    sum: number = 0;
+    show: boolean = false;
+    orders: any = [];
 
-    constructor(public navCtrl: NavController,
-                public navParams: NavParams,
-                public modalCtrl: ModalController,
-                public viewCtrl: ViewController,
-                public actionSheetCtrl: ActionSheetController,
-                public appService: AppService) {
+    constructor(private modalCtrl: ModalController,
+                private actionSheetCtrl: ActionSheetController,
+                private bannerService: BannerService,
+                private coreService: CoreService,
+                private productService: ProductService) {
+
         this.getBanners();
         this.getProduct();
+
     }
 
     getBanners() {
-        this.appService.httpGet(AppGlobal.API.getBanner, '', d => {
-            if (d.code == 0) {
-                this.banners = d.data;
+        this.bannerService.httpGetBanner().subscribe(data => {
+            if (data.code == 0) {
+                this.banners = data.data;
                 this.banners.map(item => {
-                    item.image = AppGlobal.domain + item.banner.path;
+                    item.image = this.coreService.domain + item.banner.path;
                 })
             }
-        })
+        });
     }
 
     getProduct() {
-        this.appService.httpGet(AppGlobal.API.products, '', d => {
-            if (d.code == 0) {
-                this.products = d.data;
+        this.productService.httpGetProductAll().subscribe(data => {
+            if (data.code == 0) {
+                this.products = data.data;
                 this.products.map(item => {
-                    item.image = AppGlobal.domain + item.banner.path;
+                    item.image = this.coreService.domain + item.banner.path;
                 })
             }
-        })
+        });
     }
 
     presentModal() {
@@ -115,12 +118,12 @@ export class ProductsPage {
                     handler: () => {
                         console.log('微信支付');
                     }
-                },{
+                }, {
                     text: '支付宝支付',
                     handler: () => {
                         console.log('支付宝支付');
                     }
-                },{
+                }, {
                     text: '取消',
                     role: 'cancel',
                     handler: () => {
@@ -130,31 +133,6 @@ export class ProductsPage {
             ]
         });
         actionSheet.present();
-    }
-
-    hideTabs() {
-        //当页面进入初始化的时候隐藏tabs
-        let elements = document.querySelectorAll(".tabbar");
-        if (elements != null) {
-            Object.keys(elements).map((key) => {
-                elements[key].style.display = 'none';
-            });
-        }
-    }
-
-    showTabs() {
-        //当退出页面的时候,显示tabs
-        let elements = document.querySelectorAll(".tabbar");
-        if (elements != null) {
-            Object.keys(elements).map((key) => {
-                elements[key].style.display = 'flex';
-            });
-        }
-    }
-
-
-    ionViewWillLeave() {
-
     }
 }
 

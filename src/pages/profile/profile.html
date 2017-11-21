@@ -1,9 +1,3 @@
-<!--
-  Generated template for the ProfilePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
     <ion-navbar color="primary" no-border-bottom>
@@ -12,12 +6,11 @@
 
 </ion-header>
 
-
 <ion-content>
     <ion-list>
         <ion-item color="primary" [class.show]="isLogin" class="display-box" (click)="choosePic()">
-            <ion-avatar item-start><img src="{{avatar}}"></ion-avatar>
-            <h2 class="user-name" item-end>{{phone}}</h2>
+            <ion-avatar item-start><img src="{{user.avatar}}"></ion-avatar>
+            <h2 class="user-name" item-end>{{user.phone}}</h2>
             <ion-icon name="arrow-forward" item-end class="upload-avatar"></ion-icon>
         </ion-item>
         <ion-item color="primary" class="display-box" [class.show]="!isLogin">
@@ -30,7 +23,7 @@
         <ion-item>
             <i class="iconfont icon-jifen3"></i>
             我的积分
-            <div item-end>{{code}}</div>
+            <div item-end>{{user.code}}</div>
         </ion-item>
     </ion-list>
 
@@ -38,7 +31,7 @@
         <ion-list-header>帐户与安全</ion-list-header>
         <ion-item (click)="changeUserName()">
             姓名
-            <div item-end>{{name}}</div>
+            <div item-end>{{user.name}}</div>
             <ion-icon name="arrow-forward" item-end></ion-icon>
         </ion-item>
         <ion-item>
@@ -54,7 +47,7 @@
         </ion-item>
         <ion-item>
             手机
-            <div item-end>{{phone}}</div>
+            <div item-end>{{user.phone}}</div>
         </ion-item>
     </ion-list>
     <ion-list>

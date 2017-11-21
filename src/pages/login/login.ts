@@ -1,9 +1,12 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, ViewController} from 'ionic-angular';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {numberValidator, phoneValidator} from "../../app/validator";
 import {Storage} from '@ionic/storage';
 import {AppGlobal, AppService} from "../../app/app.service";
+import {UtilService} from "../../service/util.service";
+import {ProfilePage} from "../profile/profile";
+import {UserService} from "../../service/user.service";
 
 @IonicPage()
 @Component({
@@ -11,9 +14,20 @@ import {AppGlobal, AppService} from "../../app/app.service";
     templateUrl: 'login.html',
 })
 export class LoginPage {
-    public loginForm: FormGroup;
+    loginForm: FormGroup;
+    // 验证码倒计时
+    verifyCode: any = {
+        verifyCodeTips: "获取验证码",
+        countdown: 30,
+        disable: true
+    }
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public appService: AppService) {
+    constructor(private navCtrl: NavController,
+                private storage: Storage,
+                private utilService: UtilService,
+                private viewCtrl: ViewController,
+                private userService: UserService,
+                private appService: AppService) {
         let fb = new FormBuilder();
         this.loginForm = fb.group({
             phone: ['15868823605', [phoneValidator]],
@@ -21,30 +35,22 @@ export class LoginPage {
         })
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad LoginPage');
-    }
-
     login() {
         if (this.loginForm.valid) {
-            this.appService.httpPost(AppGlobal.API.login, this.loginForm.value, (data) => {
+            this.userService.httpPost(this.loginForm.value).subscribe(data => {
                 if (data.code == 0) {
-                    this.storage.set('isLogin', this.loginForm.get('phone').value);
-                    // this.navCtrl.setRoot(ProfilePage, {phone: this.loginForm.get('phone').value});
-                    // this.navCtrl.parent.select(2);
-                    this.navCtrl.setRoot('HomePage');
+                    this.storage.set('user', data.data.doc);
+
+                    this.navCtrl.push(ProfilePage, {phone: data.data.doc.phone}).then(() => {
+                        let index = this.viewCtrl.index;
+                        this.navCtrl.remove(index);
+                    });
+                    this.utilService.toast('登录成功');
                 }else{
                     this.appService.toast(data.msg);
                 }
             });
         }
-    }
-
-    // 验证码倒计时
-    verifyCode: any = {
-        verifyCodeTips: "获取验证码",
-        countdown: 30,
-        disable: true
     }
 
     // 倒计时
@@ -86,5 +92,16 @@ export class LoginPage {
         }
         this.verifyCode.disable = false;
         this.settime();
+    }
+
+    ionViewCanEnter() {
+        this.utilService.getLoginStatus().then(data => {
+            if (data) {
+                this.navCtrl.push(ProfilePage).then(() => {
+                    let index = this.viewCtrl.index;
+                    this.navCtrl.remove(index);
+                });
+            }
+        })
     }
 }
