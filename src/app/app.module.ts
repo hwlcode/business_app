@@ -40,6 +40,7 @@ import {UserAddressPageModule} from "../pages/user-address/user-address.module";
 import {UserAddressPage} from "../pages/user-address/user-address";
 import {SearchPageModule} from "../pages/search/search.module";
 import {SearchPage} from "../pages/search/search";
+import {PipesModule} from "../pipes/pipes.module";
 
 @NgModule({
     declarations: [
@@ -59,6 +60,7 @@ import {SearchPage} from "../pages/search/search";
         CheckOrdersPageModule,
         UserAddressPageModule,
         SearchPageModule,
+        PipesModule,
         IonicStorageModule.forRoot(),
         IonicModule.forRoot(MyApp, {
             backButtonText: '返回',              //重置back文案
