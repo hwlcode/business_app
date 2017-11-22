@@ -36,6 +36,10 @@ import {CoreService} from "../service/core.service";
 import {UserService} from "../service/user.service";
 import {BannerService} from "../service/banner.service";
 import {ProductService} from "../service/product.service";
+import {UserAddressPageModule} from "../pages/user-address/user-address.module";
+import {UserAddressPage} from "../pages/user-address/user-address";
+import {SearchPageModule} from "../pages/search/search.module";
+import {SearchPage} from "../pages/search/search";
 
 @NgModule({
     declarations: [
@@ -53,6 +57,8 @@ import {ProductService} from "../service/product.service";
         UserNamePageModule,
         ShoppingPageModule,
         CheckOrdersPageModule,
+        UserAddressPageModule,
+        SearchPageModule,
         IonicStorageModule.forRoot(),
         IonicModule.forRoot(MyApp, {
             backButtonText: '返回',              //重置back文案
@@ -71,7 +77,9 @@ import {ProductService} from "../service/product.service";
         ProfilePage,
         UserNamePage,
         ShoppingPage,
-        CheckOrdersPage
+        UserAddressPage,
+        CheckOrdersPage,
+        SearchPage
     ],
     providers: [
         StatusBar,

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {Events, IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
 
 
 @IonicPage()
@@ -15,6 +15,7 @@ export class CheckOrdersPage {
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
+                public events: Events,
                 public viewCtrl: ViewController) {
         this.orders = this.navParams.get('productList');
         this.num = this.navParams.get('num');
@@ -49,6 +50,7 @@ export class CheckOrdersPage {
                 }
             });
         }
+        this.events.publish('product:add', this.num, this.sum);
     }
 
     addProduct(product) {
@@ -65,6 +67,8 @@ export class CheckOrdersPage {
                 }
             });
         }
+
+        this.events.publish('product:remove', this.num, this.sum);
     }
 
     // ionViewDidLoad() {

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, ViewController} from 'ionic-angular';
+import {Events, IonicPage, NavController, ViewController} from 'ionic-angular';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {numberValidator, phoneValidator} from "../../app/validator";
 import {Storage} from '@ionic/storage';
@@ -27,6 +27,7 @@ export class LoginPage {
                 private utilService: UtilService,
                 private viewCtrl: ViewController,
                 private userService: UserService,
+                private events: Events,
                 private appService: AppService) {
         let fb = new FormBuilder();
         this.loginForm = fb.group({
@@ -39,9 +40,10 @@ export class LoginPage {
         if (this.loginForm.valid) {
             this.userService.httpPost(this.loginForm.value).subscribe(data => {
                 if (data.code == 0) {
-                    this.storage.set('user', data.data.doc);
-
-                    this.navCtrl.push(ProfilePage, {phone: data.data.doc.phone}).then(() => {
+                    console.log(data);
+                    this.storage.set('user', data.data);
+                    this.events.publish('user', data.data);
+                    this.navCtrl.push(ProfilePage, {phone: data.data.phone}).then(() => {
                         let index = this.viewCtrl.index;
                         this.navCtrl.remove(index);
                     });

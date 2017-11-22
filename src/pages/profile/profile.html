@@ -23,7 +23,7 @@
         <ion-item>
             <i class="iconfont icon-jifen3"></i>
             我的积分
-            <div item-end>{{user.code}}</div>
+            <div item-end [innerHtml]="user.code"></div>
         </ion-item>
     </ion-list>
 
@@ -52,7 +52,7 @@
     </ion-list>
     <ion-list>
         <ion-list-header>地址</ion-list-header>
-        <ion-item>
+        <ion-item (click)="goToAddress()">
             <i class="iconfont icon-dizhi1"></i>
             收货地址
             <ion-icon name="arrow-forward" item-end></ion-icon>

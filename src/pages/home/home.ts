@@ -35,7 +35,7 @@ export class HomePage implements OnInit {
     }
 
     getItems(event) {
-
+        this.navCtrl.push(ProductsPage, {word: event.data});
     }
 
     getBanners() {

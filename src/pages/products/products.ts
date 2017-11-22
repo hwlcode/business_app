@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage} from 'ionic-angular';
+import {Events, IonicPage, NavParams} from 'ionic-angular';
 import {ModalController} from 'ionic-angular';
 import {CheckOrdersPage} from "../check-orders/check-orders";
 import {ActionSheetController} from 'ionic-angular';
@@ -18,17 +18,31 @@ export class ProductsPage {
     num: number = 0;
     sum: number = 0;
     show: boolean = false;
+    keywords: string;
     orders: any = [];
 
     constructor(private modalCtrl: ModalController,
                 private actionSheetCtrl: ActionSheetController,
                 private bannerService: BannerService,
                 private coreService: CoreService,
+                private events: Events,
+                private navPramas: NavParams,
                 private productService: ProductService) {
 
         this.getBanners();
         this.getProduct();
 
+        this.events.subscribe('product:add', (num, sum) => {
+            this.num = num;
+            this.sum = sum;
+        });
+
+        this.events.subscribe('product:remove', (num, sum) => {
+            this.num = num;
+            this.sum = sum;
+        })
+
+        this.keywords = this.navPramas.get('word');
     }
 
     getBanners() {
@@ -133,6 +147,10 @@ export class ProductsPage {
             ]
         });
         actionSheet.present();
+    }
+
+    getItems(target) {
+        console.log(this.keywords);
     }
 }
 

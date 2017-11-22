@@ -7,12 +7,14 @@
 </ion-header>
 
 <ion-content fullscreen>
+    <ion-item color="primary">
+        <ion-searchbar (input)="getItems($event)" placeholder="输入要搜索的关键字" [(ngModel)]="keywords"></ion-searchbar>
+    </ion-item>
     <ion-slides pager>
         <ion-slide *ngFor="let banner of banners">
             <img src="{{banner.image}}" class="slide-image"/>
         </ion-slide>
     </ion-slides>
-
     <div class="product-list">
         <ion-list no-padding>
             <ion-item no-padding *ngFor="let product of products">

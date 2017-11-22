@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {Events, IonicPage, NavController} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
-import {AppGlobal, AppService} from '../../app/app.service';
 import {ImageService} from '../../app/image.service';
 import {LoginPage} from "../login/login";
 import {UserNamePage} from "../user-name/user-name";
 import {HomePage} from "../home/home";
 import {UserService} from "../../service/user.service";
 import {UtilService} from "../../service/util.service";
+import {CoreService} from "../../service/core.service";
+import {UserAddressPage} from "../user-address/user-address";
 
 @IonicPage()
 @Component({
@@ -26,9 +27,10 @@ export class ProfilePage implements OnInit {
 
     constructor(private navCtrl: NavController,
                 private storage: Storage,
-                private appService: AppService,
                 private userService: UserService,
                 private imageService: ImageService,
+                private coreService: CoreService,
+                private events: Events,
                 private utilService: UtilService) {
         // 初始化默认值
         this.user = {
@@ -41,6 +43,8 @@ export class ProfilePage implements OnInit {
         this.utilService.getLoginStatus().then(data => {
             if (data) {
                 this.loginPhone = data.phone;
+                this.gender = data.sex;
+                this.event.timeStarts = data.birth;
                 this.isLogin = true;
 
                 this.getUser();
@@ -53,7 +57,7 @@ export class ProfilePage implements OnInit {
         this.selectOptions = {
             title: '选择性别'
         }
-        if(this.isLogin){
+        if (this.isLogin) {
             this.getUser();
         }
     }
@@ -63,6 +67,8 @@ export class ProfilePage implements OnInit {
         this.userService.httpGetUser(this.loginPhone).subscribe(data => {
             if (data.code == 0) {
                 this.user = data.data;
+                this.user.avatar = this.coreService.domain + this.user.avatar.path;
+                this.storage.set('user', data.data);
             }
         })
     }
@@ -75,7 +81,7 @@ export class ProfilePage implements OnInit {
     // 初始化上传图片的服务
     private initImgSer() {
         this.imageService.upload.fileKey = 'file';
-        this.imageService.upload.url = AppGlobal.domain + AppGlobal.API.upload; // 上传图片的url，如果同默认配置的url一致，那无须再设置
+        this.imageService.upload.url = this.coreService.domain + this.coreService.API.upload; // 上传图片的url，如果同默认配置的url一致，那无须再设置
 
         this.imageService.upload.success = (data) => {
             this.userService.httpPostAvatar({
@@ -92,7 +98,7 @@ export class ProfilePage implements OnInit {
         };
 
         this.imageService.upload.error = (err) => {
-            this.appService.toast('错误：头像上传失败！');
+            this.utilService.toast('错误：头像上传失败！');
         };
     }
 
@@ -127,6 +133,11 @@ export class ProfilePage implements OnInit {
 
     goToLogin() {
         this.navCtrl.push(LoginPage);
+    }
+
+    goToAddress() {
+        this.events.publish('user:message', this.user);
+        this.navCtrl.push(UserAddressPage);
     }
 
     loginOut() {

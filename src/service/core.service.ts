@@ -7,7 +7,7 @@ export class CoreService {
     }
 
     //接口基地址
-    // static domain = "http://47.96.16.226"
+    // public domain = "http://47.96.16.226";
     public domain = "http://192.168.20.92:8000";
 
     //接口地址

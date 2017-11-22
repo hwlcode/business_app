@@ -23,3 +23,8 @@ export class PostBirthRequest {
     birth: string;
 }
 
+export class PostAddressRequest {
+    phone: string;
+    address: string;
+}
+

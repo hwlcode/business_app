@@ -22,7 +22,6 @@ export class TabsPage{
     selectedTab(event) {
         if(event.index == 1 || event.index == 2){
             this.utilService.getLoginStatus().then( data => {
-                console.log(data);
                 if(data == null){
                     this.navCtrl.push(LoginPage);
                 }

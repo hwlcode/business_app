@@ -13,6 +13,7 @@ import {UtilService} from "../../service/util.service";
 export class UserNamePage {
     fromGroup: FormGroup;
     phone: string;
+    name: string;
 
     constructor(private navCtrl: NavController,
                 private utilService: UtilService,
@@ -26,6 +27,7 @@ export class UserNamePage {
         this.utilService.getLoginStatus().then(data => {
             if (data) {
                 this.phone = data.phone;
+                this.name = data.name;
             }
         });
     }
@@ -33,7 +35,6 @@ export class UserNamePage {
     update() {
         if (this.fromGroup.valid) {
             this.fromGroup.value.phone = this.phone;
-            console.log(this.fromGroup.value);
 
             this.userService.httpPostName(this.fromGroup.value).subscribe(data => {
                 if (data.code === 0) {

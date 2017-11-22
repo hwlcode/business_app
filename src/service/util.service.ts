@@ -41,12 +41,16 @@ export class UtilService {
         })
     }
 
-    toast(message: string) {
-        this.toastCtrl.create({
+    toast(message, callback?) {
+        let toast = this.toastCtrl.create({
             message: message,
-            duration: 1500,
-            position: 'top'
-        }).present();
+            duration: 5000,
+            dismissOnPageChange: true,
+        });
+        toast.present();
+        if (callback) {
+            callback();
+        }
     }
 
     // getHtmlText(str: string) {

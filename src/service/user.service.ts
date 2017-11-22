@@ -4,8 +4,12 @@ import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 import {CoreService} from './core.service';
 import {
-    PostAccessTokenRequest, PostAvatarRequest, PostBirthRequest, PostNameRequest,
-    PostSexRequest
+    PostAccessTokenRequest,
+    PostAvatarRequest,
+    PostBirthRequest,
+    PostNameRequest,
+    PostSexRequest,
+    PostAddressRequest
 } from "../message/user.request";
 
 @Injectable()
@@ -20,7 +24,7 @@ export class UserService {
     }
 
     httpGetUser(phone: string): Observable<any> {
-        return this.http.get(this.coreService.domain+ this.coreService.API.profile + '?phone='+phone)
+        return this.http.get(this.coreService.domain + this.coreService.API.profile + '?phone=' + phone)
             .map(res => res.json());
     }
 
@@ -40,6 +44,11 @@ export class UserService {
     }
 
     httpPostBirth(request: PostBirthRequest): Observable<any> {
+        return this.http.post(this.coreService.domain + this.coreService.API.saveProfile, request)
+            .map(res => res.json());
+    }
+
+    httpPostAddress(request: PostAddressRequest): Observable<any> {
         return this.http.post(this.coreService.domain + this.coreService.API.saveProfile, request)
             .map(res => res.json());
     }
