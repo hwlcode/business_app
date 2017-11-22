@@ -149,8 +149,17 @@ export class ProductsPage {
         actionSheet.present();
     }
 
-    getItems(target) {
-        console.log(this.keywords);
+    getItems() {
+        this.productService.httpProductFilter({
+            keywords: this.keywords
+        }).subscribe( data => {
+            if (data.code == 0) {
+                this.products = data.data;
+                this.products.map(item => {
+                    item.image = this.coreService.domain + item.banner.path;
+                })
+            }
+        });
     }
 }
 

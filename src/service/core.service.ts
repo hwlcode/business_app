@@ -20,6 +20,7 @@ export class CoreService {
         upload: '/api/upload',
         uploadAvatar: '/api/upload/avatar',
         products: '/api/web/productList',
-        saveProfile: '/api/saveProfile'
+        saveProfile: '/api/saveProfile',
+        search: '/api/search'
     };
 }
