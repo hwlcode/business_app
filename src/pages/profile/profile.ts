@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Events, IonicPage, NavController} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
-import {ImageService} from '../../app/image.service';
+import {ImageService} from '../../service/image.service';
 import {LoginPage} from "../login/login";
 import {UserNamePage} from "../user-name/user-name";
 import {HomePage} from "../home/home";

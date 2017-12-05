@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ActionSheetController} from "ionic-angular";
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import {AppService} from "./app.service";
 import {ImagePicker} from "@ionic-native/image-picker";
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import {UtilService} from "./util.service";
 
 @Injectable()
 export class ImageService {
@@ -43,8 +43,8 @@ export class ImageService {
     constructor(
         public actionSheetCtrl: ActionSheetController,
         private camera: Camera,
-        private appService: AppService,
         private imagePicker: ImagePicker,
+        private utilService: UtilService,
         private transfer: FileTransfer
     ) {
 
@@ -90,7 +90,7 @@ export class ImageService {
             this.uploadImg(imageData);
 
         }, (err) => {
-            this.appService.toast('ERROR:' + err); //错误：无法使用拍照功能！
+            this.utilService.toast('ERROR:' + err); //错误：无法使用拍照功能！
         });
     }
 
@@ -106,7 +106,7 @@ export class ImageService {
                 this.uploadImg(temp);
 
             }, (err) => {
-                this.appService.toast('ERROR:' + err); //错误：无法从手机相册中选择图片！
+                this.utilService.toast('ERROR:' + err); //错误：无法从手机相册中选择图片！
             });
 
         /*let str = '{"status":1,"msg":"提示：图片上传成功！","data":"http:\/\/192.168.1.20\/image\/580af6bcc4d40580af6bcc4d45.jpg"}';
@@ -138,7 +138,7 @@ export class ImageService {
                 if (this.upload.error) {
                     this.upload.error(err);
                 } else {
-                    this.appService.toast('错误：上传失败！');
+                    this.utilService.toast('错误：上传失败！');
                 }
             });
     }

@@ -25,9 +25,10 @@
                             <h2 text-right>{{product.name}}</h2>
                             <p text-right class="price"><i>￥</i>{{product.price}}/斤</p>
                             <p text-right>
-                                <button (click)="removeProduct(product)"><i class="iconfont icon-delicon"></i></button>
-                                <span class="number">1</span>
-                                <button class="add-btn" (click)="addProduct(product)"><i class="iconfont icon-add1"></i></button>
+                                <add-order [(num)]="product.orderNum"></add-order>
+                                <!--<button (click)="removeProduct(product)"><i class="iconfont icon-delicon"></i></button>-->
+                                <!--<span class="number">1</span>-->
+                                <!--<button class="add-btn" (click)="addProduct(product, $event)"><i class="iconfont icon-add1"></i></button>-->
                             </p>
                         </ion-col>
                     </ion-row>

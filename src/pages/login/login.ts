@@ -3,7 +3,6 @@ import {Events, IonicPage, NavController, ViewController} from 'ionic-angular';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {numberValidator, phoneValidator} from "../../app/validator";
 import {Storage} from '@ionic/storage';
-import {AppGlobal, AppService} from "../../app/app.service";
 import {UtilService} from "../../service/util.service";
 import {ProfilePage} from "../profile/profile";
 import {UserService} from "../../service/user.service";
@@ -27,8 +26,7 @@ export class LoginPage {
                 private utilService: UtilService,
                 private viewCtrl: ViewController,
                 private userService: UserService,
-                private events: Events,
-                private appService: AppService) {
+                private events: Events) {
         let fb = new FormBuilder();
         this.loginForm = fb.group({
             phone: ['15868823605', [phoneValidator]],
@@ -49,7 +47,7 @@ export class LoginPage {
                     });
                     this.utilService.toast('登录成功');
                 }else{
-                    this.appService.toast(data.msg);
+                    this.utilService.toast(data.msg);
                 }
             });
         }
@@ -81,16 +79,13 @@ export class LoginPage {
 
         //发送验证码成功后开始倒计时
         if(this.verifyCode.disable) {
-            this.appService.httpGet(AppGlobal.API.verifyCode, {
-                phone: this.loginForm.value.phone
-            }, d => {
-                this.appService.alert(d);
-                if (d.code == 'OK') {
-                    console.log(d);
+            this.userService.httpGetVerifyCode(this.loginForm.value.phone).subscribe( data => {
+                if (data.code == 'OK') {
+                    console.log(data);
                 } else {
-                    this.appService.toast(d.msg);
+                    this.utilService.toast(data.msg);
                 }
-            })
+            });
         }
         this.verifyCode.disable = false;
         this.settime();

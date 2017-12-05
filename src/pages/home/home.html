@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar style="opacity: 0.85" no-border-bottom color="primary">
             <ion-item color="primary">
-                <ion-searchbar (input)="getItems($event)" placeholder="输入要搜索的关键字"></ion-searchbar>
+                <ion-searchbar (click)="getItems($event)" placeholder="输入要搜索的关键字"></ion-searchbar>
                 <i class="iconfont icon-name user" item-end (click)="user()"></i>
             </ion-item>
     </ion-navbar>

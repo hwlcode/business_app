@@ -6,7 +6,6 @@ import {MyApp} from './app.component';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {HttpModule} from "@angular/http";
-import {AppService} from "./app.service";
 import {IonicStorageModule} from "@ionic/storage";
 import {WelcomePage} from "../pages/welcome/welcome";
 import {WelcomePageModule} from "../pages/welcome/welcome.module";
@@ -20,7 +19,7 @@ import {OrdersPage} from "../pages/orders/orders";
 import {OrdersPageModule} from "../pages/orders/orders.module";
 import {ProfilePage} from "../pages/profile/profile";
 import {ProfilePageModule} from "../pages/profile/profile.module";
-import {ImageService} from "./image.service";
+import {ImageService} from "../service/image.service";
 import {Camera} from "@ionic-native/camera";
 import {ImagePicker} from "@ionic-native/image-picker";
 import {FileTransfer} from "@ionic-native/file-transfer";
@@ -86,7 +85,6 @@ import {PipesModule} from "../pipes/pipes.module";
     providers: [
         StatusBar,
         SplashScreen,
-        AppService,
         ImageService,
         Camera,
         ImagePicker,

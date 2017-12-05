@@ -52,4 +52,9 @@ export class UserService {
         return this.http.post(this.coreService.domain + this.coreService.API.saveProfile, request)
             .map(res => res.json());
     }
+
+    httpGetVerifyCode(phone: string): Observable<any> {
+        return this.http.get(this.coreService.domain + this.coreService.API.verifyCode + '?phone=' + phone)
+            .map(res => res.json());
+    }
 }

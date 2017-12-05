@@ -31,31 +31,6 @@ page-products {
         font-style: normal;
         font-size: 1.8rem;
     }
-    .product-list {
-        button {
-            background: none;
-        }
-        .number {
-            font-size: 2rem;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        .iconfont {
-            color: #999999;
-            vertical-align: middle;
-        }
-        .icon-delicon {
-            font-size: 2.6rem;
-            color: #24ad20;
-        }
-        .icon-add1 {
-            font-size: 2.5rem;
-            color: #24ad20;
-        }
-        .add-btn {
-            padding-right: 0;
-        }
-    }
     ion-footer {
         .item-ios.item-block .item-inner {
             border-bottom: 0;

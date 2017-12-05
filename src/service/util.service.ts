@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Storage} from '@ionic/storage';
-import {ToastController} from "ionic-angular";
+import {AlertController, ToastController} from "ionic-angular";
 
 @Injectable()
 export class UtilService {
 
-    constructor(public storage: Storage, public toastCtrl: ToastController) {
+    constructor(public storage: Storage,
+                public toastCtrl: ToastController,
+                private alertCtrl: AlertController) {
     }
 
     getTabs(): Array<{ key: string, value: string, icon: string, page: string }> {
@@ -50,6 +52,29 @@ export class UtilService {
         toast.present();
         if (callback) {
             callback();
+        }
+    }
+
+    alert(message, callback?) {
+        if (callback) {
+            let alert = this.alertCtrl.create({
+                title: '提示',
+                message: message,
+                buttons: [{
+                    text: "确定",
+                    handler: data => {
+                        callback();
+                    }
+                }]
+            });
+            alert.present();
+        } else {
+            let alert = this.alertCtrl.create({
+                title: '提示',
+                message: message,
+                buttons: ["确定"]
+            });
+            alert.present();
         }
     }
 

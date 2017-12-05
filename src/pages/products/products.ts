@@ -27,6 +27,7 @@ export class ProductsPage {
                 private coreService: CoreService,
                 private events: Events,
                 private navPramas: NavParams,
+                // private viewCtl: ViewController,
                 private productService: ProductService) {
 
         this.getBanners();
@@ -43,6 +44,8 @@ export class ProductsPage {
         })
 
         this.keywords = this.navPramas.get('word');
+
+        console.log(this.products);
     }
 
     getBanners() {
@@ -62,6 +65,8 @@ export class ProductsPage {
                 this.products = data.data;
                 this.products.map(item => {
                     item.image = this.coreService.domain + item.banner.path;
+                    item.orderNum = 0;
+                    console.log()
                 })
             }
         });
@@ -73,9 +78,10 @@ export class ProductsPage {
                 productList: this.orders,
                 num: this.num,
                 sum: this.sum
+            },{
+                showBackdrop: true
             });
             modal.onDidDismiss(data => {
-                console.log(data);
                 this.show = data.show;
                 this.orders = data.orders;
                 this.num = data.num;
@@ -87,41 +93,41 @@ export class ProductsPage {
         }
     }
 
-    public removeProduct(product) {
-        if (this.num > 0) {
-            this.num--;
-        }
-        let order = new Order(product, 1);
-        this.sum -= parseInt((order.product as any).price, 10);
-        let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id);
-        if (isExist) {
-            this.orders.map(item => {
-                if (item.product._id == (order.product as any)._id) {
-                    if (item.num > 1) {
-                        item.num--;
-                    } else if (item.num == 1) {
-                        this.orders.splice(item, 1);
-                    }
-                }
-            });
-        }
-    }
-
-    public addProduct(product) {
-        this.num++;
-        let order = new Order(product, 1);
-        let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id);
-        this.sum += parseInt((order.product as any).price, 10);
-        if (isExist < 0) {
-            this.orders.push(order);
-        } else {
-            this.orders.map(item => {
-                if (item.product._id == (order.product as any)._id) {
-                    item.num++;
-                }
-            });
-        }
-    }
+    // public removeProduct(product) {
+    //     if (this.num > 0) {
+    //         this.num--;
+    //     }
+    //     let order = new Order(product, 1);
+    //     this.sum -= parseInt((order.product as any).price, 10);
+    //     let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id);
+    //     if (isExist) {
+    //         this.orders.map(item => {
+    //             if (item.product._id == (order.product as any)._id) {
+    //                 if (item.num > 1) {
+    //                     item.num--;
+    //                 } else if (item.num == 1) {
+    //                     this.orders.splice(item, 1);
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }
+    //
+    // public addProduct(product, $event) {
+    //     this.num++;
+    //     let order = new Order(product, 1);
+    //     let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id);
+    //     this.sum += parseInt((order.product as any).price, 10);
+    //     if (isExist < 0) {
+    //         this.orders.push(order);
+    //     } else {
+    //         this.orders.map(item => {
+    //             if (item.product._id == (order.product as any)._id) {
+    //                 item.num++;
+    //             }
+    //         });
+    //     }
+    // }
 
     selectPayWay() {
         let actionSheet = this.actionSheetCtrl.create({
@@ -163,9 +169,9 @@ export class ProductsPage {
     }
 }
 
-class Order {
-    constructor(public product: object,
-                public num: number) {
-
-    }
-}
+// class Order {
+//     constructor(public product: object,
+//                 public num: number) {
+//
+//     }
+// }
