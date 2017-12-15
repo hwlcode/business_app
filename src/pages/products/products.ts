@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Events, IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {IonicPage, NavController, ViewController} from 'ionic-angular';
 import {ModalController} from 'ionic-angular';
 import {CheckOrdersPage} from "../check-orders/check-orders";
 import {ActionSheetController} from 'ionic-angular';

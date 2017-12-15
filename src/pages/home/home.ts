@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {IonicPage, ModalController, NavController} from 'ionic-angular';
 import {ProductsPage} from "../products/products";
-import {ShoppingPage} from "../shopping/shopping";
 import {BannerService} from "../../service/banner.service";
 import {ProductService} from "../../service/product.service";
 import {CoreService} from "../../service/core.service";

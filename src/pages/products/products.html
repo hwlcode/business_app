@@ -56,8 +56,10 @@
     <ion-item color="light" [style.opacity]="num > 0 ? 1 : 0.75">
         <ion-badge item-start>{{num}}</ion-badge>
         <div *ngIf="num == 0">还未选购商品</div>
-        <div (tap)="presentModal()" *ngIf="num > 0">￥{{sum}}元</div>
-        <p class="tips">点击查看订单查情</p>
+        <div (tap)="presentModal()" *ngIf="num > 0">
+            ￥{{sum}}元
+            <p class="tips" *ngIf="num > 0">点击查看订单查情</p>
+        </div>
         <button ion-button item-end [disabled]="num == 0" (click)="selectPayWay()">去结算</button>
     </ion-item>
 </ion-footer>
