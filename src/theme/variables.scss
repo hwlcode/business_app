@@ -36,7 +36,7 @@ $app-direction: ltr;
 $colors: (
     primary:    #24ad20,
     secondary:  #f44336,
-    danger:     #ffa93f,
+    danger:     #d44950,
     light:      #666666,
     dark:       #9a0007,
 );
@@ -86,3 +86,6 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+//自定义全局css
+@import "light";

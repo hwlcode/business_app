@@ -1,19 +1,21 @@
 import {Component} from '@angular/core';
-import {Events, IonicPage, NavController, ViewController} from 'ionic-angular';
+import {IonicPage, LoadingController, ToastController, ViewController} from 'ionic-angular';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {numberValidator, phoneValidator} from "../../app/validator";
 import {Storage} from '@ionic/storage';
 import {UtilService} from "../../service/util.service";
-import {ProfilePage} from "../profile/profile";
 import {UserService} from "../../service/user.service";
+import {BaseUI} from "../../common/baseui";
+import md5 from 'blueimp-md5';
 
 @IonicPage()
 @Component({
     selector: 'page-login',
     templateUrl: 'login.html',
 })
-export class LoginPage {
+export class LoginPage extends BaseUI {
     loginForm: FormGroup;
+    showMessage: any;
     // 验证码倒计时
     verifyCode: any = {
         verifyCodeTips: "获取验证码",
@@ -21,35 +23,48 @@ export class LoginPage {
         disable: true
     }
 
-    constructor(private navCtrl: NavController,
-                private storage: Storage,
+    constructor(private storage: Storage,
                 private utilService: UtilService,
                 private viewCtrl: ViewController,
                 private userService: UserService,
-                private events: Events) {
+                private loadingCtrl: LoadingController,
+                private toastCtrl: ToastController) {
+        super();
+
         let fb = new FormBuilder();
         this.loginForm = fb.group({
             phone: ['15868823605', [phoneValidator]],
             phoneCode: ['', [numberValidator]]
-        })
+        });
+
+    }
+
+    /**
+     * 关闭当前页面
+     */
+    dismiss() {
+        this.viewCtrl.dismiss();
     }
 
     login() {
+        let loading = super.showLoading(this.loadingCtrl, '登录中...');
         if (this.loginForm.valid) {
-            this.userService.httpPost(this.loginForm.value).subscribe(data => {
-                if (data.code == 0) {
-                    console.log(data);
-                    this.storage.set('user', data.data);
-                    this.events.publish('user', data.data);
-                    this.navCtrl.push(ProfilePage, {phone: data.data.phone}).then(() => {
-                        let index = this.viewCtrl.index;
-                        this.navCtrl.remove(index);
-                    });
-                    this.utilService.toast('登录成功');
-                }else{
-                    this.utilService.toast(data.msg);
-                }
-            });
+            this.loginForm.value.phoneCode = md5(this.loginForm.value.phoneCode);
+            this.userService.httpPost(this.loginForm.value)
+                .subscribe(
+                    data => {
+                        if (data.code == 0) {
+                            this.storage.set('user', data.data._id);
+                            loading.dismiss();
+                            this.dismiss();
+                            super.showToast(this.toastCtrl, '登录成功');
+                        } else {
+                            loading.dismiss();
+                            super.showToast(this.toastCtrl, data.msg);
+                        }
+                    },
+                    error => this.showMessage = <any>error
+                );
         }
     }
 
@@ -78,8 +93,8 @@ export class LoginPage {
         }
 
         //发送验证码成功后开始倒计时
-        if(this.verifyCode.disable) {
-            this.userService.httpGetVerifyCode(this.loginForm.value.phone).subscribe( data => {
+        if (this.verifyCode.disable) {
+            this.userService.httpGetVerifyCode(this.loginForm.value.phone).subscribe(data => {
                 if (data.code == 'OK') {
                     console.log(data);
                 } else {
@@ -89,16 +104,5 @@ export class LoginPage {
         }
         this.verifyCode.disable = false;
         this.settime();
-    }
-
-    ionViewCanEnter() {
-        this.utilService.getLoginStatus().then(data => {
-            if (data) {
-                this.navCtrl.push(ProfilePage).then(() => {
-                    let index = this.viewCtrl.index;
-                    this.navCtrl.remove(index);
-                });
-            }
-        })
     }
 }

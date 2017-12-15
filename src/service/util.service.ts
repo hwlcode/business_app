@@ -11,17 +11,18 @@ export class UtilService {
     }
 
     getTabs(): Array<{ key: string, value: string, icon: string, page: string }> {
-        return [{
-            key: 'home',
-            value: '首页',
-            icon: 'home',
-            page: 'HomePage'
-        },
+        return [
             {
-                key: 'cart',
-                value: '订单',
-                icon: 'cart',
-                page: 'OrdersPage'
+                key: 'home',
+                value: '首页',
+                icon: 'home',
+                page: 'HomePage'
+            },
+            {
+                key: 'shopping',
+                value: '积分商城',
+                icon: 'basket',
+                page: 'ShoppingPage'
             },
             {
                 key: 'contact',

@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {IonicPage, ModalController, NavController} from 'ionic-angular';
 import {ProductsPage} from "../products/products";
-import {LoginPage} from "../login/login";
 import {ShoppingPage} from "../shopping/shopping";
 import {BannerService} from "../../service/banner.service";
 import {ProductService} from "../../service/product.service";
 import {CoreService} from "../../service/core.service";
-import {UtilService} from "../../service/util.service";
+import {ProfilePage} from "../profile/profile";
 
 @IonicPage()
 @Component({
@@ -20,7 +19,7 @@ export class HomePage implements OnInit {
     constructor(private navCtrl: NavController,
                 private bannerService: BannerService,
                 private coreService: CoreService,
-                private utilService: UtilService,
+                private modalCtrl: ModalController,
                 private productService: ProductService) {
 
     }
@@ -31,7 +30,7 @@ export class HomePage implements OnInit {
     }
 
     user() {
-        this.navCtrl.push(LoginPage);
+        this.navCtrl.push(ProfilePage);
     }
 
     getItems(event) {
@@ -61,25 +60,11 @@ export class HomePage implements OnInit {
     }
 
     goProduct() {
-        this.utilService.getLoginStatus().then(data => {
-            if(data){
-                this.navCtrl.push(ProductsPage);
-            }else{
-                this.navCtrl.push(LoginPage);
-            }
-        })
-    }
-
-    goToOrder() {
-        this.navCtrl.parent.select(1);
+        var modal = this.modalCtrl.create(ProductsPage);
+        modal.present();
     }
 
     goToShopping() {
-        this.navCtrl.push(ShoppingPage);
+        this.navCtrl.parent.select(1);
     }
-
-    goToUser() {
-        this.navCtrl.parent.select(2);
-    }
-
 }

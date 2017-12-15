@@ -23,8 +23,8 @@ export class UserService {
             .map(res => res.json());
     }
 
-    httpGetUser(phone: string): Observable<any> {
-        return this.http.get(this.coreService.domain + this.coreService.API.profile + '?phone=' + phone)
+    httpGetUser(id: string): Observable<any> {
+        return this.http.get(this.coreService.domain + this.coreService.API.profile + '?id=' + id)
             .map(res => res.json());
     }
 

@@ -48,6 +48,7 @@ export class CheckOrdersPage {
                         this.orders.splice(item, 1);
                     }
                 }
+                console.log(this.orders);
             });
         }
         this.events.publish('product:add', this.num, this.sum);
@@ -67,7 +68,7 @@ export class CheckOrdersPage {
                 }
             });
         }
-
+        console.log(this.orders);
         this.events.publish('product:remove', this.num, this.sum);
     }
 

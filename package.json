@@ -28,6 +28,7 @@
         "@ionic-native/splash-screen": "4.3.0",
         "@ionic-native/status-bar": "4.3.0",
         "@ionic/storage": "2.0.1",
+        "blueimp-md5": "^2.10.0",
         "com.synconset.imagepicker": "~2.1.8",
         "cordova-android": "^6.4.0",
         "cordova-ios": "^4.4.0",

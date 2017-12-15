@@ -3,12 +3,21 @@ page-profile {
         color: #333 !important;
         font-size: 16px;
     }
+    .item{
+        border-bottom: 1px #f2f2f2 solid;
+    }
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+        border-bottom: 0;
+    }
     ion-item {
         .item > ion-icon, .item-inner > ion-icon {
             color: #999999;
             font-size: 2rem;
             line-height: 2;
         }
+    }
+    .white{
+        color: #fff;
     }
     .user-name {
         color: #fff;
@@ -26,8 +35,8 @@ page-profile {
     }
     ion-avatar img {
         background: rgba(255, 255, 255, 0.85);
-        width: 60px !important;
-        height: 60px !important;
+        width: 45px !important;
+        height: 45px !important;
     }
     .display-box { display: none }
     .show {

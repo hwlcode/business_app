@@ -1,44 +1,39 @@
 import {Component, OnInit} from '@angular/core';
-import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {
+    Events, IonicPage, LoadingController, NavController, NavParams, ToastController,
+    ViewController
+} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../service/user.service";
-import {UtilService} from "../../service/util.service";
-import {ProfilePage} from "../profile/profile";
+import {Storage} from "@ionic/storage";
+import {BaseUI} from "../../common/baseui";
 
 @IonicPage()
 @Component({
     selector: 'page-user-address',
     templateUrl: 'user-address.html',
 })
-export class UserAddressPage implements OnInit{
+export class UserAddressPage extends BaseUI implements OnInit {
     fromGroup: FormGroup;
-    phone: string;
     address: string;
     user: any;
 
     constructor(public navCtrl: NavController,
                 public userService: UserService,
-                public utilService: UtilService,
                 public events: Events,
+                public storage: Storage,
+                public loadingCtrl: LoadingController,
+                public toastCtrl: ToastController,
+                public viewCtrl: ViewController,
                 public navParams: NavParams) {
+        super();
 
         let fb = new FormBuilder();
         this.fromGroup = fb.group({
             address: ['', Validators.required]
         });
 
-        this.utilService.getLoginStatus().then(data => {
-            if (data) {
-                this.phone = data.phone;
-                this.user = data;
-                this.address = data.address;
-            }
-        });
-
-        //只有数据发生变化时才可以接收到, 用于同步数据时用。
-        this.events.subscribe('user:message', user => {
-            this.user = user;
-        });
+        this.address = this.navParams.get('user').address;
     }
 
     ngOnInit() {
@@ -46,14 +41,20 @@ export class UserAddressPage implements OnInit{
     }
 
     update() {
+        let loading = super.showLoading(this.loadingCtrl, '保存中...');
         if (this.fromGroup.valid) {
-            this.fromGroup.value.phone = this.phone;
-
-            this.userService.httpPostAddress(this.fromGroup.value).subscribe(data => {
-                if (data.code === 0) {
-                    this.navCtrl.setRoot(ProfilePage);
+            this.storage.get('user').then(id => {
+                if (id != null) {
+                    this.fromGroup.value.id = id;
+                    this.userService.httpPostAddress(this.fromGroup.value).subscribe(data => {
+                        if (data.code === 0) {
+                            this.viewCtrl.dismiss();
+                            loading.dismiss();
+                            super.showToast(this.toastCtrl, '更新成功。');
+                        }
+                    });
                 }
-            });
+            })
         }
     }
 

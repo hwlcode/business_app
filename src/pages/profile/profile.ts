@@ -1,55 +1,47 @@
 import {Component, OnInit} from '@angular/core';
-import {Events, IonicPage, NavController} from 'ionic-angular';
+import {
+    IonicPage, LoadingController, ModalController, NavController, ToastController,
+} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {ImageService} from '../../service/image.service';
 import {LoginPage} from "../login/login";
 import {UserNamePage} from "../user-name/user-name";
-import {HomePage} from "../home/home";
 import {UserService} from "../../service/user.service";
 import {UtilService} from "../../service/util.service";
 import {CoreService} from "../../service/core.service";
 import {UserAddressPage} from "../user-address/user-address";
+import {BaseUI} from "../../common/baseui";
+import {OrdersPage} from "../orders/orders";
 
 @IonicPage()
 @Component({
     selector: 'page-profile',
     templateUrl: 'profile.html',
 })
-export class ProfilePage implements OnInit {
-    user: any;
-    loginPhone: string;
+export class ProfilePage extends BaseUI implements OnInit {
+    headFace: string = 'assets/user.png';
+    userInfo: string[];
+    notLogin: boolean = true;
+    logined: boolean = false;
+
     selectOptions: object;
-    isLogin: boolean = false;
     event = {
         timeStarts: '1970-80-01'
     };
     gender: string = "先生";
+
+    errorMessage: any;
 
     constructor(private navCtrl: NavController,
                 private storage: Storage,
                 private userService: UserService,
                 private imageService: ImageService,
                 private coreService: CoreService,
-                private events: Events,
+                private modalCtrl: ModalController,
+                private loadCtrl: LoadingController,
+                private toastCtrl: ToastController,
                 private utilService: UtilService) {
-        // 初始化默认值
-        this.user = {
-            avatar: '',
-            phone: '',
-            code: 0,
-            name: ''
-        };
-
-        this.utilService.getLoginStatus().then(data => {
-            if (data) {
-                this.loginPhone = data.phone;
-                this.gender = data.sex;
-                this.event.timeStarts = data.birth;
-                this.isLogin = true;
-
-                this.getUser();
-            }
-        });
+        super();
     }
 
     ngOnInit() {
@@ -57,20 +49,44 @@ export class ProfilePage implements OnInit {
         this.selectOptions = {
             title: '选择性别'
         }
-        if (this.isLogin) {
-            this.getUser();
-        }
     }
 
-    //登录后获取用户信息
-    private getUser() {
-        this.userService.httpGetUser(this.loginPhone).subscribe(data => {
-            if (data.code == 0) {
-                this.user = data.data;
-                this.user.avatar = this.coreService.domain + this.user.avatar.path;
-                this.storage.set('user', data.data);
+    showLoginModal() {
+        let modal = this.modalCtrl.create(LoginPage);
+        modal.onDidDismiss(() => {
+            this.loadUserPage();
+        });
+        modal.present();
+    }
+
+    ionViewDidEnter() {
+        this.loadUserPage();
+    }
+
+    loadUserPage() {
+        this.storage.get('user').then(val => {
+            let loading = super.showLoading(this.loadCtrl, '加载中...');
+            if (val != null) {
+                this.userService.httpGetUser(val).subscribe(
+                    userInfo => {
+                        this.userInfo = userInfo['data'];
+                        //去除图片头像的缓存
+                        this.headFace = userInfo['data'].avatar.path + "?v=" + new Date().valueOf();
+                        this.gender = userInfo['data'].sex;
+                        this.event.timeStarts = userInfo['data'].birth;
+
+                        this.notLogin = false;
+                        this.logined = true;
+                        loading.dismiss();
+                    },
+                    error => this.errorMessage = <any>error
+                )
+            } else {
+                this.notLogin = true;
+                this.logined = false;
+                loading.dismiss();
             }
-        })
+        });
     }
 
     //选择上传方式
@@ -84,15 +100,20 @@ export class ProfilePage implements OnInit {
         this.imageService.upload.url = this.coreService.domain + this.coreService.API.upload; // 上传图片的url，如果同默认配置的url一致，那无须再设置
 
         this.imageService.upload.success = (data) => {
-            this.userService.httpPostAvatar({
-                phone: this.loginPhone,
-                avatar: data.id
-            }).subscribe(data => {
-                if (data.code == 0) {
-                    // this.cd.detectChanges();
-                    console.log('头像更新成功');
-                    //上传成功后的回调处理
-                    this.navCtrl.setRoot(ProfilePage);
+            this.storage.get('user').then(id => {
+                if (id != null) {
+                    this.userService.httpPostAvatar({
+                        id: id,
+                        avatar: data.id
+                    }).subscribe(data => {
+                        if (data.code == 0) {
+                            // this.cd.detectChanges();
+                            console.log('头像更新成功');
+                            //上传成功后的回调处理
+                            this.loadUserPage();
+                            // this.navCtrl.setRoot(ProfilePage);
+                        }
+                    })
                 }
             })
         };
@@ -104,45 +125,58 @@ export class ProfilePage implements OnInit {
 
     // 更改姓名
     changeUserName() {
-        this.navCtrl.push(UserNamePage);
+        this.navCtrl.push(UserNamePage, {user: this.userInfo});
     }
 
     // 更改性别
     saveSex(val: string) {
-        this.userService.httpPostSex({
-            phone: this.loginPhone,
-            sex: val
-        }).subscribe(data => {
-            if (data.code == 0) {
-                console.log('done');
+        let loading = super.showLoading(this.loadCtrl, '保存中...');
+        this.storage.get('user').then(id => {
+            if (id != null) {
+                this.userService.httpPostSex({
+                    id: id,
+                    sex: val
+                }).subscribe(data => {
+                    if (data.code == 0) {
+                        this.gender = data.data.sex;
+                        loading.dismiss();
+                        super.showToast(this.toastCtrl, '更新成功。');
+                        console.log('done');
+                    }
+                });
             }
-        });
+        })
     }
 
     // 更改生日
     saveBirty(val: string) {
-        this.userService.httpPostBirth({
-            phone: this.loginPhone,
-            birth: val
-        }).subscribe(data => {
-            if (data.code == 0) {
-                console.log('done');
+        let loading = super.showLoading(this.loadCtrl, '保存中...');
+        this.storage.get('user').then(id => {
+            if (id != null) {
+                this.userService.httpPostBirth({
+                    id: id,
+                    birth: val
+                }).subscribe(data => {
+                    if (data.code == 0) {
+                        loading.dismiss();
+                        super.showToast(this.toastCtrl, '更新成功。');
+                        console.log('done');
+                    }
+                });
             }
-        });
-    }
-
-    goToLogin() {
-        this.navCtrl.push(LoginPage);
+        })
     }
 
     goToAddress() {
-        this.events.publish('user:message', this.user);
-        this.navCtrl.push(UserAddressPage);
+        this.navCtrl.push(UserAddressPage, {user: this.userInfo});
+    }
+
+    goToOrders(){
+        this.navCtrl.push(OrdersPage);
     }
 
     loginOut() {
         this.storage.remove('user');
-        this.navCtrl.setRoot(HomePage);
-        this.navCtrl.parent.select(0);
+        this.loadUserPage();
     }
 }

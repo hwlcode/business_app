@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController} from "ionic-angular";
 import {UtilService} from "../../service/util.service";
-import {LoginPage} from "../login/login";
 
 @IonicPage()
 @Component({
@@ -17,15 +16,5 @@ export class TabsPage{
 
     getTabs() {
         this.tabs = this.utilService.getTabs();
-    }
-
-    selectedTab(event) {
-        if(event.index == 1 || event.index == 2){
-            this.utilService.getLoginStatus().then( data => {
-                if(data == null){
-                    this.navCtrl.push(LoginPage);
-                }
-            })
-        }
     }
 }

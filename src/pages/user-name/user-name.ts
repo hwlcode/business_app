@@ -1,44 +1,48 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {IonicPage, LoadingController, NavParams, ToastController, ViewController} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ProfilePage} from "../profile/profile";
 import {UserService} from "../../service/user.service";
-import {UtilService} from "../../service/util.service";
+import {Storage} from "@ionic/storage";
+import {BaseUI} from "../../common/baseui";
 
 @IonicPage()
 @Component({
     selector: 'page-user-name',
     templateUrl: 'user-name.html',
 })
-export class UserNamePage {
+export class UserNamePage extends BaseUI{
     fromGroup: FormGroup;
-    phone: string;
-    name: string;
+    name: string = '';
 
-    constructor(private navCtrl: NavController,
-                private utilService: UtilService,
+    constructor(private navPramas: NavParams,
+                private storage: Storage,
+                private viewCtrl: ViewController,
+                private loadingCtrl: LoadingController,
+                private toastCtrl: ToastController,
                 private userService: UserService) {
+        super();
 
         let fb = new FormBuilder();
         this.fromGroup = fb.group({
             name: ['', Validators.required]
         });
 
-        this.utilService.getLoginStatus().then(data => {
-            if (data) {
-                this.phone = data.phone;
-                this.name = data.name;
-            }
-        });
+        this.name = this.navPramas.get('user').name;
     }
 
     update() {
         if (this.fromGroup.valid) {
-            this.fromGroup.value.phone = this.phone;
-
-            this.userService.httpPostName(this.fromGroup.value).subscribe(data => {
-                if (data.code === 0) {
-                    this.navCtrl.setRoot(ProfilePage);
+            this.storage.get('user').then(id => {
+                if (id != null) {
+                    this.fromGroup.value.id = id;
+                    let loading = super.showLoading(this.loadingCtrl, '保存中...');
+                    this.userService.httpPostName(this.fromGroup.value).subscribe(data => {
+                        if (data.code === 0) {
+                            loading.dismiss();
+                            super.showToast(this.toastCtrl, '更改成功。');
+                            this.viewCtrl.dismiss();
+                        }
+                    });
                 }
             });
         }

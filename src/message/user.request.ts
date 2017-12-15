@@ -4,27 +4,27 @@ export class PostAccessTokenRequest {
 }
 
 export class PostAvatarRequest {
-    phone: string;
+    id: string;
     avatar: string;
 }
 
 export class PostNameRequest {
-    phone: string;
+    id: string;
     name: string;
 }
 
 export class PostSexRequest {
-    phone: string;
+    id: string;
     sex: string;
 }
 
 export class PostBirthRequest {
-    phone: string;
+    id: string;
     birth: string;
 }
 
 export class PostAddressRequest {
-    phone: string;
+    id: string;
     address: string;
 }
 
