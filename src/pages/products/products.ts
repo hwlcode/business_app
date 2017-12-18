@@ -103,7 +103,7 @@ export class ProductsPage {
         }
     }
 
-    public removeProduct(product) {
+    removeProduct(product) {
         if(this.num == 0){
             return false;
         }
@@ -126,7 +126,7 @@ export class ProductsPage {
         }
     }
 
-    public addProduct(product, $event) {
+    addProduct(product, $event) {
         this.num++;
         let order = new Order(product, 1);
         let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id);
