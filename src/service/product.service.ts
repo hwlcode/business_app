@@ -22,7 +22,7 @@ export class ProductService {
     }
 
     httpProductFilter(request: searchRequest): Observable<any> {
-        return this.http.get(this.coreService.domain + this.coreService.API.search + '?keywords=' + request.keywords)
+        return this.http.get(this.coreService.domain + this.coreService.API.search + '?keywords=' + request.keywords + '&page=' + request.page)
             .map(res => res.json());
     }
 }

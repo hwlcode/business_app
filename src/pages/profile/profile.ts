@@ -65,7 +65,7 @@ export class ProfilePage extends BaseUI implements OnInit {
 
     loadUserPage() {
         this.storage.get('user').then(val => {
-            let loading = super.showLoading(this.loadCtrl, '加载中...');
+            // let loading = super.showLoading(this.loadCtrl, '加载中...');
             if (val != null) {
                 this.userService.httpGetUser(val).subscribe(
                     userInfo => {
@@ -77,14 +77,14 @@ export class ProfilePage extends BaseUI implements OnInit {
 
                         this.notLogin = false;
                         this.logined = true;
-                        loading.dismiss();
+                        // loading.dismiss();
                     },
                     error => this.errorMessage = <any>error
                 )
             } else {
                 this.notLogin = true;
                 this.logined = false;
-                loading.dismiss();
+                // loading.dismiss();
             }
         });
     }

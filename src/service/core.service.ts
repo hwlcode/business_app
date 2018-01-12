@@ -23,6 +23,6 @@ export class CoreService {
         uploadAvatar: '/api/upload/avatar',
         products: '/api/web/productList',
         saveProfile: '/api/saveProfile',
-        search: '/api/search'
+        search: '/api/products/list'  // 都用这个来取产品
     };
 }

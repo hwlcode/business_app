@@ -1,63 +1,77 @@
 <ion-header>
     <ion-navbar style="opacity: 0.85" no-border-bottom color="primary">
             <ion-item color="primary">
-                <ion-searchbar (click)="getItems($event)" placeholder="输入要搜索的关键字"></ion-searchbar>
+                <div item-start>盈垦</div>
+                <ion-searchbar [(ngModel)]="keywords" (ionInput)="getItems($event)" placeholder="输入要搜索的关键字"></ion-searchbar>
                 <i class="iconfont icon-name user" item-end (click)="user()"></i>
             </ion-item>
     </ion-navbar>
 </ion-header>
 
 <ion-content fullscreen>
-    <ion-slides pager>
-        <ion-slide *ngFor="let banner of banners">
-            <img src="{{banner.image}}" class="slide-image"/>
-        </ion-slide>
-    </ion-slides>
-
-    <ion-row class="order-btn" padding>
-        <button ion-button block color="primary" (click)="goProduct()">
-            开始订购
-            <ion-icon name="arrow-dropright"></ion-icon>
-        </button>
-    </ion-row>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+            pullingIcon="arrow-down"
+            pullingText="下拉刷新页面"
+            refreshingSpinner="circles"
+            refreshingText="数据加载中..."
+        ></ion-refresher-content>
+    </ion-refresher>
+    <!--<ion-slides pager>-->
+        <!--<ion-slide *ngFor="let banner of banners">-->
+            <!--<img src="{{banner.image}}" class="slide-image"/>-->
+        <!--</ion-slide>-->
+    <!--</ion-slides>-->
 
     <ion-grid class="home-list">
         <ion-row padding-vertical>
-            <ion-col col-4>
-                <button color="primary" (click)="user()">
-                    <i class="iconfont icon-menuordericon"></i>
-                    <div>我的订单</div>
-                </button>
-            </ion-col>
-            <ion-col col-4>
-                <button (click)="user()">
-                    <i class="iconfont icon-points" ></i>
-                    <div>我的积分</div>
-                </button>
-            </ion-col>
-            <ion-col col-4>
-                <button (click)="goToShopping()">
+            <!--<ion-col col-4>-->
+                <!--<button color="primary" (click)="user()">-->
+                    <!--<i class="iconfont icon-menuordericon"></i>-->
+                    <!--<div>我的订单</div>-->
+                <!--</button>-->
+            <!--</ion-col>-->
+            <ion-col col-6>
+                <button (click)="goProduct()">
                     <i class="iconfont icon-mall_fill"></i>
+                    <div>开始订购</div>
+                </button>
+            </ion-col>
+            <ion-col col-6>
+                <button (click)="goToShopping()">
+                    <i class="iconfont icon-points"></i>
                     <div>积分商城</div>
                 </button>
             </ion-col>
         </ion-row>
     </ion-grid>
 
+    <!--<ion-row class="order-btn" padding>-->
+        <!--<button ion-button block color="primary" (click)="goProduct()">-->
+            <!--开始订购-->
+            <!--<ion-icon name="arrow-dropright"></ion-icon>-->
+        <!--</button>-->
+    <!--</ion-row>-->
+
     <div class="product-list">
         <ion-list no-padding>
-            <ion-item no-padding *ngFor="let product of products" (click)="goProduct()">
+            <ion-item no-padding *ngFor="let product of products">
                 <ion-grid>
                     <ion-row>
-                        <ion-col col-6><img src="{{product.image}}"></ion-col>
-                        <ion-col col-6>
-                            <h2 text-right>{{product.name}}</h2>
-                            <p text-right class="price"><i>￥{{product.price}}</i>/斤</p>
+                        <ion-col col-3><img src="{{product.image}}" width="80" height="80"></ion-col>
+                        <ion-col col-9>
+                            <h2 class="product-title">{{product.name}}</h2>
+                            <p text-right class="price"><i>￥{{product.price}}</i>/<span class="f12">斤</span></p>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
             </ion-item>
         </ion-list>
     </div>
-
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="加载更多中..."
+        ></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

@@ -14,7 +14,7 @@
                 <ion-input type="text" formControlName="name" placeholder="输入姓名" [(ngModel)]="name"></ion-input>
             </ion-item>
             <ion-item>
-                <button ion-button block large [disabled]="!fromGroup.valid" (click)="update()">保存</button>
+                <button ion-button block large [disabled]="!fromGroup.valid" (click)="update()" class="save">保存</button>
             </ion-item>
         </ion-list>
     </form>

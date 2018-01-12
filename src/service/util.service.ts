@@ -25,6 +25,12 @@ export class UtilService {
                 page: 'ShoppingPage'
             },
             {
+                key: 'shopping',
+                value: '通知',
+                icon: 'notifications',
+                page: 'ShoppingPage'
+            },
+            {
                 key: 'contact',
                 value: '我的',
                 icon: 'contact',

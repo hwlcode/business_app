@@ -14,7 +14,7 @@
                 <ion-textarea type="text" formControlName="address" placeholder="完善收货地址" [(ngModel)]="address"></ion-textarea>
             </ion-item>
             <ion-item>
-                <button ion-button block large [disabled]="!fromGroup.valid" (click)="update()">保存</button>
+                <button ion-button block large [disabled]="!fromGroup.valid" (click)="update()" class="save">保存</button>
             </ion-item>
         </ion-list>
     </form>

@@ -1,3 +1,4 @@
 export  class searchRequest{
-    keywords: string
+    keywords: string;
+    page: number
 }

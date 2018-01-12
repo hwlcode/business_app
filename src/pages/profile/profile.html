@@ -8,10 +8,10 @@
 
 <ion-content>
     <div *ngIf="notLogin">
-        <ion-list>
+        <ion-list id="not-login">
             <button ion-item class="marginTop" (click)="showLoginModal()">
                 <ion-avatar item-start>
-                    <img src="{{headFace}}" alt="" class="user-avatar">
+                    <img src="{{headFace}}" alt="" class="user-avatar" width="40" height="40">
                 </ion-avatar>
                 <h2>立即登录</h2>
                 <p>登录后体验更多功能</p>
@@ -24,20 +24,20 @@
             <ion-avatar item-start>
                 <img src="{{headFace}}" alt="" class="user-avatar">
             </ion-avatar>
-            <h2 class="white">{{userInfo.name}}</h2>
-            <p>点击修改头像</p>
+            <h2 class="white name">{{userInfo.name}}</h2>
+            <p class="name-tips">点击修改头像</p>
         </button>
         <ion-list>
             <ion-list-header>订单与积分</ion-list-header>
             <ion-item>
-                <i class="iconfont icon-jifen3"></i>
+                <!--<i class="iconfont icon-jifen3"></i>-->
                 我的积分
                 <div item-end [innerHtml]="userInfo.code"></div>
             </ion-item>
             <ion-item (click)="goToOrders()">
-                <i class="iconfont icon-jifen3"></i>
+                <!--<i class="iconfont icon-jifen3"></i>-->
                 我的订单
-                <ion-icon name="arrow-forward" item-end></ion-icon>
+                <ion-icon name="arrow-forward" item-end class="item-icon-left"></ion-icon>
             </ion-item>
         </ion-list>
 

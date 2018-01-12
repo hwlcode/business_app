@@ -14,6 +14,9 @@ import {ProfilePage} from "../profile/profile";
 export class HomePage implements OnInit {
     public banners;
     public products;
+    public keywords: string;
+    public last: boolean = false;
+    public infiniteScroll: any;
 
     constructor(private navCtrl: NavController,
                 private bannerService: BannerService,
@@ -25,7 +28,7 @@ export class HomePage implements OnInit {
 
     ngOnInit() {
         this.getBanners();
-        this.getProduct();
+        this.getProduct('', 1);
     }
 
     user() {
@@ -33,7 +36,50 @@ export class HomePage implements OnInit {
     }
 
     getItems(event) {
-        this.navCtrl.push(ProductsPage, {word: event.data});
+        this.getProduct(this.keywords || '', 1);
+    }
+
+    doRefresh(refresher) {
+        this.productService.httpProductFilter({
+            keywords: '',
+            page: 1
+        }).subscribe(data => {
+            if (data.code == 0) {
+                this.products = data.data;
+                if(this.infiniteScroll){
+                    this.infiniteScroll.enable(true);
+                }
+                this.products.map(item => {
+                    item.image = this.coreService.domain + item.banner.path;
+                });
+                refresher.complete();
+            }
+        });
+    }
+
+    doInfinite(infiniteScroll) {
+        let page = 1;
+        page++;
+        this.infiniteScroll = infiniteScroll;
+        this.productService.httpProductFilter({
+            keywords: this.keywords || '',
+            page: page
+        }).subscribe(data => {
+            if (data.code == 0) {
+                this.last = data.isLast;
+                this.products = this.products.concat(data.data);
+                this.products.concat(data.data);
+                this.products.map(item => {
+                    item.image = this.coreService.domain + item.banner.path;
+                });
+
+                infiniteScroll.complete();
+
+                if (this.last) {
+                    infiniteScroll.enable(false);
+                }
+            }
+        });
     }
 
     getBanners() {
@@ -47,13 +93,16 @@ export class HomePage implements OnInit {
         });
     }
 
-    getProduct() {
-        this.productService.httpGetProduct().subscribe(data => {
+    getProduct(keywords, page) {
+        this.productService.httpProductFilter({
+            keywords: keywords,
+            page: page
+        }).subscribe(data => {
             if (data.code == 0) {
                 this.products = data.data;
                 this.products.map(item => {
                     item.image = this.coreService.domain + item.banner.path;
-                })
+                });
             }
         });
     }
