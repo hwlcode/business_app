@@ -170,7 +170,8 @@ export class ProductsPage {
 
     getItems() {
         this.productService.httpProductFilter({
-            keywords: this.keywords
+            keywords: this.keywords,
+            page: 1
         }).subscribe(data => {
             if (data.code == 0) {
                 this.products = data.data;
