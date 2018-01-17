@@ -68,7 +68,6 @@ export class ProductsPage {
                 this.products.map(item => {
                     item.image = this.coreService.domain + item.banner.path;
                     item.orderNum = 0;
-                    console.log()
                 })
             }
         });

@@ -71,7 +71,11 @@ export class ProfilePage extends BaseUI implements OnInit {
                     userInfo => {
                         this.userInfo = userInfo['data'];
                         //去除图片头像的缓存
-                        this.headFace = userInfo['data'].avatar.path + "?v=" + new Date().valueOf();
+                        if (userInfo['data'].avatar == null) {
+                            this.headFace = 'assets/user.png';
+                        } else {
+                            this.headFace = userInfo['data'].avatar.path + "?v=" + new Date().valueOf();
+                        }
                         this.gender = userInfo['data'].sex;
                         this.event.timeStarts = userInfo['data'].birth;
 
@@ -171,7 +175,7 @@ export class ProfilePage extends BaseUI implements OnInit {
         this.navCtrl.push(UserAddressPage, {user: this.userInfo});
     }
 
-    goToOrders(){
+    goToOrders() {
         this.navCtrl.push(OrdersPage);
     }
 
