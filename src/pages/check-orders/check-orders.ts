@@ -17,9 +17,9 @@ export class CheckOrdersPage {
                 public navParams: NavParams,
                 public events: Events,
                 public viewCtrl: ViewController) {
-        this.orders = this.navParams.get('productList');
-        this.num = this.navParams.get('num');
-        this.sum = this.navParams.get('sum');
+        this.orders = navParams.get('productList');
+        this.num = navParams.get('num');
+        this.sum = navParams.get('sum');
     }
 
     dismiss() {
@@ -33,49 +33,30 @@ export class CheckOrdersPage {
     }
 
     removeProduct(product) {
-        if (this.num > 0) {
-            this.num--;
+        if(product.orderNum > 0){
+            product.orderNum--;
         }
-        let order = new Order(product, 1);
-        this.sum -= parseInt((order.product as any).price, 10);
-        let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id);
-        if (isExist) {
-            this.orders.map(item => {
-                if (item.product._id == (order.product as any)._id) {
-                    if (item.num > 1) {
-                        item.num--;
-                    } else if (item.num == 1) {
-                        this.orders.splice(item, 1);
-                    }
-                }
-                console.log(this.orders);
-            });
+
+        let n = 0, p = 0;
+        for(let i = 0; i < this.orders.length; i++){
+            n += this.orders[i].orderNum;
+            p += this.orders[i].orderNum * this.orders[i].price;
         }
-        this.events.publish('product:add', this.num, this.sum);
+        this.num = n;
+        this.sum = p;
     }
 
     addProduct(product) {
-        this.num++;
-        let order = new Order(product, 1);
-        let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id);
-        this.sum += parseInt((order.product as any).price, 10);
-        if (isExist < 0) {
-            this.orders.push(order);
-        } else {
-            this.orders.map(item => {
-                if (item.product._id == (order.product as any)._id) {
-                    item.num++;
-                }
-            });
+        product.orderNum++;
+
+        let n = 0, p = 0;
+        for(let i = 0; i < this.orders.length; i++){
+            n += this.orders[i].orderNum;
+            p += this.orders[i].orderNum * this.orders[i].price;
         }
-        console.log(this.orders);
-        this.events.publish('product:remove', this.num, this.sum);
+        this.num = n;
+        this.sum = p;
     }
-
-    // ionViewDidLoad() {
-    //     console.log('ionViewDidLoad CheckOrdersPage');
-    // }
-
 }
 
 class Order {

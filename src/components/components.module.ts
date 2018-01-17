@@ -1,16 +1,16 @@
 import {NgModule} from '@angular/core';
-import {AddOrderComponent} from './add-order/add-order';
 import {IonicModule} from "ionic-angular";
+import {NumCountComponent} from "./num-count/num-count";
 
 @NgModule({
     declarations: [
-        AddOrderComponent
+        NumCountComponent
     ],
     imports: [
         IonicModule
     ],
     exports: [
-        AddOrderComponent,
+        NumCountComponent
     ]
 })
 export class ComponentsModule {

@@ -14,14 +14,13 @@ export const NUM_COUNT_ACCESSOR: any = {
 })
 export class NumCountComponent implements ControlValueAccessor {
     count: number = 0;
-    onChanged: Function;
+    onChanged: Function = (_: any) => {}; // 这里要给一个值
 
     constructor() {
-
+        // console.log(this);
     }
 
     writeValue(obj: any): void {
-        // obj 外部输入的传值
         if (obj) {
             this.count = obj;
         }

@@ -36,12 +36,7 @@
                                 <h2 text-left class="product-name">{{product.name}}</h2>
                                 <p text-right class="price"><i>￥{{product.price}}</i>/<b>斤</b></p>
                                 <p text-right>
-                                    <button (click)="removeProduct(product, $event)" class="change-order-btn"><i class="iconfont icon-delicon"></i></button>
-                                    <span class="number" *ngFor="let o of orders">
-                                        <b *ngIf="product._id == o.product._id">{{o.num}}</b>
-                                    </span>
-                                    <span class="number" *ngIf="orders.length < 1">0</span>
-                                    <button class="add-btn" (click)="addProduct(product, $event)" class="change-order-btn mr0"><i class="iconfont icon-add1"></i></button>
+                                    <num-count [(ngModel)]="product.orderNum" (click)="chooseProduct(product)"></num-count>
                                 </p>
                             </ion-col>
                         </ion-row>
