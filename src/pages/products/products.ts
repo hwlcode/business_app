@@ -3,7 +3,6 @@ import {IonicPage, NavController, ViewController} from 'ionic-angular';
 import {ModalController} from 'ionic-angular';
 import {CheckOrdersPage} from "../check-orders/check-orders";
 import {ActionSheetController} from 'ionic-angular';
-import {BannerService} from "../../service/banner.service";
 import {CoreService} from "../../service/core.service";
 import {ProductService} from "../../service/product.service";
 import {Storage} from '@ionic/storage';
@@ -29,7 +28,6 @@ export class ProductsPage {
 
     constructor(private modalCtrl: ModalController,
                 private actionSheetCtrl: ActionSheetController,
-                private bannerService: BannerService,
                 private coreService: CoreService,
                 private navCtrl: NavController,
                 private viewCtrl: ViewController,
