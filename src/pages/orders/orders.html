@@ -1,7 +1,7 @@
 <ion-header>
 
     <ion-navbar color="primary">
-        <ion-title>订单</ion-title>
+        <ion-title>我的订单</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -13,194 +13,27 @@
         <button ion-button>立即登录</button>
     </div>
     <div class="display-box" [class.show]="isLogin">
-        <ion-card>
+        <ion-card *ngFor="let order of orders">
             <ion-card-header>
                 <ion-item class="header-item">
-                    <div item-start>YK201711071650</div>
-                    <div item-end class="date">2017-10-10</div>
+                    <div item-start>{{order.sn}}</div>
+                    <div item-end class="date">{{order.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</div>
                 </ion-item>
 
             </ion-card-header>
 
             <ion-card-content>
                 <ion-list>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
+                    <ion-item class="list-item" *ngFor="let product of order.products">
+                        <div class="name" icon-start>{{product.name}}</div>
+                        <div class="num" item-end>x{{product.orderNum}}</div>
+                        <div class="price price-w" item-end>￥{{product.price}}</div>
                     </ion-item>
                 </ion-list>
             </ion-card-content>
-            <ion-item>
-                <div class="status">等待发货</div>
-                <div class="sum" item-end>总价￥88</div>
-            </ion-item>
-        </ion-card>
-        <ion-card>
-            <ion-card-header>
-                <ion-item class="header-item">
-                    <div item-start>YK201711071650</div>
-                    <div item-end class="date">2017-10-10</div>
-                </ion-item>
-
-            </ion-card-header>
-
-            <ion-card-content>
-                <ion-list>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                </ion-list>
-            </ion-card-content>
-            <ion-item>
-                <div class="status">等待发货</div>
-                <div class="sum" item-end>总价￥88</div>
-            </ion-item>
-        </ion-card>
-        <ion-card>
-            <ion-card-header>
-                <ion-item class="header-item">
-                    <div item-start>YK201711071650</div>
-                    <div item-end class="date">2017-10-10</div>
-                </ion-item>
-
-            </ion-card-header>
-
-            <ion-card-content>
-                <ion-list>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                </ion-list>
-            </ion-card-content>
-            <ion-item>
-                <div class="status">等待发货</div>
-                <div class="sum" item-end>总价￥88</div>
-            </ion-item>
-        </ion-card>
-        <ion-card>
-            <ion-card-header>
-                <ion-item class="header-item">
-                    <div item-start>YK201711071650</div>
-                    <div item-end class="date">2017-10-10</div>
-                </ion-item>
-
-            </ion-card-header>
-
-            <ion-card-content>
-                <ion-list>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                </ion-list>
-            </ion-card-content>
-            <ion-item>
-                <div class="status">等待发货</div>
-                <div class="sum" item-end>总价￥88</div>
-            </ion-item>
-        </ion-card>
-        <ion-card>
-            <ion-card-header>
-                <ion-item class="header-item">
-                    <div item-start>YK201711071650</div>
-                    <div item-end class="date">2017-10-10</div>
-                </ion-item>
-
-            </ion-card-header>
-
-            <ion-card-content>
-                <ion-list>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                    <ion-item class="list-item">
-                        <div class="name" icon-start>黑木珥</div>
-                        <div class="num" item-end>x2</div>
-                        <div class="price" item-end>￥22</div>
-                    </ion-item>
-                </ion-list>
-            </ion-card-content>
-            <ion-item>
-                <div class="status">等待发货</div>
-                <div class="sum" item-end>总价￥88</div>
+            <ion-item class="order-footer">
+                <div class="status">{{ order.status == 0 ? '等待发货' : '己发货'}}</div>
+                <div class="sum" item-end>总价 <b class="price">￥{{order.sumPrice}}</b></div>
             </ion-item>
         </ion-card>
     </div>

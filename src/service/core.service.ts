@@ -23,6 +23,8 @@ export class CoreService {
         uploadAvatar: '/api/upload/avatar',
         products: '/api/web/productList',
         saveProfile: '/api/saveProfile',
-        search: '/api/products/list'  // 都用这个来取产品
+        search: '/api/products/list',  // 都用这个来取产品
+        orderAdd: '/api/order/add',
+        orderList:  '/api/order/list'
     };
 }

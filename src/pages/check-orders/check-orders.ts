@@ -59,10 +59,3 @@ export class CheckOrdersPage {
     }
 }
 
-class Order {
-    constructor(public product: object,
-                public num: number) {
-
-    }
-}
-

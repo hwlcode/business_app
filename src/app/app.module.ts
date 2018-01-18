@@ -40,6 +40,7 @@ import {UserAddressPage} from "../pages/user-address/user-address";
 import {SearchPageModule} from "../pages/search/search.module";
 import {SearchPage} from "../pages/search/search";
 import {PipesModule} from "../pipes/pipes.module";
+import {OrderService} from "../service/order.service";
 
 @NgModule({
     declarations: [
@@ -95,6 +96,7 @@ import {PipesModule} from "../pipes/pipes.module";
         UserService,
         BannerService,
         ProductService,
+        OrderService,
         {provide: ErrorHandler, useClass: IonicErrorHandler}
     ]
 })

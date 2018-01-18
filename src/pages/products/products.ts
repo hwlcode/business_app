@@ -7,6 +7,9 @@ import {CoreService} from "../../service/core.service";
 import {ProductService} from "../../service/product.service";
 import {Storage} from '@ionic/storage';
 import {ProfilePage} from "../profile/profile";
+import {UtilService} from "../../service/util.service";
+import {OrdersPage} from "../orders/orders";
+import {OrderService} from "../../service/order.service";
 
 @IonicPage()
 @Component({
@@ -16,6 +19,7 @@ import {ProfilePage} from "../profile/profile";
 export class ProductsPage {
     products: any;
     keywords: string;
+    userId: string;
 
     show: boolean = false;
     orders: any = [];
@@ -32,6 +36,8 @@ export class ProductsPage {
                 private navCtrl: NavController,
                 private viewCtrl: ViewController,
                 private storage: Storage,
+                private utilService: UtilService,
+                private orderService: OrderService,
                 private productService: ProductService) {
 
         this.getProduct();
@@ -42,6 +48,8 @@ export class ProductsPage {
             if (val != null) {
                 this.noLogin = false;
                 this.logined = true;
+
+                this.userId = val;
             }
         });
     }
@@ -62,7 +70,7 @@ export class ProductsPage {
         this.viewCtrl.dismiss();
     }
 
-    goToLogin(){
+    goToLogin() {
         this.navCtrl.push(ProfilePage);
     }
 
@@ -91,12 +99,12 @@ export class ProductsPage {
         let order = new Order(product, 1);
         let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id) != -1;
 
-        if(!isExist){
+        if (!isExist) {
             this.orders.push(product);
         }
 
         let n = 0, p = 0;
-        for(let i = 0; i < this.orders.length; i++){
+        for (let i = 0; i < this.orders.length; i++) {
             n += this.orders[i].orderNum;
             p += this.orders[i].orderNum * this.orders[i].price;
         }
@@ -111,12 +119,12 @@ export class ProductsPage {
                 {
                     text: '微信支付',
                     handler: () => {
-                        console.log('微信支付');
+                        this.weChatPay();
                     }
                 }, {
                     text: '支付宝支付',
                     handler: () => {
-                        console.log('支付宝支付');
+                        this.aliPay();
                     }
                 }, {
                     text: '取消',
@@ -128,6 +136,34 @@ export class ProductsPage {
             ]
         });
         actionSheet.present();
+    }
+
+    private weChatPay() {
+        this.postOrder();
+    }
+
+    private aliPay() {
+        this.postOrder();
+    }
+
+    paySuccess() {
+        this.utilService.alert('支付成功，我们会尽快为您发货。', () => {
+            this.navCtrl.push(OrdersPage);
+        });
+    }
+
+    postOrder() {
+        if(this.orders.length > 0) {
+            this.orderService.httpPostOrder({
+                products: JSON.stringify(this.orders),
+                sumPrice: this.sum,
+                customer: this.userId
+            }).subscribe(res => {
+                if (res.code == 0) {
+                    this.paySuccess();
+                }
+            });
+        }
     }
 
     /**
