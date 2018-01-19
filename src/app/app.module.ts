@@ -41,6 +41,7 @@ import {SearchPageModule} from "../pages/search/search.module";
 import {SearchPage} from "../pages/search/search";
 import {PipesModule} from "../pipes/pipes.module";
 import {OrderService} from "../service/order.service";
+import {NotificationService} from "../service/notification.service";
 
 @NgModule({
     declarations: [
@@ -97,6 +98,7 @@ import {OrderService} from "../service/order.service";
         BannerService,
         ProductService,
         OrderService,
+        NotificationService,
         {provide: ErrorHandler, useClass: IonicErrorHandler}
     ]
 })

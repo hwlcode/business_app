@@ -25,6 +25,10 @@ export class CoreService {
         saveProfile: '/api/saveProfile',
         search: '/api/products/list',  // 都用这个来取产品
         orderAdd: '/api/order/add',
-        orderList:  '/api/order/list'
+        orderList:  '/api/order/list',
+        userNotificationList: '/api/notification',
+        delUserNotification: '/api/notification/delete',
+        readUserNotification: '/api/notification/read',
+        unReadUserNotification: '/api/notification/unread'
     };
 }

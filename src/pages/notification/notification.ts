@@ -1,12 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-
-/**
- * Generated class for the NotificationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import {NotificationService} from "../../service/notification.service";
+import {Storage} from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -15,28 +10,51 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 })
 export class NotificationPage {
     items: any;
+    userId: string;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-        this.items = [
-            {title: '我们己经成功收到您的订单，会尽快为您发货！', date: '2018-1-15'},
-            {title: '我们己经成功收到您的订单，会尽快为您发货！', date: '2018-1-14'},
-            {title: '我们己经成功收到您的订单，会尽快为您发货！', date: '2018-1-13'},
-            {title: '我们己经成功收到您的订单，会尽快为您发货！', date: '2018-1-12'},
-            {title: '我们己经成功收到您的订单，会尽快为您发货！', date: '2018-1-11'},
-            {title: '我们己经成功收到您的订单，会尽快为您发货！', date: '2018-1-10'}
-        ];
+    constructor(public navCtrl: NavController,
+                public notificationService: NotificationService,
+                public storage: Storage,
+                public navParams: NavParams) {
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad NotificationPage');
-    }
-
-    removeItem(item){
-        for(let i = 0; i < this.items.length; i++) {
-            if(this.items[i] == item){
-                this.items.splice(i, 1);
+    ionViewDidEnter() {
+        this.storage.get('user').then(val => {
+            if (val != null) {
+                this.userId = val;
+                this.getNotification();
             }
-        }
+        });
+    }
+
+    getNotification() {
+        this.notificationService.getUserNotificationList(this.userId).subscribe(res => {
+            if (res.code === 0) {
+                this.items = res.data;
+            }
+        });
+    }
+
+    removeItem(item) {
+        this.notificationService.delUserNotification(item._id)
+            .subscribe(res => {
+                if (res.code === 0) {
+                    for (let i = 0; i < this.items.length; i++) {
+                        if (this.items[i] == item) {
+                            this.items.splice(i, 1);
+                        }
+                    }
+                }
+            });
+    }
+
+    readItem(item) {
+        this.notificationService.readUserNotification(item._id)
+            .subscribe(res => {
+                if(res.code === 0){
+                    item.read = 1;
+                }
+            });
     }
 
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IonicPage, ModalController, NavController} from 'ionic-angular';
 import {ProductsPage} from "../products/products";
-import {BannerService} from "../../service/banner.service";
+// import {BannerService} from "../../service/banner.service";
 import {ProductService} from "../../service/product.service";
 import {CoreService} from "../../service/core.service";
 import {ProfilePage} from "../profile/profile";
@@ -19,7 +19,7 @@ export class HomePage implements OnInit {
     public infiniteScroll: any;
 
     constructor(private navCtrl: NavController,
-                private bannerService: BannerService,
+                // private bannerService: BannerService,
                 private coreService: CoreService,
                 private modalCtrl: ModalController,
                 private productService: ProductService) {
@@ -27,7 +27,7 @@ export class HomePage implements OnInit {
     }
 
     ngOnInit() {
-        this.getBanners();
+        // this.getBanners();
         this.getProduct('', 1);
     }
 
@@ -82,16 +82,16 @@ export class HomePage implements OnInit {
         });
     }
 
-    getBanners() {
-        this.bannerService.httpGetBanner().subscribe(data => {
-            if (data.code == 0) {
-                this.banners = data.data;
-                this.banners.map(item => {
-                    item.image = this.coreService.domain + item.banner.path;
-                })
-            }
-        });
-    }
+    // getBanners() {
+    //     this.bannerService.httpGetBanner().subscribe(data => {
+    //         if (data.code == 0) {
+    //             this.banners = data.data;
+    //             this.banners.map(item => {
+    //                 item.image = this.coreService.domain + item.banner.path;
+    //             })
+    //         }
+    //     });
+    // }
 
     getProduct(keywords, page) {
         this.productService.httpProductFilter({

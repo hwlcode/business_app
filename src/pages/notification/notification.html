@@ -17,10 +17,11 @@
     <ion-list class="notification">
         <ion-item-sliding *ngFor="let item of items">
             <ion-item>
-                <h2>{{item.title}}</h2>
-                <p text-right>{{item.date}}</p>
+                <h2 [class.font-bold]="item.read == 0">{{item.content}}</h2>
+                <p>{{item.createdAt | date: 'yyyy-mm-dd hh:mm:ss'}}</p>
             </ion-item>
             <ion-item-options>
+                <button class="remove read" (click)="readItem(item)">&nbsp;&nbsp;{{item.read == 0 ? '未读' : '己读'}}&nbsp;&nbsp;</button>
                 <button class="remove" (click)="removeItem(item)">&nbsp;&nbsp;删除&nbsp;&nbsp;</button>
             </ion-item-options>
         </ion-item-sliding>

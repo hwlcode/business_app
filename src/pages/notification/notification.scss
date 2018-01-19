@@ -1,21 +1,32 @@
 page-notification {
-    .notification{
-        h2{
-            font-size: 13px;
-            color:#333;
+    .notification {
+        h2 {
+            font-size: 12px;
+            color: #333;
             margin-bottom: 5px;
+            white-space: normal;
+            line-height: 18px;
         }
-        p{
+
+        h2.font-bold {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        p {
             color: #999;
             font-size: 12px;
         }
-        ion-icon{
+        ion-icon {
             font-size: 25px;
         }
-        .remove{
+        .remove {
             background: #ff6659;
             color: #fff;
             font-weight: bold;
+        }
+        .remove.read {
+            background: blueviolet;
         }
     }
 

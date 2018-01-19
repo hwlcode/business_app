@@ -1,20 +1,43 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController} from "ionic-angular";
-import {UtilService} from "../../service/util.service";
+import {Storage} from '@ionic/storage';
+import {NotificationService} from "../../service/notification.service";
 
 @IonicPage()
 @Component({
     templateUrl: 'tabs.html'
 })
-export class TabsPage{
-    tabs: Array<{ key: string, value: string, icon: string, page: string }>;
+export class TabsPage {
+    tab1Root = 'HomePage';
+    tab2Root = 'ShoppingPage';
+    tab3Root = 'NotificationPage';
+    tab4Root = 'ProfilePage';
+    notificationNum: number;
+    userId: string;
 
-    constructor(public utilService: UtilService,
-                public navCtrl: NavController) {
-        this.getTabs();
+    constructor(public navCtrl: NavController,
+                public storage: Storage,
+                public notificationService: NotificationService) {
+
     }
 
-    getTabs() {
-        this.tabs = this.utilService.getTabs();
+    ionViewDidLoad() {
+        this.storage.get('user').then(val => {
+            if (val != null) {
+                this.userId = val;
+                this.getNotification();
+            }
+        });
+    }
+
+    getNotification() {
+        this.notificationService.unReadUserNotification(this.userId)
+            .subscribe(res => {
+                if(res.code === 0){
+                    if(res.data.length > 0){
+                        this.notificationNum = res.data.length;
+                    }
+                }
+            })
     }
 }

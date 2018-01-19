@@ -1,3 +1,7 @@
-<ion-tabs ng-class="{'tabs-item-hide': $root.hideTabs}">
-  <ion-tab *ngFor="let tab of tabs" [root]="tab.page" tabTitle="{{tab.value}}" tabIcon="{{tab.icon}}"></ion-tab>
+<ion-tabs>
+    <ion-tab [root]="tab1Root" tabTitle="首页" tabIcon="home"></ion-tab>
+    <ion-tab [root]="tab2Root" tabTitle="积分商城" tabIcon="basket"></ion-tab>
+    <ion-tab [root]="tab3Root" tabTitle="通知" tabIcon="notifications"
+             tabBadge="{{notificationNum}}"></ion-tab>
+    <ion-tab [root]="tab4Root" tabTitle="我的" tabIcon="contact"></ion-tab>
 </ion-tabs>
