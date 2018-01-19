@@ -8,5 +8,21 @@
 
 
 <ion-content>
-    <p text-center>暂未开放，敬请关注</p>
+    <ion-grid class="mp-width">
+        <ion-row>
+            <ion-col col-6 *ngFor="let product of products" class="mp-width">
+                <ion-card class="mp-width">
+                    <ion-card-header>
+                        <img src="{{product.image}}" width="155" height="155">
+                    </ion-card-header>
+                    <ion-card-content>
+                        <h2 class="name">{{product.name}}</h2>
+                        <p>积分：<b class="code">{{product.code}}</b>
+                        <button ion-button float-right class="check-it">兑换</button>
+                        </p>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

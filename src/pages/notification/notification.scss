@@ -28,6 +28,14 @@ page-notification {
         .remove.read {
             background: blueviolet;
         }
+
+        .item-block .item-inner{
+            border-bottom: 0.55px solid #f2f2f2;
+        }
+    }
+
+    .nologin-tips {
+        padding-top: 40%;
     }
 
 }

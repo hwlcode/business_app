@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {NotificationService} from "../../service/notification.service";
 import {Storage} from '@ionic/storage';
+import {ProfilePage} from "../profile/profile";
 
 @IonicPage()
 @Component({
@@ -11,6 +12,9 @@ import {Storage} from '@ionic/storage';
 export class NotificationPage {
     items: any;
     userId: string;
+
+    noLogin: boolean = true;
+    logined: boolean = false;
 
     constructor(public navCtrl: NavController,
                 public notificationService: NotificationService,
@@ -22,6 +26,10 @@ export class NotificationPage {
         this.storage.get('user').then(val => {
             if (val != null) {
                 this.userId = val;
+
+                this.noLogin = false;
+                this.logined = true;
+
                 this.getNotification();
             }
         });
@@ -55,6 +63,10 @@ export class NotificationPage {
                     item.read = 1;
                 }
             });
+    }
+
+    goToLogin() {
+        this.navCtrl.push(ProfilePage);
     }
 
 }
