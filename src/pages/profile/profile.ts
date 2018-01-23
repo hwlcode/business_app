@@ -12,6 +12,7 @@ import {CoreService} from "../../service/core.service";
 import {UserAddressPage} from "../user-address/user-address";
 import {BaseUI} from "../../common/baseui";
 import {OrdersPage} from "../orders/orders";
+import {VersionPage} from "../version/version";
 
 @IonicPage()
 @Component({
@@ -182,5 +183,9 @@ export class ProfilePage extends BaseUI implements OnInit {
     loginOut() {
         this.storage.remove('user');
         this.loadUserPage();
+    }
+
+    goToVersion() {
+        this.navCtrl.push(VersionPage);
     }
 }

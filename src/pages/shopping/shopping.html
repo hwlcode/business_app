@@ -8,6 +8,14 @@
 
 
 <ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+            pullingIcon="arrow-down"
+            pullingText="下拉刷新页面"
+            refreshingSpinner="circles"
+            refreshingText="数据加载中..."
+        ></ion-refresher-content>
+    </ion-refresher>
     <ion-grid class="mp-width">
         <ion-row>
             <ion-col col-6 *ngFor="let product of products" class="mp-width">
@@ -18,11 +26,17 @@
                     <ion-card-content>
                         <h2 class="name">{{product.name}}</h2>
                         <p>积分：<b class="code">{{product.code}}</b>
-                        <button ion-button float-right class="check-it">兑换</button>
+                        <button ion-button float-right class="check-it" *ngIf="logined" (click)="shoppingByCode(product)">兑换</button>
                         </p>
                     </ion-card-content>
                 </ion-card>
             </ion-col>
         </ion-row>
     </ion-grid>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="加载更多中..."
+        ></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

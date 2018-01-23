@@ -59,7 +59,7 @@ export class NotificationPage {
     readItem(item) {
         this.notificationService.readUserNotification(item._id)
             .subscribe(res => {
-                if(res.code === 0){
+                if (res.code === 0) {
                     item.read = 1;
                 }
             });
@@ -67,6 +67,15 @@ export class NotificationPage {
 
     goToLogin() {
         this.navCtrl.push(ProfilePage);
+    }
+
+    doRefresh(refresher) {
+        this.notificationService.getUserNotificationList(this.userId).subscribe(res => {
+            if (res.code === 0) {
+                this.items = res.data;
+                refresher.complete();
+            }
+        });
     }
 
 }

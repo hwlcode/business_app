@@ -14,6 +14,14 @@
 
 
 <ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+            pullingIcon="arrow-down"
+            pullingText="下拉刷新页面"
+            refreshingSpinner="circles"
+            refreshingText="数据加载中..."
+        ></ion-refresher-content>
+    </ion-refresher>
     <div *ngIf="noLogin">
         <p text-center class="nologin-tips">您还没有登录，请登录后再购买商品</p>
         <div text-center>

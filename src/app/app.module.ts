@@ -42,6 +42,9 @@ import {SearchPage} from "../pages/search/search";
 import {PipesModule} from "../pipes/pipes.module";
 import {OrderService} from "../service/order.service";
 import {NotificationService} from "../service/notification.service";
+import {AppVersion} from "@ionic-native/app-version";
+import {VersionPageModule} from "../pages/version/version.module";
+import {VersionPage} from "../pages/version/version";
 
 @NgModule({
     declarations: [
@@ -61,6 +64,7 @@ import {NotificationService} from "../service/notification.service";
         CheckOrdersPageModule,
         UserAddressPageModule,
         SearchPageModule,
+        VersionPageModule,
         PipesModule,
         IonicStorageModule.forRoot(),
         IonicModule.forRoot(MyApp, {
@@ -79,6 +83,7 @@ import {NotificationService} from "../service/notification.service";
         OrdersPage,
         ProfilePage,
         UserNamePage,
+        VersionPage,
         ShoppingPage,
         UserAddressPage,
         CheckOrdersPage,
@@ -91,6 +96,7 @@ import {NotificationService} from "../service/notification.service";
         Camera,
         ImagePicker,
         FileTransfer,
+        AppVersion,
         DatePicker,
         UtilService,
         CoreService,

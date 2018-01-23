@@ -76,6 +76,14 @@
             </ion-item>
         </ion-list>
 
+        <ion-list>
+            <ion-list-header>关于</ion-list-header>
+            <ion-item (click)="goToVersion()">
+                版本信息
+                <ion-icon name="arrow-forward" item-end></ion-icon>
+            </ion-item>
+        </ion-list>
+
         <ion-row margin-horizontal>
             <button block ion-button color="danger" class="save" (click)="loginOut()">登出</button>
         </ion-row>
