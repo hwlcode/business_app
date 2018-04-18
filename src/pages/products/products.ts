@@ -2,14 +2,11 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, ViewController} from 'ionic-angular';
 import {ModalController} from 'ionic-angular';
 import {CheckOrdersPage} from "../check-orders/check-orders";
-import {ActionSheetController} from 'ionic-angular';
 import {CoreService} from "../../service/core.service";
 import {ProductService} from "../../service/product.service";
 import {Storage} from '@ionic/storage';
 import {ProfilePage} from "../profile/profile";
-import {UtilService} from "../../service/util.service";
-import {OrdersPage} from "../orders/orders";
-import {OrderService} from "../../service/order.service";
+import {ConfirmOrderPage} from "../confirm-order/confirm-order";
 
 @IonicPage()
 @Component({
@@ -31,13 +28,10 @@ export class ProductsPage {
     logined: boolean = false;
 
     constructor(private modalCtrl: ModalController,
-                private actionSheetCtrl: ActionSheetController,
                 private coreService: CoreService,
                 private navCtrl: NavController,
                 private viewCtrl: ViewController,
                 private storage: Storage,
-                private utilService: UtilService,
-                private orderService: OrderService,
                 private productService: ProductService) {
 
         this.getProduct();
@@ -113,58 +107,59 @@ export class ProductsPage {
     }
 
     selectPayWay() {
-        let actionSheet = this.actionSheetCtrl.create({
-            title: '选择支付方式',
-            buttons: [
-                {
-                    text: '微信支付',
-                    handler: () => {
-                        this.weChatPay();
-                    }
-                }, {
-                    text: '支付宝支付',
-                    handler: () => {
-                        this.aliPay();
-                    }
-                }, {
-                    text: '取消',
-                    role: 'cancel',
-                    handler: () => {
-                        console.log('cancel');
-                    }
-                }
-            ]
-        });
-        actionSheet.present();
+        this.navCtrl.push(ConfirmOrderPage, {products: JSON.stringify(this.orders)});
+        // let actionSheet = this.actionSheetCtrl.create({
+        //     title: '选择支付方式',
+        //     buttons: [
+        //         {
+        //             text: '微信支付',
+        //             handler: () => {
+        //                 this.weChatPay();
+        //             }
+        //         }, {
+        //             text: '支付宝支付',
+        //             handler: () => {
+        //                 this.aliPay();
+        //             }
+        //         }, {
+        //             text: '取消',
+        //             role: 'cancel',
+        //             handler: () => {
+        //                 console.log('cancel');
+        //             }
+        //         }
+        //     ]
+        // });
+        // actionSheet.present();
     }
 
-    private weChatPay() {
-        this.postOrder();
-    }
-
-    private aliPay() {
-        this.postOrder();
-    }
-
-    paySuccess() {
-        this.utilService.alert('支付成功，我们会尽快为您发货。', () => {
-            this.navCtrl.push(OrdersPage);
-        });
-    }
-
-    postOrder() {
-        if(this.orders.length > 0) {
-            this.orderService.httpPostOrder({
-                products: JSON.stringify(this.orders),
-                sumPrice: this.sum,
-                customer: this.userId
-            }).subscribe(res => {
-                if (res.code == 0) {
-                    this.paySuccess();
-                }
-            });
-        }
-    }
+    // private weChatPay() {
+    //     this.postOrder();
+    // }
+    //
+    // private aliPay() {
+    //     this.postOrder();
+    // }
+    //
+    // paySuccess() {
+    //     this.utilService.alert('支付成功，我们会尽快为您发货。', () => {
+    //         this.navCtrl.push(OrdersPage);
+    //     });
+    // }
+    //
+    // postOrder() {
+    //     if(this.orders.length > 0) {
+    //         this.orderService.httpPostOrder({
+    //             products: JSON.stringify(this.orders),
+    //             sumPrice: this.sum,
+    //             customer: this.userId
+    //         }).subscribe(res => {
+    //             if (res.code == 0) {
+    //                 this.paySuccess();
+    //             }
+    //         });
+    //     }
+    // }
 
     /**
      * 搜索

@@ -21,7 +21,7 @@
             </ion-item>
             <ion-item>
                 <ion-label>验证码</ion-label>
-                <ion-input type="text" formControlName="phoneCode" placeholder="请输入验证码"></ion-input>
+                <ion-input type="text" formControlName="phoneCode" placeholder="请输入验证码" maxlength="6"></ion-input>
             </ion-item>
             <ion-item>
                 <button ion-button block large [disabled]="!loginForm.valid" (click)="login()" class="login">登录</button>

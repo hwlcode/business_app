@@ -45,6 +45,10 @@ import {NotificationService} from "../service/notification.service";
 import {AppVersion} from "@ionic-native/app-version";
 import {VersionPageModule} from "../pages/version/version.module";
 import {VersionPage} from "../pages/version/version";
+import {ConfirmOrderPage} from "../pages/confirm-order/confirm-order";
+import {ConfirmOrderPageModule} from "../pages/confirm-order/confirm-order.module";
+import {PayProvider} from '../providers/pay/pay';
+import {Alipay} from "@ionic-native/alipay";
 
 @NgModule({
     declarations: [
@@ -66,6 +70,7 @@ import {VersionPage} from "../pages/version/version";
         SearchPageModule,
         VersionPageModule,
         PipesModule,
+        ConfirmOrderPageModule,
         IonicStorageModule.forRoot(),
         IonicModule.forRoot(MyApp, {
             backButtonText: '返回',              //重置back文案
@@ -87,7 +92,8 @@ import {VersionPage} from "../pages/version/version";
         ShoppingPage,
         UserAddressPage,
         CheckOrdersPage,
-        SearchPage
+        SearchPage,
+        ConfirmOrderPage
     ],
     providers: [
         StatusBar,
@@ -105,7 +111,9 @@ import {VersionPage} from "../pages/version/version";
         ProductService,
         OrderService,
         NotificationService,
-        {provide: ErrorHandler, useClass: IonicErrorHandler}
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
+        PayProvider,
+        Alipay
     ]
 })
 export class AppModule {
