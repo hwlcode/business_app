@@ -32,9 +32,11 @@
         "@ionic/storage": "2.0.1",
         "blueimp-md5": "^2.10.0",
         "com.synconset.imagepicker": "~2.1.8",
-        "cordova-alipay-base": "0.0.1",
+        "cordova": "^8.0.0",
+        "cordova-alipay-base": "git+https://github.com/xueron/cordova-alipay-base.git",
         "cordova-android": "^6.4.0",
         "cordova-ios": "^4.4.0",
+        "cordova-plugin-alipay-v2": "0.0.4",
         "cordova-plugin-app-version": "^0.1.9",
         "cordova-plugin-camera": "^2.4.1",
         "cordova-plugin-compat": "^1.2.0",
@@ -77,9 +79,13 @@
             "cordova-plugin-datepicker": {},
             "cordova-plugin-app-version": {},
             "cordova-alipay-base": {
+                "APP_ID": "2018040302498148",
                 "ALI_PID": "2088922780420002"
             },
-            "cordova-plugin-statusbar": {}
+            "cordova-plugin-statusbar": {},
+            "cordova-plugin-alipay-v2": {
+                "APP_ID": "2018040302498148"
+            }
         },
         "platforms": [
             "android",

@@ -7,6 +7,7 @@ import {ProductService} from "../../service/product.service";
 import {Storage} from '@ionic/storage';
 import {ProfilePage} from "../profile/profile";
 import {ConfirmOrderPage} from "../confirm-order/confirm-order";
+// import {PayProvider} from "../../providers/pay/pay";
 
 @IonicPage()
 @Component({
@@ -32,6 +33,7 @@ export class ProductsPage {
                 private navCtrl: NavController,
                 private viewCtrl: ViewController,
                 private storage: Storage,
+                // private pay: PayProvider,
                 private productService: ProductService) {
 
         this.getProduct();
@@ -107,6 +109,7 @@ export class ProductsPage {
     }
 
     selectPayWay() {
+
         this.navCtrl.push(ConfirmOrderPage, {products: JSON.stringify(this.orders)});
         // let actionSheet = this.actionSheetCtrl.create({
         //     title: '选择支付方式',
