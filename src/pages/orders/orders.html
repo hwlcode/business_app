@@ -32,7 +32,7 @@
                 </ion-list>
             </ion-card-content>
             <ion-item class="order-footer">
-                <div class="status">{{ order.status == 0 ? '等待发货' : '己发货'}}</div>
+                <div class="status">{{order.orderStatusText}}</div>
                 <div class="sum" item-end>总价 <b class="price">￥{{order.sumPrice}}</b></div>
             </ion-item>
         </ion-card>

@@ -12,6 +12,7 @@ import {ProfilePage} from "../profile/profile";
 export class NotificationPage {
     items: any;
     userId: string;
+    showNotification: boolean = false;
 
     noLogin: boolean = true;
     logined: boolean = false;
@@ -39,6 +40,9 @@ export class NotificationPage {
         this.notificationService.getUserNotificationList(this.userId).subscribe(res => {
             if (res.code === 0) {
                 this.items = res.data;
+                if(res.data.length > 0){
+                    this.showNotification = true;
+                }
             }
         });
     }

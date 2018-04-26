@@ -7,7 +7,8 @@ import {ProductService} from "../../service/product.service";
 import {Storage} from '@ionic/storage';
 import {ProfilePage} from "../profile/profile";
 import {ConfirmOrderPage} from "../confirm-order/confirm-order";
-// import {PayProvider} from "../../providers/pay/pay";
+import {OrderService} from "../../service/order.service";
+// import {NotificationService} from "../../service/notification.service";
 
 @IonicPage()
 @Component({
@@ -24,6 +25,7 @@ export class ProductsPage {
 
     num: number = 0;
     sum: number = 0;
+    sn: string;
 
     noLogin: boolean = true;
     logined: boolean = false;
@@ -33,7 +35,8 @@ export class ProductsPage {
                 private navCtrl: NavController,
                 private viewCtrl: ViewController,
                 private storage: Storage,
-                // private pay: PayProvider,
+                private orderService: OrderService,
+                // private notificationService: NotificationService,
                 private productService: ProductService) {
 
         this.getProduct();
@@ -109,60 +112,35 @@ export class ProductsPage {
     }
 
     selectPayWay() {
-
-        this.navCtrl.push(ConfirmOrderPage, {products: JSON.stringify(this.orders)});
-        // let actionSheet = this.actionSheetCtrl.create({
-        //     title: '选择支付方式',
-        //     buttons: [
-        //         {
-        //             text: '微信支付',
-        //             handler: () => {
-        //                 this.weChatPay();
-        //             }
-        //         }, {
-        //             text: '支付宝支付',
-        //             handler: () => {
-        //                 this.aliPay();
-        //             }
-        //         }, {
-        //             text: '取消',
-        //             role: 'cancel',
-        //             handler: () => {
-        //                 console.log('cancel');
-        //             }
-        //         }
-        //     ]
-        // });
-        // actionSheet.present();
+        this.postOrder();
     }
 
-    // private weChatPay() {
-    //     this.postOrder();
-    // }
-    //
-    // private aliPay() {
-    //     this.postOrder();
-    // }
-    //
-    // paySuccess() {
-    //     this.utilService.alert('支付成功，我们会尽快为您发货。', () => {
-    //         this.navCtrl.push(OrdersPage);
-    //     });
-    // }
-    //
-    // postOrder() {
-    //     if(this.orders.length > 0) {
-    //         this.orderService.httpPostOrder({
-    //             products: JSON.stringify(this.orders),
-    //             sumPrice: this.sum,
-    //             customer: this.userId
-    //         }).subscribe(res => {
-    //             if (res.code == 0) {
-    //                 this.paySuccess();
-    //             }
-    //         });
-    //     }
-    // }
+    postOrder() {
+        if(this.orders.length > 0) {
+            this.orderService.httpPostOrder({
+                products: JSON.stringify(this.orders),
+                sumPrice: this.sum,
+                customer: this.userId
+            }).subscribe(res => {
+                if (res.code == 0) {
+                    this.sn = res.data.sn;
+
+                    this.navCtrl.push(ConfirmOrderPage, {
+                        products: JSON.stringify(this.orders),
+                        sn: res.data.sn
+                    });
+                }
+            });
+
+            // 测试
+            // let businessOpts = {
+            //     content: '您的订单：' + 'YK1524737681983' + ' 己经生成，我们会尽快为您发货！非常感谢您的订购，祝生活愉快！电话咨询：18078660058',
+            //     from: this.userId, // 管理员ID
+            //     to: this.userId
+            // }
+            // this.userOrderNotification(businessOpts);
+        }
+    }
 
     /**
      * 搜索
@@ -180,6 +158,18 @@ export class ProductsPage {
             }
         });
     }
+
+    // 测试
+    // userOrderNotification(opts){
+    //     // this.utilService.alert(opts.toString());
+    //     this.notificationService.createNotification(opts).subscribe(
+    //         res => {
+    //             if(res.code == 0){
+    //
+    //             }
+    //         }
+    //     )
+    // }
 }
 
 class Order {

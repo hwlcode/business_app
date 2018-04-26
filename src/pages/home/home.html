@@ -55,7 +55,7 @@
 
     <div class="product-list">
         <ion-list no-padding>
-            <ion-item no-padding *ngFor="let product of products">
+            <ion-item no-padding *ngFor="let product of products" (click)="goProduct()">
                 <ion-grid>
                     <ion-row>
                         <ion-col col-3><img src="{{product.image}}" width="80" height="80"></ion-col>

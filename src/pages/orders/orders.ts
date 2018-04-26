@@ -42,6 +42,15 @@ export class OrdersPage {
                 this.orders = res.orders;
                 this.orders.map( order => {
                     order.products = JSON.parse(order.products);
+                    if(order.status == 0){
+                        order.orderStatusText = '待支付';
+                    }
+                    else if(order.status == 1){
+                        order.orderStatusText = '己付款，待发货';
+                    }
+                    else if(order.status == 2){
+                        order.orderStatusText = '己发货';
+                    }
                 });
             }
         });

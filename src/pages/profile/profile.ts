@@ -20,8 +20,9 @@ import {VersionPage} from "../version/version";
     templateUrl: 'profile.html',
 })
 export class ProfilePage extends BaseUI implements OnInit {
+    title = '登录';
     headFace: string = 'assets/user.png';
-    userInfo: string[];
+    userInfo: any;
     notLogin: boolean = true;
     logined: boolean = false;
 
@@ -30,6 +31,9 @@ export class ProfilePage extends BaseUI implements OnInit {
         timeStarts: '1970-80-01'
     };
     gender: string = "先生";
+    name: string = '';
+    code: number = 0;
+    phone: string = '';
 
     errorMessage: any;
 
@@ -72,16 +76,24 @@ export class ProfilePage extends BaseUI implements OnInit {
                     userInfo => {
                         this.userInfo = userInfo['data'];
                         //去除图片头像的缓存
-                        if (userInfo['data'].avatar == null) {
+                        if (userInfo['data'] == null) {
                             this.headFace = 'assets/user.png';
                         } else {
-                            this.headFace = userInfo['data'].avatar.path + "?v=" + new Date().valueOf();
+                            if(userInfo['data']['avatar'] == null){
+                                this.headFace = 'assets/user.png';
+                            }else{
+                                this.headFace = this.coreService.domain + userInfo['data']['avatar']['path'] + "?v=" + new Date().valueOf();
+                            }
+                            this.gender = userInfo['data'].sex;
+                            this.event.timeStarts = userInfo['data'].birth;
+                            this.name = userInfo['data'].name;
+                            this.code = userInfo['data'].code;
+                            this.phone = userInfo['data'].phone;
                         }
-                        this.gender = userInfo['data'].sex;
-                        this.event.timeStarts = userInfo['data'].birth;
 
                         this.notLogin = false;
                         this.logined = true;
+                        this.title = '个人中心';
                         // loading.dismiss();
                     },
                     error => this.errorMessage = <any>error
@@ -89,6 +101,8 @@ export class ProfilePage extends BaseUI implements OnInit {
             } else {
                 this.notLogin = true;
                 this.logined = false;
+                this.title = '登录';
+                this.headFace = 'assets/user.png';
                 // loading.dismiss();
             }
         });

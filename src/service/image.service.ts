@@ -90,7 +90,7 @@ export class ImageService {
             this.uploadImg(imageData);
 
         }, (err) => {
-            this.utilService.toast('ERROR:' + err); //错误：无法使用拍照功能！
+            this.utilService.toast('提示: 未选择图片'); //错误：无法使用拍照功能！
         });
     }
 
@@ -106,7 +106,7 @@ export class ImageService {
                 this.uploadImg(temp);
 
             }, (err) => {
-                this.utilService.toast('ERROR:' + err); //错误：无法从手机相册中选择图片！
+                this.utilService.toast('提示: 未选择图片'); //错误：无法从手机相册中选择图片！
             });
 
         /*let str = '{"status":1,"msg":"提示：图片上传成功！","data":"http:\/\/192.168.1.20\/image\/580af6bcc4d40580af6bcc4d45.jpg"}';

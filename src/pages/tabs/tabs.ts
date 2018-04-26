@@ -12,7 +12,7 @@ export class TabsPage {
     tab2Root = 'ShoppingPage';
     tab3Root = 'NotificationPage';
     tab4Root = 'ProfilePage';
-    notificationNum: number;
+    notificationNum: any;
     userId: string;
 
     constructor(public navCtrl: NavController,
@@ -21,7 +21,11 @@ export class TabsPage {
 
     }
 
-    ionViewDidLoad() {
+    ionViewWillLoad() {
+
+    }
+
+    ionViewDidEnter() {
         this.storage.get('user').then(val => {
             if (val != null) {
                 this.userId = val;
@@ -33,11 +37,19 @@ export class TabsPage {
     getNotification() {
         this.notificationService.unReadUserNotification(this.userId)
             .subscribe(res => {
-                if(res.code === 0){
-                    if(res.data.length > 0){
+                if (res.code === 0) {
+                    if (res.data.length > 0) {
                         this.notificationNum = res.data.length;
+                    } else if (res.data.length == 0) {
+                        this.notificationNum = '';
                     }
                 }
             })
+    }
+
+    tabChange() {
+        if (this.userId != null) {
+            this.getNotification();
+        }
     }
 }

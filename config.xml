@@ -101,5 +101,5 @@
         <variable name="APP_ID" value="2018040302498148" />
     </plugin>
     <engine name="android" spec="^6.4.0" />
-    <engine name="ios" spec="^4.4.0" />
+    <engine name="ios" spec="4.5.4" />
 </widget>

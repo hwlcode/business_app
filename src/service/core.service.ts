@@ -8,10 +8,10 @@ export class CoreService {
 
     //接口基地址
     // 线上
-    // public domain = 'http://admin.gxyingken.com';
+    public domain = 'http://admin.gxyingken.com';
 
     //线下 （用nginx模拟本地api服务，就可以真机调试，详见business_api.conf，这样就可以用本地IP访问了）
-    public domain = 'http://192.168.1.102';
+    // public domain = 'http://192.168.1.102';
 
     //接口地址
     public API: any = {
@@ -27,6 +27,7 @@ export class CoreService {
         search: '/api/products/list',  // 都用这个来取产品
         orderAdd: '/api/order/add',
         orderList:  '/api/order/list',
+        updateOrder: '/api/order/confirm_order',
         userNotificationList: '/api/notification',
         delUserNotification: '/api/notification/delete',
         readUserNotification: '/api/notification/read',

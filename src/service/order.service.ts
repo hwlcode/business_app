@@ -21,4 +21,9 @@ export class OrderService {
         return this.http.get(this.coreService.domain + this.coreService.API.orderList + '?id=' + id)
             .map(res => res.json());
     }
+
+    httpUpdateOrderById(id: string): Observable<any> {
+        return this.http.get(this.coreService.domain + this.coreService.API.updateOrder + '/' + id)
+            .map(res => res.json());
+    }
 }

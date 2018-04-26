@@ -33,10 +33,10 @@ export class LoginPage extends BaseUI {
 
         let fb = new FormBuilder();
         this.loginForm = fb.group({
-            phone: ['15868823605', [phoneValidator]],
+            phone: ['', [phoneValidator]],
             phoneCode: ['', [numberValidator]]
         });
-
+        // console.log(this.loginForm.value); // 手机号码正则没有匹配上
     }
 
     /**
@@ -48,6 +48,7 @@ export class LoginPage extends BaseUI {
 
     login() {
         let loading = super.showLoading(this.loadingCtrl, '登录中...');
+
         if (this.loginForm.valid) {
             this.loginForm.value.phoneCode = md5(this.loginForm.value.phoneCode);
             this.userService.httpPost(this.loginForm.value)
