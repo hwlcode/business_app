@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ProductService} from "../../service/product.service";
 import {CoreService} from "../../service/core.service";
 import {Storage} from '@ionic/storage';
+import {CodeDetailPage} from "../code-detail/code-detail";
 
 @IonicPage()
 @Component({
@@ -86,7 +87,7 @@ export class ShoppingPage {
     }
 
     shoppingByCode(product) {
-
+        this.navCtrl.push(CodeDetailPage, {product: product});
     }
 
 }

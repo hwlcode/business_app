@@ -49,6 +49,8 @@ import {ConfirmOrderPage} from "../pages/confirm-order/confirm-order";
 import {ConfirmOrderPageModule} from "../pages/confirm-order/confirm-order.module";
 import {PayProvider} from '../providers/pay/pay';
 import {Alipay} from "@ionic-native/alipay";
+import {CodeDetailPage} from "../pages/code-detail/code-detail";
+import {CodeDetailPageModule} from "../pages/code-detail/code-detail.module";
 
 @NgModule({
     declarations: [
@@ -70,6 +72,7 @@ import {Alipay} from "@ionic-native/alipay";
         SearchPageModule,
         VersionPageModule,
         PipesModule,
+        CodeDetailPageModule,
         ConfirmOrderPageModule,
         IonicStorageModule.forRoot(),
         IonicModule.forRoot(MyApp, {
@@ -93,7 +96,8 @@ import {Alipay} from "@ionic-native/alipay";
         UserAddressPage,
         CheckOrdersPage,
         SearchPage,
-        ConfirmOrderPage
+        ConfirmOrderPage,
+        CodeDetailPage
     ],
     providers: [
         StatusBar,

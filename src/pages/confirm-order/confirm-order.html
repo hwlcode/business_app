@@ -37,13 +37,15 @@
         <ion-item>
             <p text-right>小计：<span class="price">￥{{sum}}</span>元</p>
         </ion-item>
-        <ion-item class="pay-way">
-            <ion-label icon-start color="primary">支付方式</ion-label>
-            <ion-select [(ngModel)]="payway" item-end cancelText="取消" okText="确定">
-                <ion-option value="0">支付宝</ion-option>
-                <ion-option value="1">微信</ion-option>
-            </ion-select>
-        </ion-item>
+        <div class="pay">
+            <ion-item class="pay-way">
+                <ion-label icon-start color="primary">支付方式</ion-label>
+                <ion-select [(ngModel)]="payway" item-end cancelText="取消" okText="确定">
+                    <ion-option value="0">支付宝</ion-option>
+                    <ion-option value="1">微信</ion-option>
+                </ion-select>
+            </ion-item>
+        </div>
     </div>
 </ion-content>
 

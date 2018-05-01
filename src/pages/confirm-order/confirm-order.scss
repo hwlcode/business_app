@@ -17,6 +17,16 @@ page-confirm-order {
     ion-list{
         margin-bottom: 0!important;
     }
+    .item-ios.item-block .item-inner,
+    .list-ios > .item-block:first-child,
+    .list-ios > .item-block:first-child{
+        border-bottom: 0!important;
+        border-top: 0!important;
+    }
+    .pay{
+        border-bottom: 1px #f2f2f2 solid!important;
+        border-top: 1px #f2f2f2 solid!important;
+    }
     .num{
         font-size: 14px;
         font-style: normal!important;

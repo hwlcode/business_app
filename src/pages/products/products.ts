@@ -127,7 +127,8 @@ export class ProductsPage {
 
                     this.navCtrl.push(ConfirmOrderPage, {
                         products: JSON.stringify(this.orders),
-                        sn: res.data.sn
+                        sn: res.data.sn,
+                        orderNo: res.data.no
                     });
                 }
             });

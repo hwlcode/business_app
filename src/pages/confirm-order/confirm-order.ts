@@ -32,6 +32,7 @@ export class ConfirmOrderPage {
     tradeId: string;
     adminId: string;
     hasPay: boolean = false;
+    no: string;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -45,6 +46,7 @@ export class ConfirmOrderPage {
                 public utilService: UtilService) {
         this.orders = JSON.parse(this.navParams.get('products'));
         this.sn = this.navParams.get('sn');
+        this.no = this.navParams.get('orderNo');
 
         let p = 0;
         for (let i = 0; i < this.orders.length; i++) {
@@ -118,7 +120,7 @@ export class ConfirmOrderPage {
 
                         // 通知商家发货
                         let opts = {
-                            content: '您收到新的订单：' + self.sn + ' 请尽快处理！',
+                            content: '您收到新的订单：' + self.no + ' 请尽快处理！',
                             from: self.userId,
                             to: '5ae19bbbab6c3d3b910b02af' // 管理员ID
                         }
@@ -126,7 +128,7 @@ export class ConfirmOrderPage {
 
                         // 用户收到下单通知
                         let businessOpts = {
-                            content: '您的订单：' + self.sn + ' 己经生成，我们会尽快为您发货！非常感谢您的订购，祝生活愉快！电话咨询：18078660058',
+                            content: '您的订单：' + self.no + ' 己经生成，我们会尽快为您发货！非常感谢您的订购，祝生活愉快！电话咨询：18078660058',
                             from: '5ae19bbbab6c3d3b910b02af', // 管理员ID
                             to: self.userId
                         }

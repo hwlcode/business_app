@@ -43,7 +43,11 @@ export class OrdersPage {
                 this.orders.map( order => {
                     order.products = JSON.parse(order.products);
                     if(order.status == 0){
-                        order.orderStatusText = '待支付';
+                        if(order.type == 1){
+                            order.orderStatusText = '己付款，待发货';
+                        }else{
+                            order.orderStatusText = '待支付';
+                        }
                     }
                     else if(order.status == 1){
                         order.orderStatusText = '己付款，待发货';

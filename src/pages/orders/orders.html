@@ -27,7 +27,7 @@
                     <ion-item class="list-item" *ngFor="let product of order.products">
                         <div class="name" icon-start>{{product.name}}</div>
                         <div class="num" item-end>x{{product.orderNum}}</div>
-                        <div class="price price-w" item-end>￥{{product.price}}</div>
+                        <div class="price price-w" item-end>￥{{product.price * product.orderNum}}</div>
                     </ion-item>
                 </ion-list>
             </ion-card-content>
