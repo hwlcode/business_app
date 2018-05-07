@@ -57,4 +57,9 @@ export class UserService {
         return this.http.get(this.coreService.domain + this.coreService.API.verifyCode + '?phone=' + phone)
             .map(res => res.json());
     }
+
+    httpGetAdminId(): Observable<any> {
+        return this.http.get(this.coreService.domain + '/api/get_admin_id')
+            .map(res => res.json());
+    }
 }

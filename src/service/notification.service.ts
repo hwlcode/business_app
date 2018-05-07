@@ -36,4 +36,8 @@ export class NotificationService {
         return this.http.get(this.coreService.domain + '/api/notification/create/' + request.content + '/' + request.from + '/' + request.to)
             .map(res => res.json());
     }
+
+    msgToBusiness(phone: string, no: string): Observable<any> {
+        return this.http.get(this.coreService.domain + '/api/msg_to_business?phone=' + phone + '&no=' + no).map(res => res.json());
+    }
 }

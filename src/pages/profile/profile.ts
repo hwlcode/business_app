@@ -160,7 +160,7 @@ export class ProfilePage extends BaseUI implements OnInit {
                         this.gender = data.data.sex;
                         loading.dismiss();
                         super.showToast(this.toastCtrl, '更新成功。');
-                        console.log('done');
+                        // console.log('done');
                     }
                 });
             }
@@ -179,7 +179,7 @@ export class ProfilePage extends BaseUI implements OnInit {
                     if (data.code == 0) {
                         loading.dismiss();
                         super.showToast(this.toastCtrl, '更新成功。');
-                        console.log('done');
+                        // console.log('done');
                     }
                 });
             }

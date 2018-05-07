@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {Http} from "@angular/http";
 import {CoreService} from "./core.service";
-import {OrderRequest} from "../message/order.request";
+import {CodeRequest, OrderRequest} from "../message/order.request";
 
 @Injectable()
 export class OrderService {
@@ -24,6 +24,11 @@ export class OrderService {
 
     httpUpdateOrderById(id: string): Observable<any> {
         return this.http.get(this.coreService.domain + this.coreService.API.updateOrder + '/' + id)
+            .map(res => res.json());
+    }
+
+    httpPostCode(request: CodeRequest): Observable<any> {
+        return this.http.post(this.coreService.domain + '/api/update_code', request)
             .map(res => res.json());
     }
 }

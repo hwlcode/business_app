@@ -20,6 +20,10 @@ declare let cordova: any;  // 合局引入cordova，只需在index.html先引入
 })
 export class ConfirmOrderPage {
     userInfo: Object = {};
+    address: string;
+    name: string;
+    phone: string;
+
     errorMessage: any;
     orders: any = [];
     sum: number = 0;
@@ -33,6 +37,7 @@ export class ConfirmOrderPage {
     adminId: string;
     hasPay: boolean = false;
     no: string;
+    adminPhone: string;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -41,6 +46,7 @@ export class ConfirmOrderPage {
                 public payProvider: PayProvider,
                 public http: Http,
                 // private alipay: Alipay,
+                public userSerive: UserService,
                 public orderService: OrderService,
                 public notificationService: NotificationService,
                 public utilService: UtilService) {
@@ -64,16 +70,20 @@ export class ConfirmOrderPage {
                 this.userService.httpGetUser(val).subscribe(
                     userInfo => {
                         this.userInfo = userInfo['data'];
+                        this.address = userInfo['data']['address'];
+                        this.name = userInfo['data']['name'];
+                        this.phone = userInfo['data']['phone'];
                     },
                     error => this.errorMessage = <any>error
                 )
             }
         });
 
-        this.http.get('/api/get_admin_id?t='+new Date().getTime()).map(res => res.json()).subscribe(
+        this.userSerive.httpGetAdminId().subscribe(
             res => {
                 if(res.code == 0){
                     this.adminId = res.data._id;
+                    this.adminPhone = res.data.phone;
                 }
             }
         );
@@ -122,14 +132,15 @@ export class ConfirmOrderPage {
                         let opts = {
                             content: '您收到新的订单：' + self.no + ' 请尽快处理！',
                             from: self.userId,
-                            to: '5ae19bbbab6c3d3b910b02af' // 管理员ID
+                            to: self.adminId // 管理员ID
                         }
                         self.userOrderNotification(opts);
+                        self.msgToBusiness(self.adminPhone, self.no);
 
                         // 用户收到下单通知
                         let businessOpts = {
                             content: '您的订单：' + self.no + ' 己经生成，我们会尽快为您发货！非常感谢您的订购，祝生活愉快！电话咨询：18078660058',
-                            from: '5ae19bbbab6c3d3b910b02af', // 管理员ID
+                            from: self.adminId, // 管理员ID
                             to: self.userId
                         }
                         self.userOrderNotification(businessOpts);
@@ -165,6 +176,15 @@ export class ConfirmOrderPage {
                 if(res.code == 0){
 
                 }
+            }
+        )
+    }
+
+    // 短信通知商家发货
+    msgToBusiness(phone, sn) {
+        this.notificationService.msgToBusiness(phone, sn).subscribe(
+            data => {
+
             }
         )
     }

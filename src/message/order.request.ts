@@ -3,3 +3,8 @@ export class OrderRequest {
     sumPrice: number;
     customer: string
 }
+
+export class CodeRequest {
+    id: string;
+    product: any;
+}

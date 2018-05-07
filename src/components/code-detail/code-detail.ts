@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 /**
  * Generated class for the CodeDetailComponent component.
@@ -7,16 +7,16 @@ import { Component } from '@angular/core';
  * Components.
  */
 @Component({
-  selector: 'code-detail',
-  templateUrl: 'code-detail.html'
+    selector: 'code-detail',
+    templateUrl: 'code-detail.html'
 })
 export class CodeDetailComponent {
 
-  text: string;
+    text: string;
 
-  constructor() {
-    console.log('Hello CodeDetailComponent Component');
-    this.text = 'Hello World';
-  }
+    constructor() {
+        // console.log('Hello CodeDetailComponent Component');
+        this.text = 'Hello World';
+    }
 
 }

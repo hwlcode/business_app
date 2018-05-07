@@ -6,7 +6,7 @@ import {Storage} from '@ionic/storage';
 import {UtilService} from "../../service/util.service";
 import {UserService} from "../../service/user.service";
 import {BaseUI} from "../../common/baseui";
-import md5 from 'blueimp-md5';
+// import md5 from 'blueimp-md5';
 
 @IonicPage()
 @Component({
@@ -50,7 +50,7 @@ export class LoginPage extends BaseUI {
         let loading = super.showLoading(this.loadingCtrl, '登录中...');
 
         if (this.loginForm.valid) {
-            this.loginForm.value.phoneCode = md5(this.loginForm.value.phoneCode);
+            // this.loginForm.value.phoneCode = md5(this.loginForm.value.phoneCode);
             this.userService.httpPost(this.loginForm.value)
                 .subscribe(
                     data => {
@@ -89,7 +89,7 @@ export class LoginPage extends BaseUI {
 
     getCode() {
         if (this.loginForm.value.phone == '') {
-            console.debug("请填写手机号!");
+            this.utilService.toast('请输入手机号码');
             return;
         }
 
