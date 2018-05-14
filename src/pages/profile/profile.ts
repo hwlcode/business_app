@@ -13,6 +13,7 @@ import {UserAddressPage} from "../user-address/user-address";
 import {BaseUI} from "../../common/baseui";
 import {OrdersPage} from "../orders/orders";
 import {VersionPage} from "../version/version";
+import {AboutPage} from "../about/about";
 
 @IonicPage()
 @Component({
@@ -201,5 +202,9 @@ export class ProfilePage extends BaseUI implements OnInit {
 
     goToVersion() {
         this.navCtrl.push(VersionPage);
+    }
+
+    goToAbout() {
+        this.navCtrl.push(AboutPage);
     }
 }

@@ -34,7 +34,7 @@
                             <ion-col col-3><img src="{{product.image}}" width="80" height="80"></ion-col>
                             <ion-col col-9>
                                 <h2 text-left class="product-name">{{product.name}}</h2>
-                                <p text-right class="price"><i>￥{{product.price}}</i>/<b>斤</b></p>
+                                <p text-right class="price"><i>￥{{product.price}}</i>/<b>{{product.unit}}</b></p>
                                 <p text-right>
                                     <num-count [(ngModel)]="product.orderNum" (click)="chooseProduct(product)"></num-count>
                                 </p>

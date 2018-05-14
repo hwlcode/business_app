@@ -1,0 +1,23 @@
+page-about {
+    .title{
+        font-size: 20px;
+        text-align: center;
+        padding: 15px 0;
+    }
+    .about{
+        font-size: 12px;
+        color: #333;
+        border:1px #ccc solid;
+        padding: 10px 15px;
+        margin-bottom: 25px;
+        p{
+            text-indent: 2em;
+        }
+    }
+    .copy-right{
+        font-size: 12px;
+        color: #333;
+        text-align: center;
+        padding: 15px 0;
+    }
+}

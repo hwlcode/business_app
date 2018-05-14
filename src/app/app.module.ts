@@ -51,6 +51,8 @@ import {PayProvider} from '../providers/pay/pay';
 import {Alipay} from "@ionic-native/alipay";
 import {CodeDetailPage} from "../pages/code-detail/code-detail";
 import {CodeDetailPageModule} from "../pages/code-detail/code-detail.module";
+import {AboutPage} from "../pages/about/about";
+import {AboutPageModule} from "../pages/about/about.module";
 
 @NgModule({
     declarations: [
@@ -71,6 +73,7 @@ import {CodeDetailPageModule} from "../pages/code-detail/code-detail.module";
         UserAddressPageModule,
         SearchPageModule,
         VersionPageModule,
+        AboutPageModule,
         PipesModule,
         CodeDetailPageModule,
         ConfirmOrderPageModule,
@@ -97,7 +100,8 @@ import {CodeDetailPageModule} from "../pages/code-detail/code-detail.module";
         CheckOrdersPage,
         SearchPage,
         ConfirmOrderPage,
-        CodeDetailPage
+        CodeDetailPage,
+        AboutPage
     ],
     providers: [
         StatusBar,
