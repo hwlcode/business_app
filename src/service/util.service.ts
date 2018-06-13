@@ -67,12 +67,19 @@ export class UtilService {
             let alert = this.alertCtrl.create({
                 title: '提示',
                 message: message,
-                buttons: [{
-                    text: "确定",
-                    handler: data => {
-                        callback();
-                    }
-                }]
+                buttons: [
+                    {
+                        text: '取消',
+                        handler: data => {
+                            console.log('Cancel clicked');
+                        }
+                    },
+                    {
+                        text: "确定",
+                        handler: data => {
+                            callback();
+                        }
+                    }]
             });
             alert.present();
         } else {

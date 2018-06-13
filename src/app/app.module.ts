@@ -53,6 +53,7 @@ import {CodeDetailPage} from "../pages/code-detail/code-detail";
 import {CodeDetailPageModule} from "../pages/code-detail/code-detail.module";
 import {AboutPage} from "../pages/about/about";
 import {AboutPageModule} from "../pages/about/about.module";
+import {WechatChenyu} from "wechat-chenyu";
 
 @NgModule({
     declarations: [
@@ -121,6 +122,7 @@ import {AboutPageModule} from "../pages/about/about.module";
         NotificationService,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         PayProvider,
+        WechatChenyu,
         Alipay
     ]
 })

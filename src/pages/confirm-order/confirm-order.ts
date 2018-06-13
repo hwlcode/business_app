@@ -9,6 +9,7 @@ import {OrderService} from "../../service/order.service";
 import {OrdersPage} from "../orders/orders";
 import {NotificationService} from "../../service/notification.service";
 import {Http} from "@angular/http";
+import {WechatChenyu} from "wechat-chenyu";
 // import {OrdersPage} from "../orders/orders";
 
 declare let cordova: any;  // 合局引入cordova，只需在index.html先引入，需在真机里才可以调试 https://stackoverflow.com/questions/31368026/cordova-plugin-file-in-chrome-cordova-is-not-defined
@@ -31,12 +32,12 @@ export class ConfirmOrderPage {
     payInfo: string;
     subject: string = '';
     body: string = '';
-    sn: string;
+    sn: string;   // 订单编号YKxxxxxxx
     userId: string;
     tradeId: string;
     adminId: string;
     hasPay: boolean = false;
-    no: string;
+    no: string;  // 订单_id
     adminPhone: string;
 
     constructor(public navCtrl: NavController,
@@ -49,6 +50,7 @@ export class ConfirmOrderPage {
                 public userSerive: UserService,
                 public orderService: OrderService,
                 public notificationService: NotificationService,
+                public wechatChenyu: WechatChenyu,
                 public utilService: UtilService) {
         this.orders = JSON.parse(this.navParams.get('products'));
         this.sn = this.navParams.get('sn');
@@ -81,7 +83,7 @@ export class ConfirmOrderPage {
 
         this.userSerive.httpGetAdminId().subscribe(
             res => {
-                if(res.code == 0){
+                if (res.code == 0) {
                     this.adminId = res.data._id;
                     this.adminPhone = res.data.phone;
                 }
@@ -103,7 +105,6 @@ export class ConfirmOrderPage {
 
     confirmPay() {
         var self = this;
-
         if (this.payway == 0) {
             // 支付宝
             cordova.plugins.alipay.payment(this.payInfo,
@@ -117,7 +118,7 @@ export class ConfirmOrderPage {
                      * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
                      * docType=1) 建议商户依赖异步通知
                      */
-                    if(e.resultStatus == 9000){
+                    if (e.resultStatus == 9000) {
                         // let res = JSON.parse(e.result);
                         // self.tradeId = res.alipay_trade_app_pay_response.trade_no;
                         // //验证订单
@@ -130,23 +131,23 @@ export class ConfirmOrderPage {
 
                         // 通知商家发货
                         let opts = {
-                            content: '您收到新的订单：' + self.no + ' 请尽快处理！',
+                            content: '您收到新的订单：' + self.sn + ' 请尽快处理！',
                             from: self.userId,
                             to: self.adminId // 管理员ID
                         }
                         self.userOrderNotification(opts);
-                        self.msgToBusiness(self.adminPhone, self.no);
+                        self.msgToBusiness(self.adminPhone, self.sn);
 
                         // 用户收到下单通知
                         let businessOpts = {
-                            content: '您的订单：' + self.no + ' 己经生成，我们会尽快为您发货！非常感谢您的订购，祝生活愉快！电话咨询：18078660058',
+                            content: '您的订单：' + self.sn + ' 己经生成，我们会尽快为您发货！非常感谢您的订购，祝生活愉快！电话咨询：18078660058',
                             from: self.adminId, // 管理员ID
                             to: self.userId
                         }
                         self.userOrderNotification(businessOpts);
 
                         // 改变订单状态 status=1
-                        self.changeOrderStatus();
+                        self.changeOrderStatus(self.payway);
                         // 禁用按钮
                         self.hasPay = true;
                     }
@@ -157,23 +158,66 @@ export class ConfirmOrderPage {
                 });
         } else if (this.payway == 1) {
             // 微信
+            let params = {
+                attach: self.subject, // 订单标题
+                body: self.body, // 订单描述
+                out_trade_no: self.sn, // 订单号
+                total_fee: self.sum, // 订单金额
+            };
+
+            this.payProvider.postWxPay(params).subscribe(res => {
+                if (res.code == 0) {
+                    this.wechatChenyu.sendPaymentRequest(res.data).then(
+                        data => {
+                            // 成功之后的跳转
+                            self.utilService.alert('支付成功', () => {
+                                // 通知商家发货
+                                let opts = {
+                                    content: '您收到新的订单：' + self.sn + ' 请尽快处理！',
+                                    from: self.userId,
+                                    to: self.adminId // 管理员ID
+                                }
+                                self.userOrderNotification(opts);
+                                self.msgToBusiness(self.adminPhone, self.sn);
+
+                                // 用户收到下单通知
+                                let businessOpts = {
+                                    content: '您的订单：' + self.sn + ' 己经生成，我们会尽快为您发货！非常感谢您的订购，祝生活愉快！电话咨询：18078660058',
+                                    from: self.adminId, // 管理员ID
+                                    to: self.userId
+                                }
+                                self.userOrderNotification(businessOpts);
+
+                                // 改变订单状态 status=1
+                                self.changeOrderStatus(self.payway);
+                                // 禁用按钮
+                                self.hasPay = true;
+                            });
+                        },
+                        err => {
+                            self.utilService.alert(err);
+                            console.log(err);
+                        }
+                    )
+                }
+            });
         }
     }
 
-    changeOrderStatus(){
-        this.orderService.httpUpdateOrderById(this.sn).subscribe(
+    changeOrderStatus(payWay) {
+        this.orderService.httpUpdateOrderById(this.no, payWay).subscribe(
             res => {
-                if(res.code == 0){
+                if (res.code == 0) {
                     this.navCtrl.push(OrdersPage);
                 }
             }
         )
     }
 
-    userOrderNotification(opts){
+    userOrderNotification(opts) {
         this.notificationService.createNotification(opts).subscribe(
             res => {
-                if(res.code == 0){
+                if (res.code == 0) {
 
                 }
             }

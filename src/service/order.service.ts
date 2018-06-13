@@ -22,13 +22,18 @@ export class OrderService {
             .map(res => res.json());
     }
 
-    httpUpdateOrderById(id: string): Observable<any> {
-        return this.http.get(this.coreService.domain + this.coreService.API.updateOrder + '/' + id)
+    httpUpdateOrderById(id: string, payWay: number): Observable<any> {
+        return this.http.get(this.coreService.domain + this.coreService.API.updateOrder + '/' + id + '/' + payWay)
             .map(res => res.json());
     }
 
     httpPostCode(request: CodeRequest): Observable<any> {
         return this.http.post(this.coreService.domain + '/api/update_code', request)
+            .map(res => res.json());
+    }
+
+    httpDelOrder(id: string): Observable<any> {
+        return this.http.get(this.coreService.domain + '/api/order/del/' + id)
             .map(res => res.json());
     }
 }

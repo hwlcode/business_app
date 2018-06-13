@@ -35,6 +35,12 @@
                 <div class="status">{{order.orderStatusText}}</div>
                 <div class="sum" item-end>总价 <b class="price">￥{{order.sumPrice}}</b></div>
             </ion-item>
+            <ion-item>
+                <div class="align-right">
+                    <button ion-button class="check-it" *ngIf="order.status == 0" (click)="goToPay(order)">继续支付</button>
+                    <button ion-button float-right class="check-it" (click)="delOrder(order._id)">删除</button>
+                </div>
+            </ion-item>
         </ion-card>
     </div>
 </ion-content>

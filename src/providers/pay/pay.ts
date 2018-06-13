@@ -3,7 +3,7 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from "rxjs/Observable";
 import {CoreService} from "../../service/core.service";
-import {payInfoRequest} from "../../message/pay.request";
+import {payInfoRequest, payWxPayInfoRequest} from "../../message/pay.request";
 
 @Injectable()
 export class PayProvider {
@@ -19,6 +19,11 @@ export class PayProvider {
 
     queryOrder(sn: string, tradeId: string): Observable<any> {
         return this.http.get(this.coreService.domain + '/api/query_order?sn=' + sn + '&trade_id=' + tradeId)
+            .map(res => res.json());
+    }
+
+    postWxPay(request: payWxPayInfoRequest): Observable<any> {
+        return this.http.post(this.coreService.domain + '/api/wx_pay/order', request)
             .map(res => res.json());
     }
 }

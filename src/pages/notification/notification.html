@@ -33,7 +33,7 @@
             <ion-item-sliding *ngFor="let item of items">
                 <ion-item>
                     <h2 [class.font-bold]="item.read == 0">{{item.content}}</h2>
-                    <p>{{item.createdAt | date: 'yyyy-mm-dd hh:mm:ss'}}</p>
+                    <p>{{item.createdAt | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
                 </ion-item>
                 <ion-item-options>
                     <button class="remove read" (click)="readItem(item)">&nbsp;&nbsp;{{item.read == 0 ? '未读' : '己读'}}&nbsp;&nbsp;</button>

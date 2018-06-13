@@ -9,7 +9,7 @@ export function phoneValidator(control: FormControl) {
 
 export function numberValidator(control: FormControl) {
     const val = (control.value || '') + '';
-    const reg = /^\d{6}$/;
+    const reg = /^\d{5,6}$/;
     const valid = reg.test(val);
     return valid ? null : {numberValidator: true};
 }
