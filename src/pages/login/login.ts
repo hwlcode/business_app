@@ -72,7 +72,7 @@ export class LoginPage extends BaseUI {
     // 倒计时
     settime() {
         if (this.verifyCode.countdown == 1) {
-            this.verifyCode.countdown = 30;
+            this.verifyCode.countdown = 60;
             this.verifyCode.verifyCodeTips = "获取验证码";
             this.verifyCode.disable = true;
             return;
