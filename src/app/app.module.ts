@@ -54,6 +54,10 @@ import {CodeDetailPageModule} from "../pages/code-detail/code-detail.module";
 import {AboutPage} from "../pages/about/about";
 import {AboutPageModule} from "../pages/about/about.module";
 import {WechatChenyu} from "wechat-chenyu";
+import {UpdateService} from "../service/update.service";
+import {FileOpener} from "@ionic-native/file-opener";
+import {InAppBrowser} from "@ionic-native/in-app-browser";
+import {File} from '@ionic-native/file';
 
 @NgModule({
     declarations: [
@@ -109,6 +113,9 @@ import {WechatChenyu} from "wechat-chenyu";
         SplashScreen,
         ImageService,
         Camera,
+        File,
+        FileOpener,
+        InAppBrowser,
         ImagePicker,
         FileTransfer,
         AppVersion,
@@ -120,6 +127,7 @@ import {WechatChenyu} from "wechat-chenyu";
         ProductService,
         OrderService,
         NotificationService,
+        UpdateService,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         PayProvider,
         WechatChenyu,

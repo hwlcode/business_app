@@ -15,20 +15,7 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-//ion-modal{
-//    height: 100%;
-//    bottom: 53px!important;
-//    top: auto;
-//
-//    ion-backdrop{
-//        visibility: visible;
-//    }
-//
-//    .modal-wrapper {
-//        position: relative;
-//        top: 40%;
-//        z-index: 10;
-//        height: 60%;
-//        contain: strict;
-//    }
-//}
+.alert-message{
+    text-align: left!important;
+    padding: 0 40px 21px 40px!important;
+}

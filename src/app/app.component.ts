@@ -7,6 +7,7 @@ import {WelcomePage} from '../pages/welcome/welcome';
 import {Storage} from '@ionic/storage';
 import {TabsPage} from "../pages/tabs/tabs";
 import {UtilService} from "../service/util.service";
+import {UpdateService} from "../service/update.service";
 
 @Component({
     templateUrl: 'app.html'
@@ -18,7 +19,10 @@ export class MyApp {
                 statusBar: StatusBar,
                 splashScreen: SplashScreen,
                 private utilService: UtilService,
+                private updateService: UpdateService,
                 private storage: Storage) {
+
+        this.updateService.detectionUpgrade();
 
         this.utilService.getFirstIn().then(data => {
             if (data) {

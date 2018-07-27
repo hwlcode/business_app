@@ -107,4 +107,6 @@
         <native-interface version="2" />
         <config-file url="http://admin.gxyingken.com/hotcode/chcp.json" />
     </chcp>
+    <plugin name="cordova-plugin-file-opener2" spec="~2.0.19" />
+    <plugin name="cordova-plugin-inappbrowser" spec="~3.0.0" />
 </widget>
