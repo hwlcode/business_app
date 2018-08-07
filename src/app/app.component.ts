@@ -22,7 +22,9 @@ export class MyApp {
                 private updateService: UpdateService,
                 private storage: Storage) {
 
-        this.updateService.detectionUpgrade();
+        this.updateService.checkVersion(); // 版本升级检测
+
+        this.utilService.alloyLeverInit(); // 本地"开发者工具"
 
         this.utilService.getFirstIn().then(data => {
             if (data) {

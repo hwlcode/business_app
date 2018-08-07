@@ -17,7 +17,7 @@ import {AppVersion} from "@ionic-native/app-version";
 export class VersionPage {
     appName: string;
     packageName: string;
-    versionCode: string;
+    versionCode: any;
     versionNumber: string;
 
     constructor(public navCtrl: NavController, private appVersion: AppVersion, public navParams: NavParams) {

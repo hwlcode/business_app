@@ -58,6 +58,7 @@ import {UpdateService} from "../service/update.service";
 import {FileOpener} from "@ionic-native/file-opener";
 import {InAppBrowser} from "@ionic-native/in-app-browser";
 import {File} from '@ionic-native/file';
+import {Diagnostic} from "@ionic-native/diagnostic";
 
 @NgModule({
     declarations: [
@@ -128,6 +129,7 @@ import {File} from '@ionic-native/file';
         OrderService,
         NotificationService,
         UpdateService,
+        Diagnostic,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         PayProvider,
         WechatChenyu,
