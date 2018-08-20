@@ -14,12 +14,8 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-.scroll-content {
-    background: #f2f2f2;
-}
 
-ion-modal {
-    height: 60%;
-    bottom: 53px!important;
-    top: auto;
+.alert-message{
+    text-align: left!important;
+    padding: 0 40px 21px 40px!important;
 }

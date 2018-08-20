@@ -1,0 +1,60 @@
+<ion-header>
+
+    <ion-navbar color="primary">
+        <ion-title>确认订单</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-item color="primary">
+        <p>订单配送至：</p>
+        <p class="address">{{address}}</p>
+        <p>{{name}}&nbsp;&nbsp;&nbsp;&nbsp;{{phone}}</p>
+    </ion-item>
+    <div class="product-list">
+        <ion-list no-padding>
+            <ion-item no-padding *ngFor="let product of orders">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-2><img src="{{product.image}}" width="50" height="50"></ion-col>
+                        <ion-col col-10>
+                            <h2 text-left class="product-name">{{product.name}}</h2>
+                            <ion-row>
+                                <ion-col class="9">
+                                    <p text-right class="num"><span>x {{product.orderNum}}</span></p>
+                                </ion-col>
+                                <ion-col col-3>
+                                    <p text-right><i class="price">￥{{product.orderNum * product.price}}</i>元</p>
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </ion-list>
+        <ion-item>
+            <p text-right>小计：<span class="price">￥{{sum}}</span>元</p>
+        </ion-item>
+        <div class="pay">
+            <ion-item class="pay-way">
+                <ion-label icon-start color="primary">支付方式</ion-label>
+                <ion-select [(ngModel)]="payway" item-end cancelText="取消" okText="确定">
+                    <ion-option value="0">支付宝</ion-option>
+                    <ion-option value="1">微信支付</ion-option>
+                </ion-select>
+            </ion-item>
+        </div>
+    </div>
+</ion-content>
+
+<ion-footer>
+    <ion-item color="light" [style.opacity]="0.75" class="selected-bar">
+        <div class="sum-price">
+            <i class="price">￥{{sum}}</i>元
+        </div>
+        <button ion-button item-end class="go-pay" (click)="confirmPay()" class="go-pay" [disabled]="hasPay">确认支付</button>
+    </ion-item>
+</ion-footer>
+

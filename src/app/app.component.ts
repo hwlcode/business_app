@@ -4,8 +4,10 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {WelcomePage} from '../pages/welcome/welcome';
-import { Storage } from '@ionic/storage';
+import {Storage} from '@ionic/storage';
 import {TabsPage} from "../pages/tabs/tabs";
+import {UtilService} from "../service/util.service";
+import {UpdateService} from "../service/update.service";
 
 @Component({
     templateUrl: 'app.html'
@@ -13,20 +15,26 @@ import {TabsPage} from "../pages/tabs/tabs";
 export class MyApp {
     rootPage: any = 'TabsPage';
 
-    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public storage: Storage) {
-        this.storage.get('firstIn').then((result) => {
+    constructor(platform: Platform,
+                statusBar: StatusBar,
+                splashScreen: SplashScreen,
+                private utilService: UtilService,
+                private updateService: UpdateService,
+                private storage: Storage) {
 
-                if (result) {
-                    this.rootPage = TabsPage;
-                }
-                else {
-                    this.storage.set('firstIn', true);
-                    this.rootPage = WelcomePage;
-                }
+        this.updateService.checkVersion(); // 版本升级检测
 
+        this.utilService.alloyLeverInit(); // 本地"开发者工具"
+
+        this.utilService.getFirstIn().then(data => {
+            if (data) {
+                this.rootPage = TabsPage;
             }
-        );
-
+            else {
+                this.storage.set('firstIn', true);
+                this.rootPage = WelcomePage;
+            }
+        });
 
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.

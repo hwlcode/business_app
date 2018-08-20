@@ -1,0 +1,51 @@
+page-notification {
+    .notification {
+        h2 {
+            font-size: 12px;
+            color: #333;
+            margin-bottom: 5px;
+            white-space: normal;
+            line-height: 18px;
+        }
+
+        h2.font-bold {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        p {
+            color: #999;
+            font-size: 12px;
+        }
+        ion-icon {
+            font-size: 25px;
+        }
+        .remove {
+            background: #ff6659;
+            color: #fff;
+            font-weight: bold;
+        }
+        .remove.read {
+            background: blueviolet;
+        }
+
+        .item-block .item-inner{
+            border-bottom: 0.55px solid #f2f2f2;
+        }
+    }
+
+    .nologin-tips {
+        padding-top: 40%;
+    }
+
+    .refresher-pulling-text, .refresher-refreshing-text{
+        font-size: 12px;
+    }
+
+    .is-none{
+        font-size: 12px;
+        text-align: center;
+        color: #666666;
+    }
+
+}

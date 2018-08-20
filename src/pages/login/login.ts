@@ -1,45 +1,21 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, LoadingController, ToastController, ViewController} from 'ionic-angular';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {numberValidator, phoneValidator} from "../../app/validator";
 import {Storage} from '@ionic/storage';
-import {AppGlobal, AppService} from "../../app/app.service";
-import {ProfilePage} from "../profile/profile";
+import {UtilService} from "../../service/util.service";
+import {UserService} from "../../service/user.service";
+import {BaseUI} from "../../common/baseui";
+// import md5 from 'blueimp-md5';
 
 @IonicPage()
 @Component({
     selector: 'page-login',
     templateUrl: 'login.html',
 })
-export class LoginPage {
-    public loginForm: FormGroup;
-
-    constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public appService: AppService) {
-        let fb = new FormBuilder();
-        this.loginForm = fb.group({
-            phone: ['15868823605', [phoneValidator]],
-            phoneCode: ['', [numberValidator]]
-        })
-    }
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad LoginPage');
-    }
-
-    login() {
-        if (this.loginForm.valid) {
-            this.appService.httpPost(AppGlobal.API.login, this.loginForm.value, (data) => {
-                if (data.code == 0) {
-                    this.storage.set('isLogin', this.loginForm.get('phone').value);
-                    this.navCtrl.setRoot(ProfilePage, {phone: this.loginForm.get('phone').value});
-                    this.navCtrl.parent.select(2);
-                }else{
-                    this.appService.toast(data.msg);
-                }
-            });
-        }
-    }
-
+export class LoginPage extends BaseUI {
+    loginForm: FormGroup;
+    showMessage: any;
     // 验证码倒计时
     verifyCode: any = {
         verifyCodeTips: "获取验证码",
@@ -47,10 +23,56 @@ export class LoginPage {
         disable: true
     }
 
+    constructor(private storage: Storage,
+                private utilService: UtilService,
+                private viewCtrl: ViewController,
+                private userService: UserService,
+                private loadingCtrl: LoadingController,
+                private toastCtrl: ToastController) {
+        super();
+
+        let fb = new FormBuilder();
+        this.loginForm = fb.group({
+            phone: ['', [phoneValidator]],
+            phoneCode: ['', [numberValidator]]
+        });
+        // console.log(this.loginForm.value); // 手机号码正则没有匹配上
+    }
+
+    /**
+     * 关闭当前页面
+     */
+    dismiss() {
+        this.viewCtrl.dismiss();
+    }
+
+    login() {
+        let loading = super.showLoading(this.loadingCtrl, '登录中...');
+
+        if (this.loginForm.valid) {
+            // this.loginForm.value.phoneCode = md5(this.loginForm.value.phoneCode);
+            this.userService.httpPost(this.loginForm.value)
+                .subscribe(
+                    data => {
+                        if (data.code == 0) {
+                            this.storage.set('user', data.data._id);
+                            loading.dismiss();
+                            this.dismiss();
+                            super.showToast(this.toastCtrl, '登录成功');
+                        } else {
+                            loading.dismiss();
+                            super.showToast(this.toastCtrl, data.msg);
+                        }
+                    },
+                    error => this.showMessage = <any>error
+                );
+        }
+    }
+
     // 倒计时
     settime() {
         if (this.verifyCode.countdown == 1) {
-            this.verifyCode.countdown = 30;
+            this.verifyCode.countdown = 60;
             this.verifyCode.verifyCodeTips = "获取验证码";
             this.verifyCode.disable = true;
             return;
@@ -67,22 +89,20 @@ export class LoginPage {
 
     getCode() {
         if (this.loginForm.value.phone == '') {
-            console.debug("请填写手机号!");
+            this.utilService.toast('请输入手机号码');
             return;
         }
 
         //发送验证码成功后开始倒计时
-        this.appService.httpGet(AppGlobal.API.verifyCode, {
-            phone: this.loginForm.value.phone
-        }, d => {
-            this.appService.alert(d);
-            if (d.code == 'OK') {
-                console.log(d);
-            } else {
-                this.appService.toast(d.msg);
-            }
-        })
-        //此处实现验证码请求
+        if (this.verifyCode.disable) {
+            this.userService.httpGetVerifyCode(this.loginForm.value.phone).subscribe(data => {
+                if (data.code == 'OK') {
+                    console.log(data);
+                } else {
+                    this.utilService.toast(data.msg);
+                }
+            });
+        }
         this.verifyCode.disable = false;
         this.settime();
     }

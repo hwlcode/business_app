@@ -1,7 +1,11 @@
 <ion-header>
 
     <ion-navbar color="primary">
-        <ion-title>登录</ion-title>
+        <ion-title>用户登录</ion-title>
+        <button ion-button clear (click)="dismiss()">
+            <span ion-text showWhen="ios">取消</span>
+            <ion-icon name="md-close" showWhen="android" class="white"></ion-icon>
+        </button>
     </ion-navbar>
 
 </ion-header>
@@ -12,15 +16,15 @@
         <ion-list>
             <ion-item>
                 <ion-label>手机号</ion-label>
-                <ion-input type="text" formControlName="phone"></ion-input>
-                <button ion-button small item-end [disabled]="!verifyCode.disable" (click)="getCode()">{{verifyCode.verifyCodeTips}}</button>
+                <ion-input type="text" formControlName="phone" placeholder="请输入手机号码"></ion-input>
+                <button class="verify-code" ion-button small item-end [disabled]="!verifyCode.disable" (click)="getCode()">{{verifyCode.verifyCodeTips}}</button>
             </ion-item>
             <ion-item>
                 <ion-label>验证码</ion-label>
-                <ion-input type="text" formControlName="phoneCode" placeholder="请输入验证码"></ion-input>
+                <ion-input type="text" formControlName="phoneCode" placeholder="请输入验证码" maxlength="6"></ion-input>
             </ion-item>
             <ion-item>
-                <button ion-button block large [disabled]="!loginForm.valid" (click)="login()">登录</button>
+                <button ion-button block large [disabled]="!loginForm.valid" (click)="login()" class="login">登 录</button>
             </ion-item>
         </ion-list>
     </form>

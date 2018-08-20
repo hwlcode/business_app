@@ -1,9 +1,14 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
-import {AppGlobal, AppService} from "../../app/app.service";
+import {IonicPage, NavController, ViewController} from 'ionic-angular';
 import {ModalController} from 'ionic-angular';
 import {CheckOrdersPage} from "../check-orders/check-orders";
-import { ActionSheetController } from 'ionic-angular';
+import {CoreService} from "../../service/core.service";
+import {ProductService} from "../../service/product.service";
+import {Storage} from '@ionic/storage';
+import {ProfilePage} from "../profile/profile";
+import {ConfirmOrderPage} from "../confirm-order/confirm-order";
+import {OrderService} from "../../service/order.service";
+// import {NotificationService} from "../../service/notification.service";
 
 @IonicPage()
 @Component({
@@ -11,43 +16,61 @@ import { ActionSheetController } from 'ionic-angular';
     templateUrl: 'products.html',
 })
 export class ProductsPage {
-    public banners: any;
-    public products: any;
-    public num: number = 0;
-    public sum: number = 0;
-    private show: boolean = false;
-    private orders: any = [];
+    products: any;
+    keywords: string;
+    userId: string;
 
-    constructor(public navCtrl: NavController,
-                public navParams: NavParams,
-                public modalCtrl: ModalController,
-                public viewCtrl: ViewController,
-                public actionSheetCtrl: ActionSheetController,
-                public appService: AppService) {
-        this.getBanners();
+    show: boolean = false;
+    orders: any = [];
+
+    num: number = 0;
+    sum: number = 0;
+    sn: string;
+
+    noLogin: boolean = true;
+    logined: boolean = false;
+
+    constructor(private modalCtrl: ModalController,
+                private coreService: CoreService,
+                private navCtrl: NavController,
+                private viewCtrl: ViewController,
+                private storage: Storage,
+                private orderService: OrderService,
+                // private notificationService: NotificationService,
+                private productService: ProductService) {
+
         this.getProduct();
     }
 
-    getBanners() {
-        this.appService.httpGet(AppGlobal.API.getBanner, '', d => {
-            if (d.code == 0) {
-                this.banners = d.data;
-                this.banners.map(item => {
-                    item.image = AppGlobal.domain + item.banner.path;
-                })
+    ionViewDidEnter() {
+        this.storage.get('user').then(val => {
+            if (val != null) {
+                this.noLogin = false;
+                this.logined = true;
+
+                this.userId = val;
             }
-        })
+        });
     }
 
     getProduct() {
-        this.appService.httpGet(AppGlobal.API.products, '', d => {
-            if (d.code == 0) {
-                this.products = d.data;
+        this.productService.httpGetProductAll().subscribe(data => {
+            if (data.code == 0) {
+                this.products = data.data;
                 this.products.map(item => {
-                    item.image = AppGlobal.domain + item.banner.path;
+                    item.image = this.coreService.domain + item.banner.path;
+                    item.orderNum = 0;
                 })
             }
-        })
+        });
+    }
+
+    dismiss() {
+        this.viewCtrl.dismiss();
+    }
+
+    goToLogin() {
+        this.navCtrl.push(ProfilePage);
     }
 
     presentModal() {
@@ -56,9 +79,10 @@ export class ProductsPage {
                 productList: this.orders,
                 num: this.num,
                 sum: this.sum
+            }, {
+                showBackdrop: true
             });
             modal.onDidDismiss(data => {
-                console.log(data);
                 this.show = data.show;
                 this.orders = data.orders;
                 this.num = data.num;
@@ -70,92 +94,83 @@ export class ProductsPage {
         }
     }
 
-    public removeProduct(product) {
-        if (this.num > 0) {
-            this.num--;
-        }
+    chooseProduct(product) {
         let order = new Order(product, 1);
-        this.sum -= parseInt((order.product as any).price, 10);
-        let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id);
-        if (isExist) {
-            this.orders.map(item => {
-                if (item.product._id == (order.product as any)._id) {
-                    if (item.num > 1) {
-                        item.num--;
-                    } else if (item.num == 1) {
-                        this.orders.splice(item, 1);
-                    }
-                }
-            });
-        }
-    }
+        let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id) != -1;
 
-    public addProduct(product) {
-        this.num++;
-        let order = new Order(product, 1);
-        let isExist = JSON.stringify(this.orders).indexOf((order.product as any)._id);
-        this.sum += parseInt((order.product as any).price, 10);
-        if (isExist < 0) {
-            this.orders.push(order);
-        } else {
-            this.orders.map(item => {
-                if (item.product._id == (order.product as any)._id) {
-                    item.num++;
-                }
-            });
+        if (!isExist) {
+            this.orders.push(product);
         }
+
+        let n = 0, p = 0;
+        for (let i = 0; i < this.orders.length; i++) {
+            n += this.orders[i].orderNum;
+            p += this.orders[i].orderNum * this.orders[i].price;
+        }
+        this.num = n;
+        this.sum = p;
     }
 
     selectPayWay() {
-        let actionSheet = this.actionSheetCtrl.create({
-            title: '选择支付方式',
-            buttons: [
-                {
-                    text: '微信支付',
-                    handler: () => {
-                        console.log('微信支付');
-                    }
-                },{
-                    text: '支付宝支付',
-                    handler: () => {
-                        console.log('支付宝支付');
-                    }
-                },{
-                    text: '取消',
-                    role: 'cancel',
-                    handler: () => {
-                        console.log('cancel');
-                    }
+        this.postOrder();
+    }
+
+    postOrder() {
+        if(this.orders.length > 0) {
+            this.orderService.httpPostOrder({
+                products: JSON.stringify(this.orders),
+                sumPrice: this.sum,
+                customer: this.userId
+            }).subscribe(res => {
+                if (res.code == 0) {
+                    this.sn = res.data.sn;
+
+                    this.navCtrl.push(ConfirmOrderPage, {
+                        products: JSON.stringify(this.orders),
+                        sn: res.data.no,
+                        orderNo: res.data.sn
+                    });
                 }
-            ]
+            });
+
+            // 测试
+            // let businessOpts = {
+            //     content: '您的订单：' + 'YK1524737681983' + ' 己经生成，我们会尽快为您发货！非常感谢您的订购，祝生活愉快！电话咨询：18078660058',
+            //     from: this.userId, // 管理员ID
+            //     to: this.userId
+            // }
+            // this.userOrderNotification(businessOpts);
+        }
+    }
+
+    /**
+     * 搜索
+     */
+    getItems() {
+        this.productService.httpProductFilter({
+            keywords: this.keywords,
+            page: 1
+        }).subscribe(data => {
+            if (data.code == 0) {
+                this.products = data.data;
+                this.products.map(item => {
+                    item.image = this.coreService.domain + item.banner.path;
+                })
+            }
         });
-        actionSheet.present();
     }
 
-    hideTabs() {
-        //当页面进入初始化的时候隐藏tabs
-        let elements = document.querySelectorAll(".tabbar");
-        if (elements != null) {
-            Object.keys(elements).map((key) => {
-                elements[key].style.display = 'none';
-            });
-        }
-    }
-
-    showTabs() {
-        //当退出页面的时候,显示tabs
-        let elements = document.querySelectorAll(".tabbar");
-        if (elements != null) {
-            Object.keys(elements).map((key) => {
-                elements[key].style.display = 'flex';
-            });
-        }
-    }
-
-
-    ionViewWillLeave() {
-
-    }
+    // 测试
+    // userOrderNotification(opts){
+    //     // this.utilService.alert(opts.toString());
+    //     this.notificationService.createNotification(opts).subscribe(
+    //         res => {
+    //             if(res.code == 0){
+    //
+    //             }
+    //         }
+    //     )
+    // }
 }
 
 class Order {

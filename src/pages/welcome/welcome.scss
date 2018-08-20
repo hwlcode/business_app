@@ -1,6 +1,6 @@
 page-welcome {
     ion-slide {
-        background-color: #9a0007;
+        background-color: #24ad20;
     }
 
     ion-slide img {
@@ -18,7 +18,7 @@ page-welcome {
     }
 
     .toolbar-background {
-        background: #9a0007;
+        background: #24ad20;
     }
 
     .button-inner {
@@ -30,13 +30,14 @@ page-welcome {
     }
 
     .slide-title {
-        margin-top: 16.8rem;
+        //margin-top: 16.8rem;
         color: #ffffff;
     }
 
     .slide-image {
-        max-height: 50%;
-        max-width: 60%;
+        max-width: 50%;
+        max-height: 30%;
+        border-radius: 50%;
         margin: 18px 0;
     }
 

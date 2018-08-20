@@ -1,0 +1,46 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>积分兑换</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-item color="primary" class="no-bottom-border">
+        <p>订单配送至：</p>
+        <p class="address">{{userInfo.address}}</p>
+        <p>{{userInfo.name}}&nbsp;&nbsp;&nbsp;&nbsp;{{userInfo.phone}}</p>
+    </ion-item>
+
+    <div class="product-box">
+        <ion-item no-padding>
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-2><img src="{{product.image}}" width="50" height="50"></ion-col>
+                    <ion-col col-6>
+                        <h2 text-left class="product-name">{{product.name}}</h2>
+                    </ion-col>
+                    <ion-col col-4>
+                        <p text-right class="num"><span>{{product.code * orderNum}} 分</span></p>
+                        <num-count text-right [(ngModel)]="orderNum" (click)="chooseProduct(product)"></num-count>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </div>
+
+    <ion-item [(hidden)]="isHidden" class="no-bottom-border">
+        <p class="error">您的积分不足无法兑换该商品</p>
+    </ion-item>
+</ion-content>
+
+<ion-footer>
+    <ion-item color="light" [style.opacity]="0.75" class="selected-bar">
+        <div class="sum-price">
+            <i class="price">此次消费 {{sumCode}} 分</i>
+        </div>
+        <button ion-button item-end class="go-pay"  [disabled]="!isHidden" (click)="commitOrder()">确认兑换</button>
+    </ion-item>
+</ion-footer>

@@ -1,0 +1,44 @@
+num-count {
+    .num-control{
+        display: inline-block;
+        width: 117px;
+    }
+    .text-num{
+        display: inline-block;
+        padding: 0 10px;
+    }
+    .item-inner{
+        border-bottom: 0!important;
+        padding-right: 0!important;
+    }
+    ion-label{
+        margin: 0!important;
+    }
+    button {
+        background: none;
+        margin: auto 0;
+        padding: 0;
+    }
+    .number {
+        width: 40px;
+        font-size: 2rem;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+    }
+    .iconfont {
+        color: #999999;
+        vertical-align: middle;
+    }
+    .icon-delicon {
+        font-size: 2rem;
+        color: #24ad20;
+    }
+    .icon-add1 {
+        font-size: 2rem;
+        color: #24ad20;
+    }
+    .add-btn {
+        padding-right: 0;
+    }
+}

@@ -1,8 +1,26 @@
 page-login {
-    .item{
+    font-size: 12px;
+    .item {
         padding-left: 0;
     }
-    .label{
+    .label {
         padding-left: 16px;
+        font-size: 12px;
+        color: #333;
+    }
+    .text {
+        color: #fff;
+    }
+    .white {
+        color: #fff;
+    }
+    .verify-code {
+        font-size: 12px;
+    }
+    ion-input {
+        font-size: 13px;
+    }
+    .login {
+        font-size: 14px;
     }
 }

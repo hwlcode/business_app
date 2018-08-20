@@ -2,6 +2,46 @@ page-orders {
     .no-login {
         margin-top: 45%;
     }
+    .item {
+        min-height: 2rem;
+    }
+    .header-item {
+        font-size: 12px;
+    }
+    .label-ios {
+        margin: 5px 8px 5px 0;
+    }
+    ion-card-header {
+        padding: 5px 8px !important;
+    }
+    .header-item {
+        padding-left: 5px;
+    }
+    .name{
+        width: 60%;
+    }
+    .num{
+        width: 10%;
+        text-align: center;
+    }
+    .price-w{
+        width: 20%;
+        text-align: right;
+    }
+    .list-item {
+        padding-left: 0;
+        font-size: 12px;
+        color: #333;
+        .item-inner {
+            padding-right: 0 !important;
+        }
+    }
+    .order-footer{
+        font-size: 12px;
+    }
+    .date {
+        color: #999999;
+    }
     .no-login-tips {
         color: #999999;
         font-size: 16px;
@@ -12,13 +52,13 @@ page-orders {
     .show {
         display: block !important;
     }
-    .card-content-ios{
+    .card-content-ios {
         padding-bottom: 0;
     }
-    .price{
+    .price {
         color: #f44336;
     }
-    .status{
+    .status {
         color: green;
     }
 }

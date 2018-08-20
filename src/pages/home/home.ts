@@ -1,100 +1,118 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
-import {AppGlobal, AppService} from '../../app/app.service';
+import {IonicPage, ModalController, NavController} from 'ionic-angular';
 import {ProductsPage} from "../products/products";
-import {LoginPage} from "../login/login";
-import {Storage} from '@ionic/storage';
-import {ShoppingPage} from "../shopping/shopping";
+// import {BannerService} from "../../service/banner.service";
+import {ProductService} from "../../service/product.service";
+import {CoreService} from "../../service/core.service";
+import {ProfilePage} from "../profile/profile";
 
 @IonicPage()
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html'
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
     public banners;
     public products;
-    public isLogin: boolean = false;
-    public avatar: string;
+    public keywords: string;
+    public last: boolean = false;
+    public infiniteScroll: any;
 
-    constructor(
-        public navCtrl: NavController,
-        public appService: AppService,
-        public storage: Storage,
-    ) {
-        this.storage.get('isLogin').then(result => {
-            if (result) {
-                this.isLogin = true;
-                (async() => {
-                    await this.appService.httpGet(AppGlobal.API.profile, {
-                        phone: result
-                    }, (data) => {
-                        if (data.code == 0) {
-                            let user = data.data;
-                            this.avatar = AppGlobal.domain + user.avatar.path;
-                        }
-                    });
-                })();
-            }
-        })
+    constructor(private navCtrl: NavController,
+                // private bannerService: BannerService,
+                private coreService: CoreService,
+                private modalCtrl: ModalController,
+                private productService: ProductService) {
+
     }
 
     ngOnInit() {
-        this.getBanners();
-        this.getProduct();
+        // this.getBanners();
+        this.getProduct('', 1);
     }
 
-    getBanners() {
-        this.appService.httpGet(AppGlobal.API.getBanner, '', d => {
-            if (d.code == 0) {
-                this.banners = d.data;
-                this.banners.map(item => {
-                    item.image = AppGlobal.domain + item.banner.path;
-                })
-            }
-        })
+    user() {
+        this.navCtrl.push(ProfilePage);
     }
 
-    getProduct() {
-        this.appService.httpGet(AppGlobal.API.getProducts, '', d => {
-            if (d.code == 0) {
-                this.products = d.data;
+    getItems(event) {
+        this.getProduct(this.keywords || '', 1);
+    }
+
+    doRefresh(refresher) {
+        this.productService.httpProductFilter({
+            keywords: '',
+            page: 1
+        }).subscribe(data => {
+            if (data.code == 0) {
+                this.products = data.data;
+                if(this.infiniteScroll){
+                    this.infiniteScroll.enable(true);
+                }
                 this.products.map(item => {
-                    item.image = AppGlobal.domain + item.banner.path;
-                })
+                    item.image = this.coreService.domain + item.banner.path;
+                });
+                refresher.complete();
             }
-        })
+        });
+    }
+
+    doInfinite(infiniteScroll) {
+        let page = 1;
+        page++;
+        this.infiniteScroll = infiniteScroll;
+        this.productService.httpProductFilter({
+            keywords: this.keywords || '',
+            page: page
+        }).subscribe(data => {
+            if (data.code == 0) {
+                this.last = data.isLast;
+                this.products = this.products.concat(data.data);
+                this.products.concat(data.data);
+                this.products.map(item => {
+                    item.image = this.coreService.domain + item.banner.path;
+                });
+
+                infiniteScroll.complete();
+
+                if (this.last) {
+                    infiniteScroll.enable(false);
+                }
+            }
+        });
+    }
+
+    // getBanners() {
+    //     this.bannerService.httpGetBanner().subscribe(data => {
+    //         if (data.code == 0) {
+    //             this.banners = data.data;
+    //             this.banners.map(item => {
+    //                 item.image = this.coreService.domain + item.banner.path;
+    //             })
+    //         }
+    //     });
+    // }
+
+    getProduct(keywords, page) {
+        this.productService.httpProductFilter({
+            keywords: keywords,
+            page: page
+        }).subscribe(data => {
+            if (data.code == 0) {
+                this.products = data.data;
+                this.products.map(item => {
+                    item.image = this.coreService.domain + item.banner.path;
+                });
+            }
+        });
     }
 
     goProduct() {
-        if(!this.isLogin){
-            return this.goToLogin()
-        }
-        this.navCtrl.push(ProductsPage);
-    }
-
-    goToLogin() {
-        this.navCtrl.push(LoginPage)
-    }
-
-    goToOrder() {
-        if(!this.isLogin){
-            this.goToLogin()
-        }
-
-        this.navCtrl.parent.select(1);
+        var modal = this.modalCtrl.create(ProductsPage);
+        modal.present();
     }
 
     goToShopping() {
-        this.navCtrl.push(ShoppingPage);
+        this.navCtrl.parent.select(1);
     }
-
-    goToUser() {
-        if(!this.isLogin){
-            this.goToLogin()
-        }
-
-        this.navCtrl.parent.select(2);
-    }
-
 }

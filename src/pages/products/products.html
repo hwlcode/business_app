@@ -1,45 +1,62 @@
 <ion-header>
 
-    <ion-navbar style="opacity: 0.8" no-border-bottom color="primary">
-        <ion-title>产品列表</ion-title>
+    <ion-navbar no-border-bottom color="primary">
+        <ion-title>选购</ion-title>
+        <button ion-button clear (click)="dismiss()">
+            <span ion-text showWhen="ios" class="white">取消</span>
+            <ion-icon name="md-close" showWhen="android" class="white"></ion-icon>
+        </button>
     </ion-navbar>
 
 </ion-header>
 
 <ion-content fullscreen>
-    <ion-slides pager>
-        <ion-slide *ngFor="let banner of banners">
-            <img src="{{banner.image}}" class="slide-image"/>
-        </ion-slide>
-    </ion-slides>
-
-    <div class="product-list">
-        <ion-list no-padding>
-            <ion-item no-padding *ngFor="let product of products">
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-6><img src="{{product.image}}"></ion-col>
-                        <ion-col col-6>
-                            <h2 text-right>{{product.name}}</h2>
-                            <p text-right class="price"><i>￥</i>{{product.price}}/斤</p>
-                            <p text-right>
-                                <button (click)="removeProduct(product)"><i class="iconfont icon-delicon"></i></button>
-                                <span class="number">1</span>
-                                <button class="add-btn" (click)="addProduct(product)"><i class="iconfont icon-add1"></i></button>
-                            </p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-        </ion-list>
+    <div *ngIf="noLogin">
+        <p text-center class="nologin-tips">您还没有登录，请登录后再购买商品</p>
+        <div text-center>
+            <button ion-button small (click)="goToLogin()">立即登录</button>
+        </div>
+    </div>
+    <div *ngIf="logined">
+        <ion-item color="primary">
+            <ion-searchbar (input)="getItems($event)" placeholder="输入要搜索的关键字" [(ngModel)]="keywords"></ion-searchbar>
+        </ion-item>
+        <!--<ion-slides pager>-->
+            <!--<ion-slide *ngFor="let banner of banners">-->
+                <!--<img src="{{banner.image}}" class="slide-image" height="100"/>-->
+            <!--</ion-slide>-->
+        <!--</ion-slides>-->
+        <div class="product-list">
+            <ion-list no-padding>
+                <ion-item no-padding *ngFor="let product of products">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col col-3><img src="{{product.image}}" width="80" height="80"></ion-col>
+                            <ion-col col-9>
+                                <h2 text-left class="product-name">{{product.name}}</h2>
+                                <p text-right class="price"><i>￥{{product.price}}</i>/<b>{{product.unit}}</b></p>
+                                <p text-right>
+                                    <num-count [(ngModel)]="product.orderNum" (click)="chooseProduct(product)"></num-count>
+                                </p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+            </ion-list>
+        </div>
     </div>
 </ion-content>
-<ion-footer>
-    <ion-item color="light" style="opacity: 0.55">
+
+<ion-footer *ngIf="logined">
+    <ion-item color="light" [style.opacity]="num > 0 ? 1 : 0.75" class="selected-bar">
         <ion-badge item-start>{{num}}</ion-badge>
         <div *ngIf="num == 0">还未选购商品</div>
-        <div (click)="presentModal()" *ngIf="num > 0">￥{{sum}}元</div>
-        <button ion-button item-end [disabled]="num == 0" (click)="selectPayWay()">去结算</button>
+        <div (tap)="presentModal()" *ngIf="num > 0">
+            ￥<i class="price">{{sum}}</i>元
+            <p class="tips" *ngIf="num > 0">点击查看订单查情</p>
+        </div>
+        <button ion-button item-end [disabled]="num == 0" (click)="selectPayWay()" class="go-pay">去结算</button>
     </ion-item>
 </ion-footer>
+
 
