@@ -22,10 +22,6 @@ export class MyApp {
                 private updateService: UpdateService,
                 private storage: Storage) {
 
-        this.updateService.checkVersion(); // 版本升级检测
-
-        this.utilService.alloyLeverInit(); // 本地"开发者工具"
-
         this.utilService.getFirstIn().then(data => {
             if (data) {
                 this.rootPage = TabsPage;
@@ -35,12 +31,15 @@ export class MyApp {
                 this.rootPage = WelcomePage;
             }
         });
+        this.utilService.alloyLeverInit(); // 本地"开发者工具"
 
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
+            // 重点：在平台准备好后再加载插件，否则会报错
             statusBar.styleDefault();
             splashScreen.hide();
+            this.updateService.checkVersion(); // 版本升级检测
         });
     }
 }

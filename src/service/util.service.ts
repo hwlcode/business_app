@@ -165,10 +165,11 @@ export class UtilService {
      * @type {()=>number}
      */
      getSequence = (() => {
-        let sequence = 1;
-        return () => {
-            return ++sequence;
-        };
+        // let sequence = 1;
+        // return () => {
+        //     return ++sequence;
+        // };
+         return new Date().getTime();
     })();
 
     /**

@@ -107,6 +107,7 @@ export class ConfirmOrderPage {
         var self = this;
         if (this.payway == 0) {
             // 支付宝
+            console.log(this.payInfo);
             cordova.plugins.alipay.payment(this.payInfo,
                 function success(e) {
                     //e.resultStatus  状态代码  e.result  本次操作返回的结果数据 e.memo 提示信息
@@ -153,6 +154,7 @@ export class ConfirmOrderPage {
                     }
                 }, function error(e) {
                     self.utilService.toast(e.memo);
+                    console.log(e);
                     self.navCtrl.push(OrdersPage);
                     self.hasPay = true;
                 });

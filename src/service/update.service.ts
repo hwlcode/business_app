@@ -93,7 +93,9 @@ export class UpdateService {
      * 下载app
      */
     downloadApp() {
-        if (this.utilService.isIos()) {// ios打开网页下载
+        if (this.utilService.isIos()) {
+            // ios打开网页下载
+            console.log(this.iosUrl);
             this.utilService.openUrlByBrowser(this.iosUrl);
         }
 
@@ -120,11 +122,13 @@ export class UpdateService {
 
                 // 下载并安装apk
                 const fileTransfer: FileTransferObject = this.transfer.create();
-                const apk = this.file.externalRootDirectory + 'download/' + `android_${this.utilService.getSequence()}.apk`; // 下载apk保存的目录
-
-                fileTransfer.download(this.apkUrl, apk).then(() => {
+                const apk = this.file.externalRootDirectory + 'download/' + `android_${new Date().getTime()}.apk`; // 下载apk保存的目录
+                console.log(this.apkUrl);
+                fileTransfer.download(this.apkUrl, apk).then((entry) => {
                     alert && alert.dismiss();
-                    this.fileOpener.open(apk, 'application/vnd.android.package-archive');
+                    console.log('download complete: ' + entry.toURL());
+                    // 如果出现应用未安装的现象，请确保两个apk的源是同一个，可以看笔记
+                    this.fileOpener.open(entry.toURL(), 'application/vnd.android.package-archive');
                 }, err => {
                     this.updateProgress = -1;
                     alert && alert.dismiss();
